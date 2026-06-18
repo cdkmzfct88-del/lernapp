@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistik Rezepte — Uni Passau</title>
+<style>
+:root {
+  --accent: #4A90D9;
+  --accent-bg: #edf4fc;
+  --green: #27AE60;
+  --amber: #E67E22;
+  --red: #E74C3C;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "Courier New", Courier, monospace;
+  --border: #e8eaed;
+  --muted: #6b7280;
+  --text: #1a1a1a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--text); background: #fff; line-height: 1.65; }
+.page { max-width: 800px; margin: 0 auto; padding: 0 20px 80px; }
+
+/* Header */
+.site-header { padding: 40px 0 24px; border-bottom: 2px solid var(--accent); margin-bottom: 32px; }
+.site-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 6px; }
+.site-header .sub { color: var(--muted); font-size: 0.9rem; }
+
+/* Intro box */
+.intro-box {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-bottom: 36px;
+  font-size: 0.9rem;
+  color: #1a3a5c;
+}
+
+/* TOC */
+.toc { background: #fafafa; border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; margin-bottom: 40px; }
+.toc h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+.toc ol { padding-left: 20px; }
+.toc li { margin-bottom: 6px; }
+.toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+.toc a:hover { text-decoration: underline; }
+.badge { display: inline-block; font-size: 0.7rem; padding: 1px 7px; border-radius: 99px; margin-left: 6px; vertical-align: middle; font-weight: 600; }
+.badge-red    { background: #fde8e8; color: #b91c1c; }
+.badge-orange { background: #fef3e2; color: #b45309; }
+.badge-yellow { background: #fefce8; color: #854d0e; }
+
+/* Recipe card */
+.recipe {
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 24px 24px 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.07);
+}
+.recipe-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.recipe-title { font-size: 1.2rem; font-weight: 700; }
+.recipe-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.recipe-pts { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+
+.tag { font-size: 0.75rem; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--border); color: var(--muted); }
+
+.label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin: 20px 0 8px; }
+.when-box { background: #f9fafb; border-radius: 6px; padding: 12px 14px; font-size: 0.875rem; color: #374151; border: 1px solid var(--border); }
+.when-box ul { padding-left: 18px; }
+.when-box li { margin-bottom: 4px; }
+
+/* Steps */
+.steps { counter-reset: step; }
+.step {
+  display: flex; gap: 16px; margin-bottom: 18px;
+  padding-bottom: 18px; border-bottom: 1px solid #f0f0f0;
+}
+.step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.step-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: var(--accent); color: #fff;
+  border-radius: 50%; font-size: 0.8rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  counter-increment: step;
+  margin-top: 2px;
+}
+.step-body { flex: 1; }
+.step-body h3 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 6px; }
+.step-body p  { font-size: 0.9rem; color: #374151; margin-bottom: 6px; }
+.step-body p:last-child { margin-bottom: 0; }
+
+/* Formula */
+.formula {
+  background: #f5f5f5; border-radius: 6px;
+  padding: 10px 14px; font-family: var(--mono);
+  font-size: 0.875rem; margin: 8px 0;
+  border: 1px solid #e5e5e5;
+  overflow-x: auto;
+}
+.formula-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; font-family: var(--font); }
+
+/* Example */
+.example {
+  background: #f0faf4; border-radius: 8px;
+  border: 1px solid #bbf0d0;
+  padding: 18px 20px; margin: 20px 0;
+}
+.example-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--green); font-weight: 700; margin-bottom: 10px; }
+.example p { font-size: 0.9rem; color: #1a3a2a; margin-bottom: 6px; }
+.example .num { color: var(--green); font-weight: 600; font-family: var(--mono); }
+.ex-table { width: 100%; border-collapse: collapse; font-size: 0.825rem; margin: 10px 0; overflow-x: auto; display: block; }
+.ex-table th { background: #d1f5e0; color: #155724; padding: 6px 10px; text-align: right; font-weight: 600; }
+.ex-table td { padding: 5px 10px; text-align: right; border-bottom: 1px solid #d1f5e0; color: #1a3a2a; }
+.ex-table td:first-child, .ex-table th:first-child { text-align: center; }
+.ex-table tr:last-child td { font-weight: 700; background: #eafaf0; }
+.example .formula { background: #e0f7ea; border-color: #a3e0b8; }
+
+/* Tip box */
+.tip {
+  background: var(--accent-bg); border-left: 4px solid var(--accent);
+  border-radius: 0 6px 6px 0; padding: 14px 16px; margin: 20px 0;
+  font-size: 0.875rem; color: #1a3a5c;
+}
+.tip-header { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 6px; }
+.tip ul { padding-left: 18px; }
+.tip li { margin-bottom: 4px; }
+
+/* Warning */
+.warn {
+  background: #fff8f0; border-left: 4px solid var(--amber);
+  border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.875rem; color: #7c4a00;
+}
+.warn-header { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--amber); margin-bottom: 4px; }
+
+/* Errors */
+.errors { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.errors h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: #b91c1c; font-weight: 700; margin-bottom: 8px; }
+.errors ul { padding-left: 18px; }
+.errors li { font-size: 0.875rem; color: #374151; margin-bottom: 5px; }
+
+/* Formula reference */
+.ref-section { margin-top: 60px; padding-top: 32px; border-top: 2px solid var(--border); }
+.ref-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+.ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 500px) { .ref-grid { grid-template-columns: 1fr; } }
+.ref-card { background: #fafafa; border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
+.ref-card h4 { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: .05em; }
+.ref-card .formula { margin: 4px 0; font-size: 0.8rem; }
+
+/* Misc */
+ul.plain { list-style: none; padding-left: 0; }
+ul.plain li::before { content: "→ "; color: var(--accent); }
+
+@media print {
+  .toc { break-inside: avoid; }
+  .recipe { break-inside: avoid; border-left-color: #999 !important; box-shadow: none; }
+  .tip { background: #f8f8f8 !important; border-left-color: #999 !important; }
+  .example { background: #f8f8f8 !important; border-color: #ccc !important; }
+  .warn { background: #f8f8f8 !important; border-left-color: #999 !important; }
+  .intro-box { background: #f8f8f8 !important; border-left-color: #999 !important; }
+  .step-num { background: #555 !important; }
+  a { color: #000 !important; text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="site-header">
+  <h1>📊 Statistik — Klausur-Rezepte</h1>
+  <div class="sub">Uni Passau · PD Dr. Schnurbus · Statistik für Wirtschaftswissenschaften</div>
+</header>
+
+<div class="intro-box">
+  Diese Rezepte basieren auf echten Klausuren der <strong>Statistik für Wirtschaftswissenschaften</strong> (Uni Passau, PD Dr. Schnurbus). Die häufigsten Aufgabentypen sind nach Klausurhäufigkeit sortiert.
+</div>
+
+<nav class="toc">
+  <h2>Inhaltsverzeichnis</h2>
+  <ol>
+    <li><a href="#kq">KQ-Schätzung (Lineare Regression)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 20–40 Pkt</span></li>
+    <li><a href="#htest">Hypothesentest für Regressionsparameter</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#nv">Normalverteilung — Wahrscheinlichkeiten</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#pearson">Korrelationskoeffizient (Bravais-Pearson)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#spearman">Rangkorrelation (Spearman)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#ki">Konfidenzintervall für β̂</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#bayes">Bayes / Bedingte Wahrscheinlichkeit</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–20 Pkt</span></li>
+    <li><a href="#chisq">Chi-Quadrat Anpassungstest</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–20 Pkt</span></li>
+    <li><a href="#binom">Binomialverteilung</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#anova">Varianzanalyse (ANOVA)</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 15–20 Pkt</span></li>
+  </ol>
+</nav>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- REZEPT 1: KQ-SCHÄTZUNG -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="recipe" id="kq">
+  <div class="recipe-header">
+    <div class="recipe-title">1 · KQ-Schätzung (Lineare Regression)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 20–40 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Was ist das?</div>
+  <p>Die Methode der kleinsten Quadrate (KQ) findet die Gerade Ŷ = α̂ + β̂X, die die Summe der quadrierten Abweichungen Σε̂ᵢ² minimiert.</p>
+
+  <div class="label">Wann verwenden?</div>
+  <div class="when-box"><ul>
+    <li>Zusammenhang zwischen zwei metrischen Variablen analysieren</li>
+    <li>Steigung und Achsenabschnitt einer Regressionsgerade bestimmen</li>
+    <li>Bestimmtheitsmaß R² berechnen</li>
+  </ul></div>
+
+  <div class="label">Schritt-für-Schritt</div>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Tabelle aufstellen</h3>
+        <p>Lege Spalten an für: <strong>i | xᵢ | yᵢ | xᵢ² | xᵢyᵢ | ŷᵢ | ε̂ᵢ | ε̂ᵢ²</strong> — fülle xᵢ und yᵢ aus den Daten, alles andere berechnest du.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Summen berechnen</h3>
+        <div class="formula">Σxᵢ, Σyᵢ, Σxᵢ², Σxᵢyᵢ</div>
+        <p>Addiere jede Spalte einzeln. Kontrolliere durch gegenseitiges Nachrechnen.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Mittelwerte berechnen</h3>
+        <div class="formula">x̄ = Σxᵢ / n &nbsp;&nbsp;&nbsp; ȳ = Σyᵢ / n</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>β̂ berechnen</h3>
+        <div class="formula-label">Hauptformel (für Tabellenwerte):</div>
+        <div class="formula">β̂ = (Σxᵢyᵢ − n·x̄·ȳ) / (Σxᵢ² − n·x̄²)</div>
+        <div class="formula-label">Alternative (konzeptuell klarer):</div>
+        <div class="formula">β̂ = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²</div>
+        <p>Die erste Formel ist einfacher, wenn du die Summen schon berechnet hast.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>α̂ berechnen</h3>
+        <div class="formula">α̂ = ȳ − β̂ · x̄</div>
+        <p>Die Regressionsgerade läuft immer durch den Punkt (x̄, ȳ).</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Regressionsgerade aufschreiben</h3>
+        <div class="formula">Ŷ = α̂ + β̂ · X</div>
+        <p>Setze die berechneten Werte ein. Schreibe die Gleichung vollständig mit Zahlen auf.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h3>Bestimmtheitsmaß R² berechnen</h3>
+        <div class="formula">R² = 1 − Σε̂ᵢ² / Σ(yᵢ−ȳ)²</div>
+        <p>Berechne erst die Residuen ε̂ᵢ = yᵢ − ŷᵢ, dann ε̂ᵢ² und summiere. R² ∈ [0, 1].</p>
+        <div class="warn"><div class="warn-header">⚠ Interpretation Pflicht</div>„R² = 0,95 bedeutet: 95 % der Varianz von Y wird durch X erklärt."</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <h3>β̂ interpretieren</h3>
+        <p>„Steigt X um 1 Einheit, steigt Y durchschnittlich um <strong>β̂ Einheiten</strong>."<br>
+        Einheiten immer benennen (z.B. „cm", „kg", „€").</p>
+      </div>
+    </div>
+
+  </div><!-- /steps -->
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2026)</div>
+    <p><strong>Daten:</strong> n = 5 Beobachtungen zum Zusammenhang Werbungsausgaben (x) und Umsatz (y).</p>
+    <table class="ex-table">
+      <tr><th>i</th><th>xᵢ</th><th>yᵢ</th><th>xᵢ²</th><th>xᵢyᵢ</th><th>ŷᵢ</th><th>ε̂ᵢ</th><th>ε̂ᵢ²</th></tr>
+      <tr><td>1</td><td>5</td><td>40</td><td>25</td><td>200</td><td>24,6</td><td>15,4</td><td>237,16</td></tr>
+      <tr><td>2</td><td>20</td><td>59</td><td>400</td><td>1.180</td><td>54,6</td><td>4,4</td><td>19,36</td></tr>
+      <tr><td>3</td><td>45</td><td>80</td><td>2.025</td><td>3.600</td><td>104,6</td><td>−24,6</td><td>605,16</td></tr>
+      <tr><td>4</td><td>75</td><td>150</td><td>5.625</td><td>11.250</td><td>164,6</td><td>−14,6</td><td>213,16</td></tr>
+      <tr><td>5</td><td>105</td><td>244</td><td>11.025</td><td>25.620</td><td>224,6</td><td>19,4</td><td>376,36</td></tr>
+      <tr><td><strong>Σ</strong></td><td><strong>250</strong></td><td><strong>573</strong></td><td><strong>19.100</strong></td><td><strong>41.850</strong></td><td></td><td></td><td><strong>1.451,2</strong></td></tr>
+    </table>
+    <p><strong>Schritt 3:</strong> <span class="num">x̄ = 250/5 = 50</span>, <span class="num">ȳ = 573/5 = 114,6</span></p>
+    <div class="formula">β̂ = (41.850 − 5 · 50 · 114,6) / (19.100 − 5 · 50²)
+   = (41.850 − 28.650) / (19.100 − 12.500)
+   = 13.200 / 6.600 = <strong>2,0</strong></div>
+    <div class="formula">α̂ = 114,6 − 2,0 · 50 = <strong>14,6</strong></div>
+    <p><strong>Regressionsgerade:</strong> <span class="num">Ŷ = 14,6 + 2,0 · X</span></p>
+    <p><strong>R²:</strong> Σ(yᵢ−ȳ)² = 74,6² + 55,6² + 34,6² + 35,4² + 129,4² = 27.851,2</p>
+    <div class="formula">R² = 1 − 1.451,2 / 27.851,2 = 1 − 0,052 = <strong>0,948</strong></div>
+    <p><strong>Interpretation:</strong> „Steigt der Werbeaufwand um 1 Einheit, steigt der Umsatz durchschnittlich um 2,0 Einheiten. Das Modell erklärt 94,8 % der Streuung im Umsatz."</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    Schnurbus fragt fast immer: <strong>(1)</strong> Tabelle ausfüllen, <strong>(2)</strong> Schätzer berechnen + interpretieren, <strong>(3)</strong> Bestimmtheitsmaß. Lerne diesen Ablauf auswendig. Die Tabelle ist das Herzstück — mach sie sorgfältig.
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>α̂ und β̂ vertauschen (β̂ = Steigung, α̂ = Achsenabschnitt)</li>
+      <li>Vorzeichen bei ε̂ᵢ = yᵢ − ŷᵢ vergessen (nicht ŷᵢ − yᵢ)</li>
+      <li>Interpretation von β̂ weglassen — immer Einheiten nennen</li>
+      <li>R² ohne Interpretation lassen — 1 Satz reicht, gibt Punkte</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 2: HYPOTHESENTEST -->
+<section class="recipe" id="htest">
+  <div class="recipe-header">
+    <div class="recipe-title">2 · Hypothesentest für Regressionsparameter</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Was ist das?</div>
+  <p>Prüft, ob der geschätzte Parameter β̂ statistisch signifikant von einem Wert β₀ abweicht.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Hypothesen aufstellen</h3>
+        <div class="formula">Einseitig:  H₀: β ≤ β₀  vs.  H₁: β &gt; β₀
+Zweiseitig: H₀: β = β₀  vs.  H₁: β ≠ β₀</div>
+        <div class="warn"><div class="warn-header">⚠ Wichtig — Begründung der Hypothesenwahl</div>Wähle Hypothesen so, dass eine Testdurchführung sinnvoll ist: Die Forschungsfrage steht in H₁. Z.B. „Wir wollen zeigen, dass β &gt; 0" → H₁: β &gt; 0. Begründe in 1–2 Sätzen!</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Teststatistik berechnen</h3>
+        <div class="formula">T = (β̂ − β₀) / s_β̂</div>
+        <div class="formula">s² = Σε̂ᵢ² / (n−2) &nbsp;&nbsp; (Residualvarianz)
+s_β̂ = s / √Σ(xᵢ−x̄)² &nbsp;&nbsp; (Standardfehler von β̂)</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Kritischen Wert aus t-Tabelle ablesen</h3>
+        <div class="formula">Einseitig:  t_{n−2; α}    (Freiheitsgrade = n−2)
+Zweiseitig: t_{n−2; α/2}</div>
+        <p>Bei n=5 → df=3. Bei α=0,10 einseitig: t_{3;0,10} = 1,638</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Entscheidungsregel</h3>
+        <div class="formula">Einseitig (rechts):  H₀ ablehnen, wenn T &gt; t_{n−2; α}
+Zweiseitig:         H₀ ablehnen, wenn |T| &gt; t_{n−2; α/2}</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Interpretation formulieren</h3>
+        <p>„Auf dem X%-Signifikanzniveau wird H₀ [abgelehnt / nicht abgelehnt]. Das bedeutet, [inhaltliche Aussage über den Parameter]."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (angelehnt an Klausur 2024)</div>
+    <p>Aus dem KQ-Beispiel oben: <span class="num">β̂ = 2,0</span>, <span class="num">Σε̂ᵢ² = 1.451,2</span>, <span class="num">n = 5</span>, <span class="num">Σ(xᵢ−x̄)² = 6.600</span></p>
+    <p>Teste H₀: β ≤ 0 vs. H₁: β &gt; 0 bei α = 0,10.</p>
+    <div class="formula">s² = 1.451,2 / (5−2) = 1.451,2 / 3 = 483,73
+s   = √483,73 ≈ 21,99
+s_β̂ = 21,99 / √6.600 = 21,99 / 81,24 ≈ 0,271</div>
+    <div class="formula">T = (2,0 − 0) / 0,271 ≈ <strong>7,38</strong></div>
+    <p>Kritischer Wert: <span class="num">t_{3; 0,10} = 1,638</span></p>
+    <p><strong>Entscheidung:</strong> <span class="num">T = 7,38 &gt; 1,638</span> → H₀ wird abgelehnt.</p>
+    <p><strong>Interpretation:</strong> „Auf dem 10%-Niveau ist der Zusammenhang statistisch signifikant positiv. Höhere Werbeausgaben gehen mit höherem Umsatz einher."</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <strong>Begründung der Hypothesenwahl = 1–2 Sätze Pflicht!</strong> Schnurbus vergibt dafür explizit Punkte. Schreibe immer: „H₁ enthält die Forschungshypothese, da wir zeigen möchten, dass..."
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Freiheitsgrade vergessen: bei einfacher Regression immer df = n−2</li>
+      <li>Einseitig vs. zweiseitig verwechseln — lies die Aufgabe genau</li>
+      <li>β₀ vergessen: T = (β̂ − β₀) / s_β̂, nicht nur β̂ / s_β̂</li>
+      <li>Hypothesenbegründung weglassen — gibt Punktabzug</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 3: NORMALVERTEILUNG -->
+<section class="recipe" id="nv">
+  <div class="recipe-header">
+    <div class="recipe-title">3 · Normalverteilung — Wahrscheinlichkeiten</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Standardisieren</h3>
+        <div class="formula">Z = (X − μ) / σ &nbsp;&nbsp;&nbsp;&nbsp; wobei σ = √Var(X)</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Verschiedene Wahrscheinlichkeiten umrechnen</h3>
+        <div class="formula">P(X ≤ x)   = Φ((x−μ)/σ)            → direkt ablesen
+P(X &gt; x)   = 1 − Φ((x−μ)/σ)
+P(a &lt; X &lt; b) = Φ((b−μ)/σ) − Φ((a−μ)/σ)
+P(X = x)   = 0  (stetige Verteilung!)</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Lineare Transformationen</h3>
+        <p>Wenn X₁ ~ N(μ₁, σ₁²) und X₂ ~ N(μ₂, σ₂²) unkorreliert, und Y = a·X₁ + b·X₂:</p>
+        <div class="formula">E(Y)   = a·μ₁ + b·μ₂
+Var(Y) = a²·σ₁² + b²·σ₂²
+Y ~ N(E(Y), Var(Y))</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Quantile berechnen</h3>
+        <div class="formula">x_p = μ + z_p · σ</div>
+        <p>z_p aus der Φ-Tabelle ablesen (Zeile mit Φ(z) = p), dann zurücktransformieren.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2026)</div>
+    <p>X₁ ~ N(3; 1,75), X₂ ~ N(−4; 1), unkorreliert, Y = 2X₁ + 3X₂</p>
+    <div class="formula">E(Y)   = 2·3 + 3·(−4) = 6 − 12 = <strong>−6</strong>
+Var(Y) = 4·1,75 + 9·1  = 7 + 9  = <strong>16</strong>
+SD(Y)  = √16 = 4 &nbsp;&nbsp;&nbsp; → Y ~ N(−6; 16)</div>
+    <p><strong>P(Y = 4) = <span class="num">0</span></strong>, da Y stetig verteilt ist.</p>
+    <div class="formula">P(Y &gt; 2): z = (2 − (−6)) / 4 = 8/4 = 2,00
+P(Y &gt; 2) = 1 − Φ(2,00) = 1 − 0,9772 = <strong>0,0228</strong></div>
+    <div class="formula">P(−0,8 &lt; Y &lt; 1):
+z₁ = (−0,8 − (−6)) / 4 = 5,2/4 = 1,30
+z₂ = (1 − (−6)) / 4   = 7/4   = 1,75
+P = Φ(1,75) − Φ(1,30) = 0,9599 − 0,9032 = <strong>0,0567</strong></div>
+    <div class="formula">90%-Quantil: z₀,₉₀ = 1,2816
+y₀,₉₀ = −6 + 1,2816 · 4 = −6 + 5,13 ≈ <strong>−0,87</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <strong>P(Y = 4) = 0 bei stetiger Verteilung</strong> — das ist eine klassische Fangfrage! Kurze Begründung: „Da Y stetig verteilt ist, hat jeder Einzelwert Wahrscheinlichkeit 0." Das reicht für volle Punkte.
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>σ² (Varianz) mit σ (Standardabweichung) verwechseln — in der Formel steht Var(Y) = a²·σ₁² mit der Varianz, nicht der SD</li>
+      <li>Bei negativem z-Wert: Φ(−z) = 1 − Φ(z) — Symmetrieregel benutzen</li>
+      <li>P(Y = x) ≠ 0 vergessen — immer „stetige Verteilung" erwähnen</li>
+      <li>Quantil: z aus Tabelle ablesen, dann erst zurückrechnen — nicht anders herum</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 4: PEARSON -->
+<section class="recipe" id="pearson">
+  <div class="recipe-header">
+    <div class="recipe-title">4 · Korrelationskoeffizient (Bravais-Pearson)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Wann geeignet?</div>
+  <div class="when-box">Beide Variablen metrisch + linearer Zusammenhang erwartet + keine starken Ausreißer.</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Formel (aus Tabellenwerten)</h3>
+        <div class="formula">rXY = (Σxᵢyᵢ − n·x̄·ȳ) / √[(Σxᵢ²−n·x̄²) · (Σyᵢ²−n·ȳ²)]</div>
+        <div class="formula-label">Alternative (konzeptuell):</div>
+        <div class="formula">rXY = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²]</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Interpretation</h3>
+        <div class="formula">r = +1: perfekt positiv linear
+r = −1: perfekt negativ linear
+r =  0: kein linearer Zusammenhang
+|r| &gt; 0,8: starker Zusammenhang
+|r| 0,5–0,8: mittlerer Zusammenhang</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Zusammenhang mit R²</h3>
+        <div class="formula">R² = rXY²</div>
+        <p>In der einfachen linearen Regression gilt: das Bestimmtheitsmaß ist das Quadrat des Korrelationskoeffizienten.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Beispiel (angelehnt an Klausur 2024)</div>
+    <p>Mit den Daten aus Rezept 1: Σxᵢyᵢ = 41.850, n=5, x̄=50, ȳ=114,6, Σxᵢ²=19.100</p>
+    <p>Zusätzlich: Σyᵢ² = 40²+59²+80²+150²+244² = 1.600+3.481+6.400+22.500+59.536 = 93.517</p>
+    <div class="formula">Zähler: 41.850 − 5·50·114,6 = 13.200
+Σ(xᵢ−x̄)²: 19.100 − 5·50² = 6.600
+Σ(yᵢ−ȳ)²: 93.517 − 5·114,6² = 93.517 − 65.664,8 = 27.852,2
+
+rXY = 13.200 / √(6.600 · 27.852,2) = 13.200 / √183.824.520 ≈ 13.200 / 13.558 ≈ <strong>0,974</strong></div>
+    <p><strong>Interpretation:</strong> „Es besteht ein sehr starker positiver linearer Zusammenhang (r ≈ 0,974)."</p>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Σyᵢ² vergessen zu berechnen — braucht man im Nenner</li>
+      <li>Korrelation = Kausalität schlussfolgern — nie!</li>
+      <li>Vorzeichen vergessen — bei negativem Zusammenhang ist Zähler &lt; 0</li>
+      <li>r = 0 mit „kein Zusammenhang" gleichsetzen — richtig ist „kein linearer Zusammenhang"</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 5: SPEARMAN -->
+<section class="recipe" id="spearman">
+  <div class="recipe-header">
+    <div class="recipe-title">5 · Rangkorrelation (Spearman)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Wann statt Pearson?</div>
+  <div class="when-box">Ausreißer vorhanden · nicht-linearer Zusammenhang · ordinale Daten</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Ränge vergeben</h3>
+        <p>Sortiere xᵢ und yᵢ jeweils aufsteigend und vergib Ränge 1, 2, 3, …</p>
+        <div class="warn"><div class="warn-header">⚠ Bindungen (gleiche Werte)</div>Bei gleichen Werten: Durchschnittsrang = (Summe der betroffenen Ränge) / Anzahl. Z.B. Rang 3 und 4 geteilt → beide bekommen Rang 3,5.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Rangdifferenzen berechnen</h3>
+        <div class="formula">dᵢ = Rang(xᵢ) − Rang(yᵢ)</div>
+        <p>Kontrolliere: Σdᵢ = 0 (wenn keine Bindungen).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Spearman-Koeffizient berechnen</h3>
+        <div class="formula">rs = 1 − (6·Σdᵢ²) / (n·(n²−1))</div>
+        <p>Interpretation: wie Pearson, von −1 bis +1.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Beispiel (aus Klausur 2023/24) — Alter und Laufzeit</div>
+    <p>n=6: Alter (x): 22, 25, 25, 30, 35, 40 · Laufzeit (y): 18, 22, 20, 25, 28, 35</p>
+    <table class="ex-table">
+      <tr><th>i</th><th>xᵢ</th><th>Rang(x)</th><th>yᵢ</th><th>Rang(y)</th><th>dᵢ</th><th>dᵢ²</th></tr>
+      <tr><td>1</td><td>22</td><td>1</td><td>18</td><td>1</td><td>0</td><td>0</td></tr>
+      <tr><td>2</td><td>25</td><td>2,5</td><td>22</td><td>3</td><td>−0,5</td><td>0,25</td></tr>
+      <tr><td>3</td><td>25</td><td>2,5</td><td>20</td><td>2</td><td>0,5</td><td>0,25</td></tr>
+      <tr><td>4</td><td>30</td><td>4</td><td>25</td><td>4</td><td>0</td><td>0</td></tr>
+      <tr><td>5</td><td>35</td><td>5</td><td>28</td><td>5</td><td>0</td><td>0</td></tr>
+      <tr><td>6</td><td>40</td><td>6</td><td>35</td><td>6</td><td>0</td><td>0</td></tr>
+      <tr><td>Σ</td><td></td><td></td><td></td><td></td><td></td><td><strong>0,5</strong></td></tr>
+    </table>
+    <div class="formula">rs = 1 − (6 · 0,5) / (6 · (36−1)) = 1 − 3/210 = 1 − 0,0143 ≈ <strong>0,986</strong></div>
+    <p><strong>Bindung</strong> bei x=25: Ränge 2 und 3 → Durchschnittsrang = 2,5 für beide.</p>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Bindungen vergessen → falscher Rang → falsche Differenzen</li>
+      <li>Formel mit n(n+1)(n−1) statt n(n²−1) — beides gleich, aber klar schreiben</li>
+      <li>Rangdifferenz dᵢ falsch berechnen — Vorzeichen spielt keine Rolle da quadriert</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 6: KONFIDENZINTERVALL -->
+<section class="recipe" id="ki">
+  <div class="recipe-header">
+    <div class="recipe-title">6 · Konfidenzintervall für β̂</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Formel</h3>
+        <div class="formula">KI = [β̂ − t_{n−2; α/2} · s_β̂ &nbsp; ; &nbsp; β̂ + t_{n−2; α/2} · s_β̂]</div>
+        <p>s_β̂ wie in Rezept 2 berechnet. t-Wert immer für α/2 (zweiseitig)!</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Interpretation</h3>
+        <p>„Mit (1−α)·100 % Konfidenz liegt der wahre Parameter β in diesem Intervall." — Nicht: „mit Wahrscheinlichkeit (1−α)"!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Beispiel — 90%-KI (aus den Daten in Rezept 1)</div>
+    <p>β̂ = 2,0, s_β̂ = 0,271, n=5, df=3, α=0,10 → t_{3; 0,05} = 2,353</p>
+    <div class="formula">KI = [2,0 − 2,353 · 0,271 &nbsp; ; &nbsp; 2,0 + 2,353 · 0,271]
+   = [2,0 − 0,638 &nbsp; ; &nbsp; 2,0 + 0,638]
+   = [<strong>1,362 ; 2,638</strong>]</div>
+    <p>„Mit 90 % Konfidenz liegt die wahre Steigung β zwischen 1,362 und 2,638."</p>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>α statt α/2 beim t-Wert — für zweiseitiges KI immer α/2</li>
+      <li>Falsche Freiheitsgrade (nicht n, sondern n−2)</li>
+      <li>Interpretation mit „Wahrscheinlichkeit" formulieren — korrekt ist „Konfidenz"</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 7: BAYES -->
+<section class="recipe" id="bayes">
+  <div class="recipe-header">
+    <div class="recipe-title">7 · Bayes / Bedingte Wahrscheinlichkeit</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–20 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Satz von Bayes</h3>
+        <div class="formula">P(A|B) = P(B|A) · P(A) / P(B)</div>
+        <div class="formula">P(B) = P(B|A)·P(A) + P(B|Ā)·P(Ā) &nbsp;&nbsp; (totale Wahrscheinlichkeit)</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Baumdiagramm aufstellen</h3>
+        <p>1. Ast: Urursache A und Ā mit Wahrscheinlichkeiten P(A), P(Ā).</p>
+        <p>2. Ast: Bedingte Wahrscheinlichkeiten P(B|A), P(B̄|A), P(B|Ā), P(B̄|Ā).</p>
+        <p>Endwahrscheinlichkeiten = Produkt der Äste. Alle Endwahrscheinlichkeiten summieren zu 1.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2024 — Spam-Filter)</div>
+    <p>Gegeben: P(F) = 0,6 (Werbung), P(F|S̄) = 0,3, P(S∩F) = 0,12</p>
+    <p>S = Spam, F = als Spam gefiltert</p>
+    <div class="formula">Aus P(S∩F) = P(F|S)·P(S) = 0,12
+→ benötige P(S) und P(F|S)
+
+Aus P(F) = P(F|S)·P(S) + P(F|S̄)·P(S̄) = 0,6:
+P(F|S)·P(S) + 0,3·(1−P(S)) = 0,6
+P(S∩F) + 0,3 − 0,3·P(S) = 0,6
+0,12 + 0,3 − 0,3·P(S) = 0,6 → P(S) = <strong>−0,6 / (−0,3) = 0,6</strong>
+→ P(F|S) = 0,12 / 0,6 = <strong>0,2</strong></div>
+    <div class="formula">Bayes: P(S|F) = P(F|S)·P(S) / P(F)
+             = 0,2 · 0,6 / 0,6 = <strong>0,2</strong></div>
+    <p>„Die bedingte Wahrscheinlichkeit, dass eine E-Mail Spam ist, gegeben sie wurde gefiltert, beträgt 20 %."</p>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>P(A|B) mit P(B|A) verwechseln — Bayes-Tausch ist der häufigste Fehler</li>
+      <li>P(B) nicht über totale Wahrscheinlichkeit berechnen</li>
+      <li>Baumdiagramm: Äste auf gleicher Stufe summieren nicht zu 1</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 8: CHI-QUADRAT -->
+<section class="recipe" id="chisq">
+  <div class="recipe-header">
+    <div class="recipe-title">8 · Chi-Quadrat Anpassungstest</div>
+    <div class="recipe-meta">
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 10–20 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>H₀ formulieren</h3><p>„Die Variable folgt einer [Normalverteilung / Gleichverteilung / ...] mit [Parametern]."</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Klassen und beobachtete Häufigkeiten (Oᵢ)</h3><p>Aus den Daten: wie viele Beobachtungen fallen in jede Klasse?</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Erwartete Häufigkeiten (Eᵢ) unter H₀</h3><div class="formula">Eᵢ = n · P(Klasse i unter H₀)</div><p>P(Klasse i) aus Normalverteilung: P(a &lt; X &lt; b) mit gegebenen μ, σ berechnen → standardisieren.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Teststatistik berechnen</h3><div class="formula">χ² = Σ (Oᵢ − Eᵢ)² / Eᵢ</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><h3>Freiheitsgrade</h3><div class="formula">df = k − 1 − (Anzahl geschätzter Parameter)</div><p>Normalverteilung mit μ und σ aus Daten geschätzt: df = k − 1 − 2 = k − 3</p></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><h3>Entscheidung</h3><p>H₀ ablehnen, wenn χ² &gt; χ²_{df; α} aus der Tabelle.</p></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Beispiel (aus Klausur 2026) — Händler, 50 Produkte</div>
+    <p>Klassen: [0,20), [20,40), [40,60] · n=50 · μ=30 (Mitte), σ=√183,67≈13,55 · α=0,05</p>
+    <div class="formula">P([0,20)):   z₁=(0−30)/13,55=−2,21, z₂=(20−30)/13,55=−0,74
+               P = Φ(−0,74)−Φ(−2,21) = 0,2296−0,0136 = 0,2160
+               E₁ = 50·0,2160 = 10,8
+
+P([20,40)):  z₁=−0,74, z₂=(40−30)/13,55=0,74
+               P = Φ(0,74)−Φ(−0,74) = 0,7704−0,2296 = 0,5408
+               E₂ = 50·0,5408 = 27,04
+
+P([40,60]):  z₁=0,74, z₂=(60−30)/13,55=2,21
+               E₃ = 50·0,2160 = 10,8</div>
+    <p>O = (8, 30, 12), E = (10,8, 27,04, 10,8)</p>
+    <div class="formula">χ² = (8−10,8)²/10,8 + (30−27,04)²/27,04 + (12−10,8)²/10,8
+   = 7,84/10,8 + 8,76/27,04 + 1,44/10,8
+   = 0,726 + 0,324 + 0,133 ≈ <strong>1,18</strong></div>
+    <p>df = 3 − 1 − 2 = 0 → <strong>Achtung: df=0 bedeutet Test nicht anwendbar</strong> (zu wenig Klassen für die geschätzten Parameter). Schnurbus gibt in solchen Fällen df explizit vor.</p>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Freiheitsgrade falsch: df = k − 1 − Anzahl geschätzter Parameter</li>
+      <li>Klassen mit Eᵢ &lt; 5 sollten zusammengefasst werden</li>
+      <li>Standardisierung vergessen: μ und σ immer angeben</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 9: BINOMIAL -->
+<section class="recipe" id="binom">
+  <div class="recipe-header">
+    <div class="recipe-title">9 · Binomialverteilung</div>
+    <div class="recipe-meta">
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Wahrscheinlichkeitsfunktion</h3><div class="formula">P(X = k) = C(n,k) · πᵏ · (1−π)^(n−k)</div><div class="formula">C(n,k) = n! / (k! · (n−k)!)</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Kenngrößen</h3><div class="formula">E(X) = n·π &nbsp;&nbsp;&nbsp; Var(X) = n·π·(1−π)</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Kumulierte Wahrscheinlichkeiten</h3><div class="formula">P(X ≤ k) = Σᵢ₌₀ᵏ P(X=i)
+P(X &gt; k) = 1 − P(X ≤ k)</div></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Beispiel — Elfmeter, n=5, π=0,6</div>
+    <div class="formula">P(X=0) = C(5,0)·0,6⁰·0,4⁵ = 1·1·0,01024 = 0,010
+P(X=1) = C(5,1)·0,6¹·0,4⁴ = 5·0,6·0,0256  = 0,077
+P(X=2) = C(5,2)·0,6²·0,4³ = 10·0,36·0,064 = 0,230
+P(X=3) = C(5,3)·0,6³·0,4² = 10·0,216·0,16 = 0,346
+P(X=4) = C(5,4)·0,6⁴·0,4¹ = 5·0,1296·0,4 = 0,259
+P(X=5) = C(5,5)·0,6⁵·0,4⁰ = 1·0,07776·1  = 0,078
+
+E(X) = 5·0,6 = 3 &nbsp;&nbsp; Var(X) = 5·0,6·0,4 = 1,2
+P(X≥3) = P(3)+P(4)+P(5) = 0,346+0,259+0,078 = <strong>0,683</strong></div>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>C(n,k) falsch berechnen — bei großem n den Taschenrechner benutzen</li>
+      <li>P(X &gt; k) = P(X ≥ k+1), nicht P(X ≥ k) — Grenzen genau lesen</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 10: ANOVA -->
+<section class="recipe" id="anova">
+  <div class="recipe-header">
+    <div class="recipe-title">10 · Varianzanalyse (ANOVA)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 15–20 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Wann?</div>
+  <div class="when-box">Mittelwerte von mehr als zwei Gruppen vergleichen · H₀: μ₁ = μ₂ = ... = μₖ</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Streuungszerlegung</h3><div class="formula">SST = SSB + SSW
+SST = Σᵢⱼ (yᵢⱼ − ȳ)²     (Gesamtstreuung)
+SSB = Σⱼ nⱼ·(ȳⱼ − ȳ)²   (Zwischen-Gruppen)
+SSW = Σᵢⱼ (yᵢⱼ − ȳⱼ)²   (Innerhalb-Gruppen)</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>F-Statistik</h3><div class="formula">F = (SSB/(k−1)) / (SSW/(n−k))
+&nbsp;&nbsp;&nbsp;= MSB / MSW</div><p>k = Anzahl Gruppen, n = Gesamtbeobachtungen</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Entscheidung</h3><p>H₀ ablehnen, wenn F &gt; F_{k−1; n−k; α} aus der F-Tabelle.</p></div></div>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Freiheitsgrade: Zähler = k−1, Nenner = n−k</li>
+      <li>Gesamtmittelwert ȳ falsch berechnen — ist Mittel über alle Beobachtungen, nicht der Mittelwert der Gruppenmittelwerte</li>
+      <li>SST ≠ SSB + SSW als Kontrollrechnung vergessen</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FORMELREFERENZ -->
+<section class="ref-section">
+  <h2>📋 Formelreferenz — alle Formeln auf einen Blick</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h4>KQ-Regression</h4>
+      <div class="formula">β̂ = (Σxᵢyᵢ−n·x̄·ȳ)/(Σxᵢ²−n·x̄²)</div>
+      <div class="formula">α̂ = ȳ − β̂·x̄</div>
+      <div class="formula">R² = 1 − Σε̂ᵢ²/Σ(yᵢ−ȳ)²</div>
+    </div>
+    <div class="ref-card">
+      <h4>Hypothesentest</h4>
+      <div class="formula">T = (β̂−β₀)/s_β̂</div>
+      <div class="formula">s² = Σε̂ᵢ²/(n−2)</div>
+      <div class="formula">s_β̂ = s/√Σ(xᵢ−x̄)²</div>
+    </div>
+    <div class="ref-card">
+      <h4>Normalverteilung</h4>
+      <div class="formula">Z = (X−μ)/σ</div>
+      <div class="formula">P(X&gt;x) = 1−Φ(z)</div>
+      <div class="formula">x_p = μ + z_p·σ</div>
+    </div>
+    <div class="ref-card">
+      <h4>Korrelation / Rang</h4>
+      <div class="formula">rXY = (Σxᵢyᵢ−n·x̄·ȳ)/√[...]</div>
+      <div class="formula">rs = 1 − 6Σdᵢ²/(n(n²−1))</div>
+    </div>
+    <div class="ref-card">
+      <h4>Konfidenzintervall β̂</h4>
+      <div class="formula">KI = β̂ ± t_{n−2;α/2}·s_β̂</div>
+    </div>
+    <div class="ref-card">
+      <h4>Bayes / Binomial</h4>
+      <div class="formula">P(A|B) = P(B|A)·P(A)/P(B)</div>
+      <div class="formula">P(X=k) = C(n,k)·πᵏ·(1−π)^(n-k)</div>
+    </div>
+    <div class="ref-card">
+      <h4>ANOVA</h4>
+      <div class="formula">F = MSB/MSW</div>
+      <div class="formula">df: (k−1, n−k)</div>
+    </div>
+    <div class="ref-card">
+      <h4>χ²-Test</h4>
+      <div class="formula">χ² = Σ(Oᵢ−Eᵢ)²/Eᵢ</div>
+      <div class="formula">df = k−1−(gesch. Param.)</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /page -->
+</body>
+</html>

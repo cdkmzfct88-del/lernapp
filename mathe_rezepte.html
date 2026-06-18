@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathe Rezepte — Uni Passau</title>
+<style>
+:root {
+  --accent: #7B68EE;
+  --accent-bg: #f1f0ff;
+  --green: #27AE60;
+  --amber: #E67E22;
+  --red: #E74C3C;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "Courier New", Courier, monospace;
+  --border: #e8eaed;
+  --muted: #6b7280;
+  --text: #1a1a1a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--text); background: #fff; line-height: 1.65; }
+.page { max-width: 800px; margin: 0 auto; padding: 0 20px 80px; }
+
+/* Header */
+.site-header { padding: 40px 0 24px; border-bottom: 2px solid var(--accent); margin-bottom: 32px; }
+.site-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 6px; }
+.site-header .sub { color: var(--muted); font-size: 0.9rem; }
+
+/* Intro box */
+.intro-box {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-bottom: 36px;
+  font-size: 0.9rem;
+  color: #2a1a5c;
+}
+
+/* TOC */
+.toc { background: #fafafa; border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; margin-bottom: 40px; }
+.toc h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+.toc ol { padding-left: 20px; }
+.toc li { margin-bottom: 6px; }
+.toc a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+.toc a:hover { text-decoration: underline; }
+.badge { display: inline-block; font-size: 0.7rem; padding: 1px 7px; border-radius: 99px; margin-left: 6px; vertical-align: middle; font-weight: 600; }
+.badge-red    { background: #fde8e8; color: #b91c1c; }
+.badge-orange { background: #fef3e2; color: #b45309; }
+.badge-yellow { background: #fefce8; color: #854d0e; }
+
+/* Recipe card */
+.recipe {
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 24px 24px 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.07);
+}
+.recipe-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.recipe-title { font-size: 1.2rem; font-weight: 700; }
+.recipe-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.recipe-pts { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+
+.label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin: 20px 0 8px; }
+.when-box { background: #f9fafb; border-radius: 6px; padding: 12px 14px; font-size: 0.875rem; color: #374151; border: 1px solid var(--border); }
+.when-box ul { padding-left: 18px; }
+.when-box li { margin-bottom: 4px; }
+
+/* Steps */
+.steps { counter-reset: step; }
+.step { display: flex; gap: 16px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #f0f0f0; }
+.step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.step-num {
+  flex-shrink: 0; width: 28px; height: 28px;
+  background: var(--accent); color: #fff;
+  border-radius: 50%; font-size: 0.8rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  counter-increment: step; margin-top: 2px;
+}
+.step-body { flex: 1; }
+.step-body h3 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 6px; }
+.step-body p  { font-size: 0.9rem; color: #374151; margin-bottom: 6px; }
+.step-body p:last-child { margin-bottom: 0; }
+
+/* Formula */
+.formula {
+  background: #f5f5f5; border-radius: 6px;
+  padding: 10px 14px; font-family: var(--mono);
+  font-size: 0.875rem; margin: 8px 0;
+  border: 1px solid #e5e5e5; overflow-x: auto;
+}
+.formula-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; font-family: var(--font); }
+
+/* Example */
+.example {
+  background: #f0faf4; border-radius: 8px;
+  border: 1px solid #bbf0d0; padding: 18px 20px; margin: 20px 0;
+}
+.example-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--green); font-weight: 700; margin-bottom: 10px; }
+.example p { font-size: 0.9rem; color: #1a3a2a; margin-bottom: 6px; }
+.example .num { color: var(--green); font-weight: 600; font-family: var(--mono); }
+.ex-table { width: 100%; border-collapse: collapse; font-size: 0.825rem; margin: 10px 0; overflow-x: auto; display: block; }
+.ex-table th { background: #d1f5e0; color: #155724; padding: 6px 10px; text-align: center; font-weight: 600; }
+.ex-table td { padding: 5px 10px; text-align: center; border-bottom: 1px solid #d1f5e0; color: #1a3a2a; }
+.ex-table tr.pivot td { background: #fff8e1; font-weight: 700; }
+.ex-table tr.opt td { background: #eafaf0; font-weight: 700; }
+.example .formula { background: #e0f7ea; border-color: #a3e0b8; }
+
+/* Tip box */
+.tip {
+  background: var(--accent-bg); border-left: 4px solid var(--accent);
+  border-radius: 0 6px 6px 0; padding: 14px 16px; margin: 20px 0;
+  font-size: 0.875rem; color: #2a1a5c;
+}
+.tip-header { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 6px; }
+.tip ul { padding-left: 18px; }
+.tip li { margin-bottom: 4px; }
+
+/* Warning */
+.warn {
+  background: #fff8f0; border-left: 4px solid var(--amber);
+  border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.875rem; color: #7c4a00;
+}
+.warn-header { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--amber); margin-bottom: 4px; }
+
+/* Errors */
+.errors { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.errors h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: #b91c1c; font-weight: 700; margin-bottom: 8px; }
+.errors ul { padding-left: 18px; }
+.errors li { font-size: 0.875rem; color: #374151; margin-bottom: 5px; }
+
+/* Tableau grid */
+.tableau { overflow-x: auto; margin: 10px 0; }
+.tableau table { border-collapse: collapse; font-size: 0.8rem; font-family: var(--mono); min-width: 100%; }
+.tableau th { background: #ede9ff; color: #3b1fa8; padding: 5px 10px; border: 1px solid #c4b5fd; text-align: center; }
+.tableau td { padding: 5px 10px; border: 1px solid #e5e7eb; text-align: center; }
+.tableau tr.pivot-row td { background: #fef9c3; }
+.tableau tr.opt-row td { background: #d1fae5; }
+.tableau .pivot-col { background: #fef9c3; }
+.tableau .basis-col { background: #f5f3ff; font-weight: 700; }
+
+/* Formula reference */
+.ref-section { margin-top: 60px; padding-top: 32px; border-top: 2px solid var(--border); }
+.ref-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+.ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 500px) { .ref-grid { grid-template-columns: 1fr; } }
+.ref-card { background: #fafafa; border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
+.ref-card h4 { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: .05em; }
+.ref-card .formula { margin: 4px 0; font-size: 0.8rem; }
+
+@media print {
+  .toc { break-inside: avoid; }
+  .recipe { break-inside: avoid; border-left-color: #999 !important; box-shadow: none; }
+  .tip { background: #f8f8f8 !important; border-left-color: #999 !important; }
+  .example { background: #f8f8f8 !important; border-color: #ccc !important; }
+  .warn { background: #f8f8f8 !important; border-left-color: #999 !important; }
+  .intro-box { background: #f8f8f8 !important; border-left-color: #999 !important; }
+  .step-num { background: #555 !important; }
+  a { color: #000 !important; text-decoration: none; }
+  .tableau th { background: #eee !important; }
+  .tableau tr.pivot-row td, .tableau .pivot-col { background: #f5f5f5 !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="site-header">
+  <h1>📐 Mathe — Klausur-Rezepte</h1>
+  <div class="sub">Uni Passau · Prof. Dr. Fritsch · Mathematik für Wirtschaftswissenschaften</div>
+</header>
+
+<div class="intro-box">
+  Diese Rezepte basieren auf echten Klausuren der <strong>Mathematik für Wirtschaftswissenschaften</strong> (Uni Passau, Prof. Dr. Fritsch). Die Aufgabentypen sind nach Klausurhäufigkeit sortiert — lerne die ersten vier auswendig.
+</div>
+
+<nav class="toc">
+  <h2>Inhaltsverzeichnis</h2>
+  <ol>
+    <li><a href="#ableitung">Ableitungsregeln &amp; Kurvendiskussion (1 Variable)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 20–30 Pkt</span></li>
+    <li><a href="#partabl">Partielle Ableitung &amp; Extrema (mehrere Variablen)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 20–30 Pkt</span></li>
+    <li><a href="#lagrange">Lagrange-Methode (Optimierung mit Nebenbedingung)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#gauss">Gauß-Elimination (Lineares Gleichungssystem)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#matrix">Matrizenrechnung (Mult., Det., Inverse)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 15–20 Pkt</span></li>
+    <li><a href="#simplex">Simplex-Methode (Lineare Programmierung)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#integral">Integralrechnung (bestimmtes Integral)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#finanz">Finanzmathematik (Renten, Barwert)</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#folgen">Folgen und Reihen (geometrisch, arithmetisch)</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+  </ol>
+</nav>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- REZEPT 1: ABLEITUNG & KURVENDISKUSSION -->
+<!-- ════════════════════════════════════════════════ -->
+<section class="recipe" id="ableitung">
+  <div class="recipe-header">
+    <div class="recipe-title">1 · Ableitungsregeln &amp; Kurvendiskussion</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 20–30 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Ableitungsregeln auf einen Blick</div>
+  <div class="formula">Potenzregel:    (xⁿ)'  = n·xⁿ⁻¹
+Produktregel:   (u·v)' = u'·v + u·v'
+Quotientenregel:(u/v)' = (u'·v − u·v') / v²
+Kettenregel:    (f(g(x)))' = f'(g(x)) · g'(x)
+ln(x):          (ln x)' = 1/x
+eˣ:             (eˣ)'  = eˣ
+eᵍ⁽ˣ⁾:          (e^g(x))' = g'(x)·e^g(x)</div>
+
+  <div class="label">Schritt-für-Schritt Kurvendiskussion</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Definitionsbereich</h3><p>Ausschließen: Division durch 0, negativer Radikand, ln(0). Meist: D = ℝ oder D = ℝ \ {0}</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Nullstellen: f(x) = 0 lösen</h3><p>Ausklammern, PQ-Formel, oder numerisch schätzen.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Erste Ableitung f'(x)</h3><p>Berechne f'(x) mit den Ableitungsregeln.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Kritische Punkte: f'(x) = 0 lösen</h3><p>Jede Lösung x₀ ist ein Kandidat für Extremstellen.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body">
+      <h3>Zweite Ableitung f''(x) → Extremum prüfen</h3>
+      <div class="formula">f''(x₀) &gt; 0 → lokales Minimum
+f''(x₀) &lt; 0 → lokales Maximum
+f''(x₀) = 0 → weitere Untersuchung nötig (Vorzeichenwechsel f')</div>
+    </div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><h3>Wendepunkte: f''(x) = 0 und Vorzeichenwechsel</h3><div class="formula">f''(x₀) = 0 UND f'''(x₀) ≠ 0 → Wendepunkt bei x₀</div></div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-body"><h3>Funktionswert berechnen und Ergebnis formulieren</h3><p>Setze x₀ in f(x) ein → Koordinaten des Extrempunkts (x₀ | f(x₀))</p></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2025)</div>
+    <p><strong>f(x) = −2x³ + 12x² − 18x + 5</strong></p>
+    <div class="formula">f'(x) = −6x² + 24x − 18</div>
+    <p><strong>Kritische Punkte:</strong> f'(x) = 0</p>
+    <div class="formula">−6x² + 24x − 18 = 0  |÷(−6)
+x² − 4x + 3 = 0
+(x−1)(x−3) = 0
+→ x₁ = 1, x₂ = 3</div>
+    <div class="formula">f''(x) = −12x + 24
+f''(1) = −12 + 24 = <strong>+12 &gt; 0  → lokales Minimum</strong>
+f''(3) = −36 + 24 = <strong>−12 &lt; 0  → lokales Maximum</strong></div>
+    <div class="formula">f(1) = −2 + 12 − 18 + 5 = <strong>−3</strong>  → Tiefpunkt T(1|−3)
+f(3) = −54 + 108 − 54 + 5 = <strong>5</strong>  → Hochpunkt H(3|5)</div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li><strong>Immer alle Schritte aufschreiben</strong>, auch wenn du das Ergebnis siehst — Punkte gibt es für den Rechenweg.</li>
+      <li>Kettenregel: Außenableitung mal Innenableitung — in genau dieser Reihenfolge aufschreiben.</li>
+      <li>f''(x₀) = 0 reicht NICHT für Wendepunkt — Vorzeichenwechsel prüfen!</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Produktregel vergessen: (x·eˣ)' ≠ eˣ; korrekt: eˣ + x·eˣ = eˣ(1+x)</li>
+      <li>f''(x₀) = 0 als Wendepunkt werten ohne Vorzeichenwechsel zu prüfen</li>
+      <li>Koordinaten des Extremums: auch f(x₀) berechnen, nicht nur x₀ angeben</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 2: PARTIELLE ABLEITUNG -->
+<section class="recipe" id="partabl">
+  <div class="recipe-header">
+    <div class="recipe-title">2 · Partielle Ableitung &amp; Extrema (mehrere Variablen)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 20–30 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Partielle Ableitungen berechnen</h3>
+      <p>Leite nach x ab (y = Konstante), dann nach y (x = Konstante).</p>
+      <div class="formula">fₓ = ∂f/∂x  (y als Konstante behandeln)
+fᵧ = ∂f/∂y  (x als Konstante behandeln)</div>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Kritische Punkte: Gleichungssystem lösen</h3>
+      <div class="formula">fₓ(x, y) = 0
+fᵧ(x, y) = 0</div>
+      <p>Löse das System, z.B. durch Einsetzen oder Subtraktion.</p>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Hesse-Matrix &amp; Determinante</h3>
+      <div class="formula">H = [[fₓₓ, fₓᵧ],   det(H) = fₓₓ·fᵧᵧ − (fₓᵧ)²
+     [fₓᵧ, fᵧᵧ]]</div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Klassifikation des Extremums</h3>
+      <div class="formula">det(H) &gt; 0 UND fₓₓ &gt; 0  → <strong>lokales Minimum</strong>
+det(H) &gt; 0 UND fₓₓ &lt; 0  → <strong>lokales Maximum</strong>
+det(H) &lt; 0               → <strong>Sattelpunkt</strong>
+det(H) = 0               → keine Aussage möglich</div>
+    </div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body">
+      <h3>Funktionswert berechnen</h3>
+      <p>f(x₀, y₀) einsetzen → Koordinaten des Extrempunkts angeben.</p>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (angelehnt an Klausur 2025)</div>
+    <p><strong>f(x, y) = x² + y² − 2x − 4y + 6</strong></p>
+    <div class="formula">fₓ = 2x − 2 = 0  →  x = 1
+fᵧ = 2y − 4 = 0  →  y = 2
+Kritischer Punkt: (x₀, y₀) = (1, 2)</div>
+    <div class="formula">fₓₓ = 2,  fᵧᵧ = 2,  fₓᵧ = 0
+det(H) = 2·2 − 0² = <strong>4 &gt; 0</strong>  und  fₓₓ = 2 &gt; 0
+→ <strong>Globales Minimum</strong></div>
+    <div class="formula">f(1, 2) = 1 + 4 − 2 − 8 + 6 = <strong>1</strong>
+Minimum bei (1 | 2) mit Minimalwert 1</div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    Die Hesse-Methode muss vollständig aufgeschrieben werden: <strong>alle drei zweiten Ableitungen (fₓₓ, fᵧᵧ, fₓᵧ)</strong>, dann det(H), dann Klassifikation. Vergisst du auch nur einen Schritt, gibt es Abzug.
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>fₓᵧ = 0 annehmen ohne zu prüfen — immer ausrechnen</li>
+      <li>det(H) &gt; 0 reicht nicht — zusätzlich fₓₓ &gt; 0 oder &lt; 0 bestimmen</li>
+      <li>Sattelpunkt als „kein Extremum" formulieren — korrekt: es ist ein Sattelpunkt</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 3: LAGRANGE -->
+<section class="recipe" id="lagrange">
+  <div class="recipe-header">
+    <div class="recipe-title">3 · Lagrange-Methode (Optimierung mit Nebenbedingung)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Was ist das?</div>
+  <p>Extremum von f(x, y) suchen, wobei eine Nebenbedingung g(x, y) = 0 eingehalten werden muss.</p>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Lagrange-Funktion aufstellen</h3>
+      <div class="formula">L(x, y, λ) = f(x, y) + λ · g(x, y)</div>
+      <div class="warn"><div class="warn-header">⚠ Vorzeichen der Nebenbedingung</div>Bringe die NB auf die Form g(x, y) = 0 (alles auf eine Seite). Z.B. aus x + 2y = 10 wird g = 10 − x − 2y oder g = x + 2y − 10.</div>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Drei partielle Ableitungen gleich null setzen</h3>
+      <div class="formula">∂L/∂x = 0  (I)
+∂L/∂y = 0  (II)
+∂L/∂λ = 0  (III) → das ist wieder die Nebenbedingung!</div>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>System lösen</h3>
+      <p>Aus (I) und (II) λ oder eine Variable eliminieren, dann in (III) einsetzen.</p>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Ergebnis prüfen und interpretieren</h3>
+      <p>Setze die gefundenen x, y in f(x, y) ein → Extremalwert. Charaktere (Max/Min) per Kontext oder 2nd-order conditions bestimmen.</p>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2024)</div>
+    <p><strong>Maximiere f(x, y) = x·y &nbsp; unter der NB &nbsp; x + 2y = 10</strong></p>
+    <div class="formula">g(x, y) = 10 − x − 2y
+L(x, y, λ) = x·y + λ·(10 − x − 2y)</div>
+    <div class="formula">(I)  ∂L/∂x = y − λ = 0     →  λ = y
+(II) ∂L/∂y = x − 2λ = 0  →  x = 2λ = 2y
+(III) ∂L/∂λ = 10 − x − 2y = 0  (NB)</div>
+    <p>Aus (II): x = 2y. Einsetzen in (III):</p>
+    <div class="formula">10 − 2y − 2y = 0
+10 = 4y
+<strong>y* = 2,5</strong>
+<strong>x* = 2·2,5 = 5</strong>
+<strong>λ* = y* = 2,5</strong></div>
+    <div class="formula">f(5; 2,5) = 5 · 2,5 = <strong>12,5</strong> (Maximum)</div>
+    <p>Interpretation: Bei x = 5 und y = 2,5 ist das Maximum unter der gegebenen Budgetrestriktion erreicht.</p>
+    <p><strong>Interpretation von λ*:</strong> Ein marginaler Anstieg der rechten Seite der NB um 1 Einheit erhöht den Maximalwert um λ* = 2,5. (Schattenpreis)</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>∂L/∂λ = 0 gibt <strong>immer</strong> die NB zurück — das ist kein Fehler, das ist der Mechanismus</li>
+      <li>λ immer mitangeben — Fritsch fragt oft nach seiner Interpretation (Schattenpreis)</li>
+      <li>Bei f(x,y) = xy: teile x durch 2 und y durch 1 (proportional zur NB-Koeffizienten)</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Vorzeichen in L falsch — NB muss = 0 sein, Vorzeichen von λ anpassen</li>
+      <li>Gleichungssystem falsch aufgelöst — Zwischenschritte aufschreiben</li>
+      <li>λ-Interpretation vergessen — gibt immer Punkte</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 4: GAUSS -->
+<section class="recipe" id="gauss">
+  <div class="recipe-header">
+    <div class="recipe-title">4 · Gauß-Elimination (Lineares Gleichungssystem)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Erweiterte Koeffizientenmatrix [A|b] aufstellen</h3>
+      <p>Schreibe alle Koeffizienten in eine Matrix, rechte Seite (b) als letzte Spalte.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Vorwärtselimination (Stufenform)</h3>
+      <p>Ziel: unter jeder Pivotposition nur Nullen. Erlaubte Zeilenoperationen:</p>
+      <div class="formula">Rᵢ ← Rᵢ + c · Rⱼ  (Zeile i = Zeile i + c × Zeile j)
+Rᵢ ↔ Rⱼ           (Zeilen tauschen)
+Rᵢ ← c · Rᵢ       (Zeile skalieren)</div>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Rückwärtseinsetzen</h3>
+      <p>Starte bei der untersten Zeile → berechne letzte Variable. Dann von unten nach oben einsetzen.</p>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Probe: Alle Gleichungen prüfen</h3>
+      <div class="warn"><div class="warn-header">⚠ Probe IMMER machen</div>Gibt Punkte und schützt vor Rechenfehlern. Setze alle Lösungen in alle Originalgleichungen ein.</div>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (angelehnt an Klausur 2025)</div>
+    <p>Löse das System:</p>
+    <div class="formula">2x + y − z = 8   (I)
+−3x − y + 2z = −11  (II)
+−2x + y + 2z = −3   (III)</div>
+    <p><strong>Erweiterte Matrix:</strong></p>
+    <div class="formula"> [ 2   1  −1 |  8]
+ [−3  −1   2 | −11]
+ [−2   1   2 | −3 ]</div>
+    <p>R2 ← R2 + (3/2)·R1:</p>
+    <div class="formula"> [ 2   1   −1 |  8]
+ [ 0  1/2  1/2 |  1]   ← −3+3=0, −1+3/2=1/2, 2−3/2=1/2, −11+12=1
+ [−2   1    2 | −3]</div>
+    <p>R3 ← R3 + R1:</p>
+    <div class="formula"> [ 2   1   −1  |  8]
+ [ 0  1/2  1/2 |  1]
+ [ 0   2    1  |  5]   ← −2+2=0, 1+1=2, 2−1=1, −3+8=5</div>
+    <p>R3 ← R3 − 4·R2:</p>
+    <div class="formula"> [ 2   1   −1  |  8]
+ [ 0  1/2  1/2 |  1]
+ [ 0   0   −1  |  1]   ← 2−4·(1/2)=0, 1−4·(1/2)=−1, 5−4·1=1</div>
+    <p><strong>Rückwärtseinsetzen:</strong></p>
+    <div class="formula">Zeile 3: −z = 1  →  <strong>z = −1</strong>
+Zeile 2: (1/2)y + (1/2)·(−1) = 1
+         (1/2)y = 3/2  →  <strong>y = 3</strong>
+Zeile 1: 2x + 3 − (−1) = 8
+         2x = 4  →  <strong>x = 2</strong></div>
+    <div class="formula">Probe: 2·2 + 3 − (−1) = 4+3+1 = <strong>8 ✓</strong>
+       −3·2 − 3 + 2·(−1) = −6−3−2 = <strong>−11 ✓</strong>
+       −2·2 + 3 + 2·(−1) = −4+3−2 = <strong>−3 ✓</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    Benutze Brüche, nicht Dezimalzahlen — Rechenzeichen bleiben exakt. Schreibe jede Zeilenoperation explizit auf: <code>R2 ← R2 + (3/2)R1</code>. Das zeigt Kompetenz und schützt dich, wenn ein Rechenfehler folgt.
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Vorzeichen bei negativen Pivots vergessen</li>
+      <li>Zeile nicht vollständig transformieren — auch den b-Wert (rechte Seite) mitrechnen</li>
+      <li>Keine Probe → Flüchtigkeitsfehler werden nicht entdeckt</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 5: MATRIZEN -->
+<section class="recipe" id="matrix">
+  <div class="recipe-header">
+    <div class="recipe-title">5 · Matrizenrechnung (Mult., Det., Inverse)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 15–20 Pkt</span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Matrizenmultiplikation A · B</h3>
+      <div class="formula">Zeile i von A  ×  Spalte j von B  =  (A·B)ᵢⱼ
+A(m×n) · B(n×p)  →  C(m×p)</div>
+      <p>Bedingung: Spalten von A = Zeilen von B</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Determinante (2×2)</h3>
+      <div class="formula">det [[a, b], [c, d]] = a·d − b·c</div>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Determinante (3×3) — Regel von Sarrus</h3>
+      <div class="formula">+ a₁₁·a₂₂·a₃₃  + a₁₂·a₂₃·a₃₁  + a₁₃·a₂₁·a₃₂
+− a₁₃·a₂₂·a₃₁  − a₁₁·a₂₃·a₃₂  − a₁₂·a₂₁·a₃₃</div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Inverse Matrix A⁻¹ (2×2)</h3>
+      <div class="formula">A⁻¹ = (1/det(A)) · [[d, −b], [−c, a]]</div>
+      <p>Nur möglich, wenn det(A) ≠ 0. Probe: A·A⁻¹ = I</p>
+    </div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body">
+      <h3>LGS mit Inverser lösen: Ax = b → x = A⁻¹·b</h3>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2024)</div>
+    <p><strong>Gegeben: A = [[3, 1], [5, 2]], b = [[7], [12]]</strong></p>
+    <div class="formula">det(A) = 3·2 − 1·5 = 6 − 5 = <strong>1</strong></div>
+    <div class="formula">A⁻¹ = (1/1) · [[ 2, −1], [−5,  3]] = [[2, −1], [−5, 3]]</div>
+    <div class="formula">Probe: A · A⁻¹ = [[3·2+1·(−5), 3·(−1)+1·3],
+                     [5·2+2·(−5), 5·(−1)+2·3]]
+              = [[1, 0], [0, 1]] ✓</div>
+    <div class="formula">x = A⁻¹ · b = [[2·7 + (−1)·12], [(−5)·7 + 3·12]]
+            = [[14−12], [−35+36]]
+            = [[2], [1]]
+→ x = 2, y = 1</div>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>2×2-Inverse: a und d tauschen, b und c negieren — genau in dieser Reihenfolge</li>
+      <li>Matrizenmult.: A·B ≠ B·A — Reihenfolge beachten</li>
+      <li>Probe vergessen: A·A⁻¹ = I gibt Sicherheit und evtl. Teilpunkte</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 6: SIMPLEX -->
+<section class="recipe" id="simplex">
+  <div class="recipe-header">
+    <div class="recipe-title">6 · Simplex-Methode (Lineare Programmierung)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Standardform: Maximierung, alle NB mit ≤</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Schlupfvariablen einführen</h3><p>Jede Ungleichung ≤ bekommt eine Schlupfvariable yᵢ ≥ 0: ax + by ≤ c wird ax + by + y₁ = c.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Ausgangstableau aufstellen</h3><p>Startbasis = alle Schlupfvariablen. Zielfunktionszeile mit negativen Koeffizienten der Zielfunktion (Maximierung).</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Pivotspalte (= Eintretende Variable)</h3><p>Spalte mit dem <strong>betragsmäßig größten negativen</strong> Koeffizienten in der Zielfunktionszeile.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Pivotzeile (= Austretende Variable)</h3><div class="formula">Minimum-Ratio-Test: min(bᵢ / aᵢⱼ) für aᵢⱼ &gt; 0</div><p>Nur positive Elemente in der Pivotspalte berechnen.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><h3>Pivotschritt</h3><p>(a) Teile Pivotzeile durch Pivotelement. (b) Alle anderen Zeilen: Subtrahiere passendes Vielfaches der neuen Pivotzeile.</p></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><h3>Optimalitätsprüfung</h3><p>Alle Koeffizienten in der Zielfunktionszeile ≥ 0 → optimal! Sonst: Schritt 3 wiederholen.</p></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2024)</div>
+    <p>Maximiere G = 5K₁ + 4K₂ s.t.: 2K₁+K₂ ≤ 8 · K₁+2K₂ ≤ 7 · K₁ ≤ 4 · K₁,K₂ ≥ 0</p>
+    <p><strong>Tableau 1 (Start):</strong></p>
+    <div class="tableau"><table>
+      <tr><th>Basis</th><th>K₁</th><th>K₂</th><th>y₁</th><th>y₂</th><th>y₃</th><th>RHS</th></tr>
+      <tr class="pivot-row"><td class="basis-col">y₁</td><td>2</td><td>1</td><td>1</td><td>0</td><td>0</td><td>8</td></tr>
+      <tr><td class="basis-col">y₂</td><td>1</td><td>2</td><td>0</td><td>1</td><td>0</td><td>7</td></tr>
+      <tr><td class="basis-col">y₃</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>4</td></tr>
+      <tr><td class="basis-col">G</td><td>−5</td><td>−4</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    </table></div>
+    <p>Pivotspalte: K₁ (−5 ist betragsgrößte negative Zahl). Ratio-Test: 8/2=4, 7/1=7, 4/1=4. Pivot: y₁-Zeile, Element = 2. → K₁ tritt ein, y₁ tritt aus.</p>
+    <p><strong>Tableau 2 (nach Pivot K₁ ↔ y₁):</strong></p>
+    <div class="tableau"><table>
+      <tr><th>Basis</th><th>K₁</th><th>K₂</th><th>y₁</th><th>y₂</th><th>y₃</th><th>RHS</th></tr>
+      <tr><td class="basis-col">K₁</td><td>1</td><td>½</td><td>½</td><td>0</td><td>0</td><td>4</td></tr>
+      <tr class="pivot-row"><td class="basis-col">y₂</td><td>0</td><td>3/2</td><td>−½</td><td>1</td><td>0</td><td>3</td></tr>
+      <tr><td class="basis-col">y₃</td><td>0</td><td>−½</td><td>−½</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td class="basis-col">G</td><td>0</td><td>−3/2</td><td>5/2</td><td>0</td><td>0</td><td>20</td></tr>
+    </table></div>
+    <p>Pivotspalte: K₂ (−3/2). Ratio-Test: 4/(½)=8, 3/(3/2)=2, überspringe (neg.). Pivot: y₂-Zeile, Element = 3/2.</p>
+    <p><strong>Tableau 3 (Optimal):</strong></p>
+    <div class="tableau"><table>
+      <tr><th>Basis</th><th>K₁</th><th>K₂</th><th>y₁</th><th>y₂</th><th>y₃</th><th>RHS</th></tr>
+      <tr><td class="basis-col">K₁</td><td>1</td><td>0</td><td>2/3</td><td>−1/3</td><td>0</td><td>3</td></tr>
+      <tr><td class="basis-col">K₂</td><td>0</td><td>1</td><td>−1/3</td><td>2/3</td><td>0</td><td>2</td></tr>
+      <tr><td class="basis-col">y₃</td><td>0</td><td>0</td><td>−2/3</td><td>1/3</td><td>1</td><td>1</td></tr>
+      <tr class="opt-row"><td class="basis-col">G</td><td>0</td><td>0</td><td>2</td><td>1</td><td>0</td><td><strong>23</strong></td></tr>
+    </table></div>
+    <p>Alle G-Zeilen-Koeffizienten ≥ 0 → <strong>Optimum: K₁ = 3, K₂ = 2, G = 23</strong></p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Ratio-Test: <strong>nur positive</strong> Elemente berücksichtigen (negativer Nenner → überspringen)</li>
+      <li>Nach jedem Tableau Optimalitätsprüfung — oft vergessen</li>
+      <li>Lösung aus dem finalen Tableau ablesen: Basisvariablen = RHS-Wert, Nicht-Basisvariablen = 0</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Pivotelement falsch identifiziert — erste negative Zielfunktionsspalte, nicht zwingend linkeste</li>
+      <li>Pivotzeile: negativen Quotienten mitnehmen → führt zu falschem Ergebnis</li>
+      <li>G-Zeile vergessen zu transformieren — führt zu falschem Zielwert</li>
+      <li>Lösung falsch ablesen: Schlupfvariable in Basis = ihr Wert, nicht 0</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 7: INTEGRAL -->
+<section class="recipe" id="integral">
+  <div class="recipe-header">
+    <div class="recipe-title">7 · Integralrechnung (bestimmtes Integral)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Stammfunktionen auf einen Blick</div>
+  <div class="formula">∫ xⁿ dx    = xⁿ⁺¹/(n+1) + C  (n ≠ −1)
+∫ 1/x dx  = ln|x| + C
+∫ eˣ dx   = eˣ + C
+∫ e^(ax) dx = (1/a)·e^(ax) + C
+∫ a^x dx  = a^x / ln(a) + C</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Stammfunktion F(x) bestimmen</h3><p>Wende Integrationsregeln an. Integrationskonstante C bei bestimmten Integralen weglassen.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Bestimmtes Integral berechnen</h3><div class="formula">∫ₐᵇ f(x) dx = [F(x)]ₐᵇ = F(b) − F(a)</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Fläche zwischen Kurve und x-Achse</h3>
+      <div class="warn"><div class="warn-header">⚠ Vorzeichen bei Flächen</div>Liegt f(x) &lt; 0 im Intervall, ist das Integral negativ. Für die Fläche: Betrag nehmen. Bei Vorzeichenwechsel in [a,b]: Intervall aufteilen.</div>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2026)</div>
+    <p><strong>Berechne ∫₁³ (x² − 2x + 3) dx</strong></p>
+    <div class="formula">F(x) = x³/3 − x² + 3x</div>
+    <div class="formula">F(3) = 27/3 − 9 + 9 = 9 − 9 + 9 = 9
+F(1) = 1/3 − 1 + 3  = 1/3 + 2 = 7/3</div>
+    <div class="formula">∫₁³ f(x) dx = F(3) − F(1) = 9 − 7/3 = 27/3 − 7/3 = <strong>20/3 ≈ 6,67</strong></div>
+    <p><strong>Weitere Aufgabe — Partielle Integration:</strong> ∫ x·eˣ dx</p>
+    <div class="formula">u = x,   u' = 1
+v' = eˣ, v  = eˣ
+∫ x·eˣ dx = x·eˣ − ∫ eˣ dx = x·eˣ − eˣ + C = eˣ(x−1) + C</div>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Hochzahl bei xⁿ⁺¹ falsch — n+1 im Exponenten UND im Nenner</li>
+      <li>F(b) − F(a) in falscher Reihenfolge (nicht F(a) − F(b))</li>
+      <li>Partielle Integration: u und v' vertauscht wählen — u = Polynom, v' = eˣ/sin/cos</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 8: FINANZMATHEMATIK -->
+<section class="recipe" id="finanz">
+  <div class="recipe-header">
+    <div class="recipe-title">8 · Finanzmathematik (Renten, Barwert)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Wichtigste Formeln</div>
+  <div class="formula">Zinseszins:      Kₙ = K₀ · (1+i)ⁿ
+Barwert:         K₀ = Kₙ / (1+i)ⁿ
+Rentenbarwert:   BW = R · (1 − (1+i)^(−n)) / i   (nachschüssig)
+Rentenendwert:   KW = R · ((1+i)ⁿ − 1) / i
+Annuität:        R  = K₀ · i·(1+i)ⁿ / ((1+i)ⁿ − 1)</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Gegebene Größen identifizieren</h3><p>Welche Größen sind gegeben? K₀, Kₙ, R, i, n — was soll berechnet werden?</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Formel wählen und einsetzen</h3><p>Nachschüssig = Zahlung am Ende jeder Periode. Vorschüssig = Zahlung am Anfang → Formeln unterscheiden sich.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Ergebnis interpretieren</h3><p>Barwert = heutiger Wert aller zukünftigen Zahlungen bei Zinssatz i. Annuität = gleichbleibende Zahlung über n Perioden.</p></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2025)</div>
+    <p><strong>Rente: R = 1.000 €/Jahr, n = 5 Jahre, i = 5%, nachschüssig. Berechne Barwert.</strong></p>
+    <div class="formula">BW = 1.000 · (1 − (1,05)^(−5)) / 0,05
+
+(1,05)^5 = 1,27628  →  (1,05)^(−5) = 1/1,27628 = 0,78353
+
+BW = 1.000 · (1 − 0,78353) / 0,05
+   = 1.000 · 0,21647 / 0,05
+   = 1.000 · 4,3295
+   = <strong>4.329,48 €</strong></div>
+    <p><strong>Annuität:</strong> Kredit K₀ = 10.000 €, n = 4 Jahre, i = 6%</p>
+    <div class="formula">R = 10.000 · 0,06·(1,06)⁴ / ((1,06)⁴ − 1)
+  = 10.000 · 0,06·1,26248 / (1,26248 − 1)
+  = 10.000 · 0,07575 / 0,26248
+  = 10.000 · 0,28859
+  = <strong>2.885,91 €</strong></div>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Zinssatz als Prozent statt Dezimalzahl einsetzen: i = 0,05 nicht 5</li>
+      <li>Vor- vs. nachschüssig verwechseln — lese die Aufgabe zweimal</li>
+      <li>(1+i)^(-n) ohne Taschenrechner falsch berechnen — Zwischenstand aufschreiben</li>
+    </ul>
+  </div>
+</section>
+
+<!-- REZEPT 9: FOLGEN & REIHEN -->
+<section class="recipe" id="folgen">
+  <div class="recipe-header">
+    <div class="recipe-title">9 · Folgen und Reihen (geom. / arithm.)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Formeln</div>
+  <div class="formula">Arithmetische Folge: aₙ = a₁ + (n−1)·d
+Arithmetische Reihe: Sₙ = n·(a₁+aₙ)/2 = n·(2a₁+(n−1)d)/2
+
+Geometrische Folge:  aₙ = a₁ · qⁿ⁻¹
+Geometrische Reihe:  Sₙ = a₁·(qⁿ−1)/(q−1)  (q ≠ 1)
+Unendliche Reihe:    S∞ = a₁/(1−q)           (|q| &lt; 1)</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Typ bestimmen: arithmetisch oder geometrisch?</h3><p>Arithmetisch: konstante Differenz d = aₙ₊₁ − aₙ. Geometrisch: konstantes Verhältnis q = aₙ₊₁/aₙ.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Parameter bestimmen: a₁, d oder q</h3><p>Entweder direkt gegeben oder aus zwei Gliedern ausrechnen.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Formel anwenden und Ergebnis interpretieren</h3></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Beispiel (angelehnt an Klausur 2024)</div>
+    <p><strong>Geometrisch:</strong> a₁ = 100, q = 0,9. Berechne a₅ und S₅.</p>
+    <div class="formula">a₅ = 100 · 0,9⁴ = 100 · 0,6561 = <strong>65,61</strong>
+S₅ = 100 · (0,9⁵ − 1)/(0,9 − 1) = 100 · (0,59049−1)/(−0,1)
+   = 100 · (−0,40951)/(−0,1) = 100 · 4,0951 = <strong>409,51</strong></div>
+    <p><strong>Unendliche Summe</strong> (|q|=0,9 &lt; 1):</p>
+    <div class="formula">S∞ = 100 / (1−0,9) = 100 / 0,1 = <strong>1.000</strong></div>
+    <p><strong>Arithmetisch:</strong> a₁ = 3, d = 5. Welches Glied hat den Wert 48?</p>
+    <div class="formula">aₙ = 3 + (n−1)·5 = 48
+(n−1)·5 = 45  →  n−1 = 9  →  <strong>n = 10</strong></div>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Exponent bei aₙ: ist n−1, nicht n</li>
+      <li>Geometrische Reihe mit q = 1: Formel nicht anwendbar → einfach n·a₁</li>
+      <li>S∞ nur bei |q| &lt; 1 möglich — sonst divergiert die Reihe</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FORMELREFERENZ -->
+<section class="ref-section">
+  <h2>📋 Formelreferenz — alle Formeln auf einen Blick</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h4>Ableitungsregeln</h4>
+      <div class="formula">(xⁿ)' = n·xⁿ⁻¹</div>
+      <div class="formula">(u·v)' = u'v + uv'</div>
+      <div class="formula">(f(g))' = f'(g)·g'</div>
+    </div>
+    <div class="ref-card">
+      <h4>Hesse-Matrix</h4>
+      <div class="formula">det(H) = fₓₓ·fᵧᵧ − fₓᵧ²</div>
+      <div class="formula">det&gt;0, fₓₓ&gt;0 → Min</div>
+      <div class="formula">det&gt;0, fₓₓ&lt;0 → Max</div>
+    </div>
+    <div class="ref-card">
+      <h4>Lagrange</h4>
+      <div class="formula">L = f + λ·g</div>
+      <div class="formula">∂L/∂x=∂L/∂y=∂L/∂λ=0</div>
+    </div>
+    <div class="ref-card">
+      <h4>Inverse 2×2</h4>
+      <div class="formula">A⁻¹ = (1/det)·[[d,−b],[−c,a]]</div>
+      <div class="formula">det = ad − bc</div>
+    </div>
+    <div class="ref-card">
+      <h4>Simplex</h4>
+      <div class="formula">Pivotspalte: min G-Koeff.</div>
+      <div class="formula">Pivotzeile: min(b/a), a&gt;0</div>
+    </div>
+    <div class="ref-card">
+      <h4>Integrale</h4>
+      <div class="formula">∫xⁿ = xⁿ⁺¹/(n+1)</div>
+      <div class="formula">∫eˣ = eˣ</div>
+      <div class="formula">∫₁ᵇ f = F(b)−F(a)</div>
+    </div>
+    <div class="ref-card">
+      <h4>Finanzmathematik</h4>
+      <div class="formula">Kₙ = K₀·(1+i)ⁿ</div>
+      <div class="formula">BW = R·(1−(1+i)^-n)/i</div>
+    </div>
+    <div class="ref-card">
+      <h4>Geometrische Reihe</h4>
+      <div class="formula">Sₙ = a₁·(qⁿ−1)/(q−1)</div>
+      <div class="formula">S∞ = a₁/(1−q), |q|&lt;1</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /page -->
+</body>
+</html>
