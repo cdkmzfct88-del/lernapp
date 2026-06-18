@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Lernapp</title>
+<style>
+/* ── Reset & base ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --bg: #ffffff;
+  --surface: #f7f8fa;
+  --border: #e8eaed;
+  --text: #1a1a1a;
+  --text-2: #5f6368;
+  --text-3: #9aa0a6;
+  --radius: 10px;
+  --shadow: 0 1px 4px rgba(0,0,0,.08);
+  --accent-stat: #4A90D9;
+  --accent-math: #7B68EE;
+  --accent-corp: #27AE60;
+  --accent-recht: #E67E22;
+  --accent-makro: #E74C3C;
+}
+
+html { font-size: 16px; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100dvh;
+}
+
+/* ── Layout ─────────────────────────────────────────── */
+#app { max-width: 480px; margin: 0 auto; padding: 0 16px 80px; }
+
+/* ── Views ───────────────────────────────────────────── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── Header ──────────────────────────────────────────── */
+.page-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 20px 0 8px;
+  position: sticky; top: 0; background: var(--bg);
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.back-btn {
+  background: none; border: none; cursor: pointer;
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-2); font-size: 20px; flex-shrink: 0;
+  transition: background .15s;
+}
+.back-btn:hover { background: var(--surface); }
+.page-title { font-size: 1.0625rem; font-weight: 600; flex: 1; min-width: 0; }
+.page-accent { width: 4px; height: 24px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── Dashboard header ────────────────────────────────── */
+.dash-header {
+  padding: 28px 0 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.dash-greeting {
+  font-size: 0.8125rem; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px;
+}
+.dash-title { font-size: 1.5rem; font-weight: 700; }
+
+/* ── Subject cards ───────────────────────────────────── */
+.card {
+  border-left: 4px solid transparent;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: box-shadow .15s, transform .1s;
+}
+.card:hover { box-shadow: var(--shadow); transform: translateX(2px); }
+.card:active { transform: translateX(0); }
+
+.card-name { font-size: 0.9375rem; font-weight: 600; margin-bottom: 10px; }
+
+.progress-wrap { margin-bottom: 4px; }
+.progress-bar {
+  height: 5px; background: var(--border); border-radius: 99px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 99px;
+  transition: width .4s ease;
+}
+.progress-label {
+  font-size: 0.75rem; color: var(--text-3); margin-top: 5px;
+}
+
+/* ── Subject action buttons ──────────────────────────── */
+.btn-row {
+  display: flex; gap: 8px; margin-top: 12px;
+}
+.btn-subject {
+  flex: 1;
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-family: var(--font); font-size: 0.75rem; font-weight: 500;
+  cursor: pointer; text-align: center;
+  color: var(--text-2);
+  transition: background .15s, color .15s, border-color .15s;
+}
+.btn-subject:hover { border-color: currentColor; }
+
+/* ── Content views ───────────────────────────────────── */
+.section-title {
+  font-size: 0.75rem; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .08em;
+  margin: 24px 0 10px;
+}
+
+/* ── Karteikarten ────────────────────────────────────── */
+.flashcard {
+  background: var(--surface); border-radius: var(--radius);
+  padding: 28px 20px; text-align: center;
+  min-height: 200px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  cursor: pointer;
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border);
+  transition: box-shadow .15s;
+}
+.flashcard:hover { box-shadow: var(--shadow); }
+.flashcard-side {
+  font-size: 0.6875rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-3); margin-bottom: 12px;
+}
+.flashcard-text { font-size: 1.0625rem; font-weight: 500; line-height: 1.5; }
+.flashcard-hint {
+  font-size: 0.75rem; color: var(--text-3); margin-top: 16px;
+}
+.flashcard-back { display: none; }
+
+.card-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 20px;
+}
+.card-nav-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--bg);
+  font-size: 1.25rem; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; color: var(--text-2);
+  transition: background .15s;
+}
+.card-nav-btn:hover { background: var(--surface); }
+.card-counter { font-size: 0.875rem; color: var(--text-3); }
+
+.card-actions { display: flex; gap: 8px; margin-top: 12px; }
+.card-action-btn {
+  flex: 1; padding: 10px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--bg);
+  font-family: var(--font); font-size: 0.8125rem; font-weight: 500;
+  cursor: pointer; color: var(--text-2); transition: all .15s;
+}
+.card-action-btn.good  { border-color: #27AE60; color: #27AE60; }
+.card-action-btn.again { border-color: #E74C3C; color: #E74C3C; }
+
+/* ── Quiz ────────────────────────────────────────────── */
+.quiz-question {
+  font-size: 1.0625rem; font-weight: 600;
+  background: var(--surface); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px; line-height: 1.5;
+  border: 1px solid var(--border);
+}
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.quiz-option {
+  padding: 14px 16px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--bg);
+  font-family: var(--font); font-size: 0.9375rem;
+  cursor: pointer; text-align: left; color: var(--text);
+  transition: all .15s;
+}
+.quiz-option:hover:not(:disabled) { border-color: #aaa; }
+.quiz-option.correct  { background: #e8f5e9; border-color: #27AE60; color: #1b5e20; }
+.quiz-option.wrong    { background: #ffebee; border-color: #E74C3C; color: #b71c1c; }
+.quiz-option:disabled { cursor: default; }
+
+.quiz-feedback {
+  text-align: center; padding: 16px 0; font-size: 0.9375rem;
+  font-weight: 500; display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { color: #27AE60; }
+.quiz-feedback.wrong   { color: #E74C3C; }
+
+.quiz-next-btn {
+  width: 100%; padding: 14px; margin-top: 16px;
+  border-radius: var(--radius); border: none;
+  background: var(--text); color: var(--bg);
+  font-family: var(--font); font-size: 0.9375rem; font-weight: 600;
+  cursor: pointer; display: none; transition: opacity .15s;
+}
+.quiz-next-btn.show { display: block; }
+.quiz-next-btn:hover { opacity: .85; }
+
+.quiz-score {
+  text-align: center; padding: 32px 20px;
+  background: var(--surface); border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.quiz-score-num { font-size: 3rem; font-weight: 700; margin-bottom: 8px; }
+.quiz-score-label { font-size: 0.9375rem; color: var(--text-2); margin-bottom: 24px; }
+.quiz-restart-btn {
+  padding: 12px 28px; border-radius: var(--radius);
+  border: none; background: var(--text); color: var(--bg);
+  font-family: var(--font); font-size: 0.9375rem; font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── Einfach erklärt ─────────────────────────────────── */
+.erklaert-topic {
+  background: var(--surface); border-radius: var(--radius);
+  border: 1px solid var(--border); margin-bottom: 10px;
+  overflow: hidden;
+}
+.erklaert-topic-head {
+  width: 100%; padding: 14px 16px;
+  background: none; border: none;
+  font-family: var(--font); font-size: 0.9375rem; font-weight: 500;
+  color: var(--text); cursor: pointer; text-align: left;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.erklaert-topic-head .chevron { font-size: 0.875rem; color: var(--text-3); transition: transform .2s; }
+.erklaert-topic-head[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+.erklaert-body {
+  padding: 0 16px; max-height: 0; overflow: hidden;
+  transition: max-height .3s ease, padding .3s ease;
+}
+.erklaert-body.open { padding: 0 16px 16px; max-height: 600px; }
+.erklaert-body p { font-size: 0.9375rem; color: var(--text-2); line-height: 1.7; margin-bottom: 10px; }
+.erklaert-body p:last-child { margin-bottom: 0; }
+.erklaert-body strong { color: var(--text); }
+.erklaert-body .formula {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 10px 14px;
+  font-family: "Courier New", monospace; font-size: 0.875rem;
+  color: var(--text); margin: 8px 0;
+}
+
+/* ── Progress overview in subject ───────────────────── */
+.stat-row {
+  display: flex; gap: 12px; margin-bottom: 20px;
+}
+.stat-box {
+  flex: 1; background: var(--surface); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 12px;
+  text-align: center;
+}
+.stat-box-num { font-size: 1.5rem; font-weight: 700; }
+.stat-box-label { font-size: 0.75rem; color: var(--text-3); margin-top: 2px; }
+
+/* ── Empty state ─────────────────────────────────────── */
+.empty { text-align: center; padding: 40px 20px; color: var(--text-3); font-size: 0.9375rem; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════════════════════════════════
+       VIEW: DASHBOARD
+  ════════════════════════════════════════════════════ -->
+  <div class="view active" id="view-dash">
+    <div class="dash-header">
+      <div class="dash-greeting">Deine Fächer</div>
+      <div class="dash-title">Lerndashboard</div>
+    </div>
+    <div id="subject-list"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       VIEW: KARTEIKARTEN
+  ════════════════════════════════════════════════════ -->
+  <div class="view" id="view-karten">
+    <div class="page-header">
+      <button class="back-btn" onclick="goBack()">←</button>
+      <div class="page-accent" id="karten-accent"></div>
+      <div class="page-title" id="karten-title"></div>
+    </div>
+    <div id="karten-content"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       VIEW: QUIZ
+  ════════════════════════════════════════════════════ -->
+  <div class="view" id="view-quiz">
+    <div class="page-header">
+      <button class="back-btn" onclick="goBack()">←</button>
+      <div class="page-accent" id="quiz-accent"></div>
+      <div class="page-title" id="quiz-title"></div>
+    </div>
+    <div id="quiz-content"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       VIEW: EINFACH ERKLÄRT
+  ════════════════════════════════════════════════════ -->
+  <div class="view" id="view-erklaert">
+    <div class="page-header">
+      <button class="back-btn" onclick="goBack()">←</button>
+      <div class="page-accent" id="erklaert-accent"></div>
+      <div class="page-title" id="erklaert-title"></div>
+    </div>
+    <div id="erklaert-content"></div>
+  </div>
+
+</div>
+
+<script>
+'use strict';
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+
+const SUBJECTS = [
+  {
+    id: 'stat',
+    name: 'Statistik für Wirtschaftswissenschaftler',
+    color: '#4A90D9',
+    karten: [
+      { q: 'Was ist der Unterschied zwischen Modalwert, Median und Arithmetischem Mittel?', a: 'Modalwert: häufigster Wert. Median: mittlerer Wert (sortierte Reihe). Arithmetisches Mittel: Summe ÷ Anzahl. Bei schiefen Verteilungen weichen sie stark voneinander ab.' },
+      { q: 'Was ist eine Normalverteilung?', a: 'Symmetrische, glockenförmige Verteilung mit µ (Erwartungswert) und σ² (Varianz). 68,3 % der Werte liegen im Bereich µ ± σ, 95,4 % im Bereich µ ± 2σ.' },
+      { q: 'Was ist ein p-Wert?', a: 'Die Wahrscheinlichkeit, das beobachtete oder ein extremeres Ergebnis zu erhalten, wenn die Nullhypothese wahr ist. Ist p < α (Signifikanzniveau), wird H₀ abgelehnt.' },
+      { q: 'Was ist die Standardabweichung?', a: 'Die Wurzel der Varianz. Misst die durchschnittliche Abweichung der Werte vom Mittelwert. Gleiche Einheit wie die Originalvariable.' },
+      { q: 'Was ist Korrelation und was bedeutet r = 0,8?', a: 'Korrelation misst den linearen Zusammenhang zwischen zwei Variablen (−1 bis +1). r = 0,8 bedeutet starker positiver Zusammenhang — aber keine Kausalität!' },
+    ],
+    quiz: [
+      { q: 'Welche Lagemaß ist am robustesten gegenüber Ausreißern?', options: ['Arithmetisches Mittel', 'Median', 'Modalwert', 'Varianz'], correct: 1 },
+      { q: 'Was gilt bei einer symmetrischen Normalverteilung?', options: ['Mittelwert > Median', 'Mittelwert < Median', 'Mittelwert = Median = Modus', 'Modus ist nie definiert'], correct: 2 },
+      { q: 'Ein p-Wert von 0,03 bei α = 0,05 bedeutet:', options: ['H₀ wird beibehalten', 'H₀ wird abgelehnt', 'Der Effekt ist praktisch bedeutsam', 'Die Varianz ist 0,03'], correct: 1 },
+      { q: 'Was misst die Varianz?', options: ['Den häufigsten Wert', 'Die Abweichung vom Median', 'Die mittlere quadratische Abweichung vom Mittelwert', 'Den Zusammenhang zweier Variablen'], correct: 2 },
+    ],
+    erklaert: [
+      { titel: 'Lage- und Streuungsmaße', text: '<p><strong>Lagemaße</strong> beschreiben die Mitte einer Verteilung. Der <strong>Mittelwert</strong> addiert alle Werte und teilt durch n — reagiert sensitiv auf Ausreißer. Der <strong>Median</strong> ist der mittlere Wert in der sortierten Reihe — robust gegenüber Ausreißern. Der <strong>Modalwert</strong> ist der häufigste Wert.</p><p><strong>Streuungsmaße</strong> zeigen, wie breit die Werte streuen. Die <strong>Varianz</strong> ist die mittlere quadratische Abweichung vom Mittelwert. Die <strong>Standardabweichung</strong> (Wurzel der Varianz) hat die gleiche Einheit wie die Daten.</p>' },
+      { titel: 'Normalverteilung & Standardisierung', text: '<p>Die <strong>Normalverteilung</strong> N(µ, σ²) ist die wichtigste Verteilung in der Statistik. Sie ist symmetrisch um den Mittelwert µ, die Breite wird durch σ bestimmt.</p><p>Die <strong>68-95-99,7-Regel</strong>: 68 % der Werte liegen in µ ± σ, 95 % in µ ± 2σ, 99,7 % in µ ± 3σ.</p><p>Durch <strong>Z-Transformation</strong> z = (x − µ) / σ wird jede Normalverteilung zur Standardnormalverteilung N(0,1) umgerechnet.</p><div class="formula">z = (x − µ) / σ</div>' },
+      { titel: 'Hypothesentests verstehen', text: '<p>Ein <strong>Hypothesentest</strong> prüft, ob beobachtete Daten mit einer Annahme (H₀) vereinbar sind. Die <strong>Nullhypothese H₀</strong> ist die Aussage, die wir „widerlegen" wollen. Die <strong>Alternativhypothese H₁</strong> ist das, was wir zeigen möchten.</p><p>Der <strong>p-Wert</strong> gibt an, wie wahrscheinlich das beobachtete Ergebnis (oder extremere) wäre, wenn H₀ gilt. Ist p &lt; α (meist 0,05), lehnen wir H₀ ab — das Ergebnis ist <strong>statistisch signifikant</strong>.</p><p>Wichtig: Statistisch signifikant ≠ praktisch relevant!</p>' },
+      { titel: 'Regression einfach erklärt', text: '<p>Die <strong>lineare Regression</strong> sucht die Gerade, die den Zusammenhang zwischen x (unabhängige Variable) und y (abhängige Variable) am besten beschreibt.</p><div class="formula">ŷ = a + b·x</div><p><strong>b</strong> (Steigung) gibt an, um wie viel y steigt, wenn x um 1 zunimmt. <strong>a</strong> (Achsenabschnitt) ist der y-Wert bei x = 0.</p><p>Das <strong>Bestimmtheitsmaß R²</strong> (0 bis 1) zeigt, wie viel Prozent der Streuung von y durch x erklärt wird. R² = 0,75 bedeutet: 75 % der Variation in y wird durch x erklärt.</p>' },
+    ]
+  },
+  {
+    id: 'math',
+    name: 'Mathematik für Wirtschaftswissenschaftler',
+    color: '#7B68EE',
+    karten: [
+      { q: 'Was ist eine Ableitung und was gibt sie an?', a: 'Die Ableitung f\'(x) gibt die momentane Änderungsrate (Steigung) einer Funktion an einem Punkt x an. Geometrisch: Steigung der Tangente an diesem Punkt.' },
+      { q: 'Wie leitet man x^n ab?', a: 'Potenzregel: d/dx(xⁿ) = n · x^(n−1). Beispiel: d/dx(x³) = 3x², d/dx(x⁻¹) = −x⁻².' },
+      { q: 'Was ist ein Integral und wie hängt es mit der Ableitung zusammen?', a: 'Das Integral berechnet den Flächeninhalt unter einer Kurve. Es ist die Umkehroperation der Ableitung (Hauptsatz der Differential- und Integralrechnung).' },
+      { q: 'Was ist eine Matrix und wie wird multipliziert?', a: 'Eine Matrix ist ein rechteckiges Zahlenschema. Matrizenmultiplikation: (AB)ᵢⱼ = Σ aᵢₖ · bₖⱼ (Zeile × Spalte). Nur möglich wenn Spaltenzahl von A = Zeilenzahl von B.' },
+      { q: 'Was ist ein lokales Maximum?', a: 'Ein Punkt x₀ ist ein lokales Maximum, wenn f\'(x₀) = 0 (notwendige Bedingung) und f\'\'(x₀) < 0 (hinreichende Bedingung).' },
+    ],
+    quiz: [
+      { q: 'Was ist die Ableitung von f(x) = x⁴?', options: ['x³', '4x³', '4x⁵', 'x⁵/5'], correct: 1 },
+      { q: 'Wann hat eine Funktion ein lokales Minimum?', options: ["f'(x₀) = 0 und f''(x₀) > 0", "f'(x₀) = 0 und f''(x₀) < 0", "f'(x₀) > 0", "f''(x₀) = 0"], correct: 0 },
+      { q: 'Was berechnet ein bestimmtes Integral ∫ₐᵇ f(x) dx?', options: ['Die Steigung bei x = a', 'Den Flächeninhalt unter f(x) zwischen a und b', 'Die Ableitung von f', 'Den Wendepunkt'], correct: 1 },
+      { q: 'Eine 3×2-Matrix multipliziert mit einer 2×4-Matrix ergibt:', options: ['Eine 2×2-Matrix', 'Eine 3×4-Matrix', 'Eine 4×3-Matrix', 'Nicht definiert'], correct: 1 },
+    ],
+    erklaert: [
+      { titel: 'Ableitung verstehen', text: '<p>Die <strong>Ableitung</strong> misst, wie schnell sich eine Funktion ändert. Stell dir eine Kurve vor: An jedem Punkt kannst du eine Tangente anlegen. Die Steigung dieser Tangente ist die Ableitung f\'(x).</p><p><strong>Wichtige Ableitungsregeln:</strong></p><div class="formula">Potenzregel: (xⁿ)\' = n·x^(n−1)</div><div class="formula">Produktregel: (u·v)\' = u\'·v + u·v\'</div><div class="formula">Kettenregel: (f(g(x)))\' = f\'(g(x))·g\'(x)</div>' },
+      { titel: 'Kurvendiskussion Schritt für Schritt', text: '<p>Eine <strong>Kurvendiskussion</strong> analysiert den Verlauf einer Funktion vollständig.</p><p><strong>1. Nullstellen:</strong> f(x) = 0 lösen.<br><strong>2. Extremstellen:</strong> f\'(x) = 0 → Kandidaten, dann f\'\'(x) prüfen (> 0: Minimum, &lt; 0: Maximum).<br><strong>3. Wendepunkte:</strong> f\'\'(x) = 0 und f\'\'\'(x) ≠ 0.<br><strong>4. Verhalten im Unendlichen:</strong> Grenzwerte für x → ±∞.</p>' },
+      { titel: 'Lineare Algebra: Matrizen & Gleichungssysteme', text: '<p>Matrizen sind rechteckige Zahlentabellen. Sie sind nützlich, um <strong>Gleichungssysteme</strong> kompakt darzustellen: Ax = b.</p><p>Die <strong>Gaussche Elimination</strong> löst lineare Gleichungssysteme durch systematisches Umformen. Das Ergebnis ist eine Stufenform, aus der man die Lösungen ablesen kann.</p><p>Die <strong>Determinante</strong> einer quadratischen Matrix sagt, ob ein Gleichungssystem eine eindeutige Lösung hat. det(A) ≠ 0 → eindeutige Lösung; det(A) = 0 → keine oder unendlich viele Lösungen.</p>' },
+    ]
+  },
+  {
+    id: 'corp',
+    name: 'Corporate Finance 1',
+    color: '#27AE60',
+    karten: [
+      { q: 'Was ist der Barwert (Present Value)?', a: 'Der heutige Wert einer zukünftigen Zahlung, abgezinst mit dem Kalkulationszinssatz. PV = CF / (1 + r)ᵗ. Ein Euro heute ist mehr wert als ein Euro morgen.' },
+      { q: 'Was ist der NPV (Kapitalwert) und wann lohnt ein Projekt?', a: 'NPV = Barwert aller zukünftigen Cashflows − Anfangsinvestition. Projekt lohnt sich, wenn NPV > 0.' },
+      { q: 'Was ist der interne Zinsfuß (IRR)?', a: 'Der Zinssatz, bei dem der NPV = 0 ist. Projekt ist vorteilhaft, wenn IRR > Kalkulationszinssatz. Nachteil: kann bei unkonventionellen Zahlungsreihen mehrere Lösungen geben.' },
+      { q: 'Was ist die WACC?', a: 'Weighted Average Cost of Capital — gewichteter Kapitalkostensatz aus Eigen- und Fremdkapitalkosten. WACC = (EK/GK)·rEK + (FK/GK)·rFK·(1−t). Steuervorteil des Fremdkapitals durch (1−t).' },
+      { q: 'Was sagt das Modigliani-Miller-Theorem?', a: 'Ohne Steuern und Marktunvollkommenheiten ist der Unternehmenswert unabhängig von der Kapitalstruktur (Eigenkapital vs. Fremdkapital). In der Realität gibt es Steuern und Insolvenzkosten → optimale Kapitalstruktur existiert.' },
+    ],
+    quiz: [
+      { q: 'Was ist der Barwert von 1.000 € in 2 Jahren bei r = 5 %?', options: ['950,00 €', '907,03 €', '1.102,50 €', '952,38 €'], correct: 1 },
+      { q: 'Ein Projekt hat NPV = −50.000 €. Was bedeutet das?', options: ['Das Projekt vernichtet Wert und sollte abgelehnt werden', 'Das Projekt schafft Wert und sollte angenommen werden', 'Der IRR ist positiv', 'Die WACC ist zu niedrig'], correct: 0 },
+      { q: 'Was ist der Steuereffekt (Tax Shield) bei Fremdfinanzierung?', options: ['Zinszahlungen mindern das steuerpflichtige Einkommen, was FK verbilligt', 'Eigenkapital ist steuerlich immer günstiger', 'Dividenden sind steuerlich absetzbar', 'FK hat keinen Steuereffekt'], correct: 0 },
+      { q: 'Was ist CAPM?', options: ['Ein Budgetierungsverfahren', 'Ein Modell zur Berechnung erwarteter Eigenkapitalrenditen basierend auf dem Marktrisiko (β)', 'Die Formel für den internen Zinsfuß', 'Ein Bilanzierungsstandard'], correct: 1 },
+    ],
+    erklaert: [
+      { titel: 'Zeitwert des Geldes', text: '<p>Das wichtigste Konzept in Corporate Finance: <strong>Ein Euro heute ist mehr wert als ein Euro morgen</strong>, weil man ihn investieren kann.</p><p>Der <strong>Barwert (PV)</strong> gibt an, wie viel eine zukünftige Zahlung heute wert ist:</p><div class="formula">PV = CF_t / (1 + r)^t</div><p>Den <strong>Kapitalwert (NPV)</strong> erhält man, indem man alle zukünftigen Cashflows abdiskontiert und die Anfangsinvestition abzieht. NPV > 0 → Projekt schafft Wert.</p>' },
+      { titel: 'Kapitalkosten & WACC', text: '<p>Ein Unternehmen finanziert sich mit <strong>Eigenkapital (EK)</strong> und <strong>Fremdkapital (FK)</strong>. Beide haben Kosten — Eigenkapitalgeber fordern eine Rendite, Fremdkapitalgeber verlangen Zinsen.</p><p>Die <strong>WACC</strong> ist der gewichtete Durchschnitt dieser Kosten:</p><div class="formula">WACC = (EK/GK)·rEK + (FK/GK)·rFK·(1−τ)</div><p>Der Term (1−τ) berücksichtigt den <strong>Steuervorteil</strong> von Fremdkapital: Zinsen sind steuerlich absetzbar, Dividenden nicht.</p>' },
+      { titel: 'Investitionsentscheidungen (NPV vs. IRR)', text: '<p>Zwei Hauptmethoden zur Bewertung von Investitionen:</p><p><strong>NPV-Methode:</strong> Berechne den Kapitalwert aller Cashflows. Nimm das Projekt an, wenn NPV > 0. Vergleiche Projekte: höherer NPV gewinnt.</p><p><strong>IRR-Methode:</strong> Finde den Zinssatz, bei dem NPV = 0. Nimm das Projekt an, wenn IRR > Kalkulationszinssatz (Hurdle Rate).</p><p>Problem des IRR: Bei unkonventionellen Zahlungsreihen (mehrfacher Vorzeichenwechsel) kann es mehrere IRRs geben. NPV ist deshalb die zuverlässigere Methode.</p>' },
+    ]
+  },
+  {
+    id: 'recht',
+    name: 'Grundlagen des Rechts',
+    color: '#E67E22',
+    karten: [
+      { q: 'Was ist der Unterschied zwischen öffentlichem und privatem Recht?', a: 'Öffentliches Recht: Staat vs. Bürger (Über-/Unterordnung). Z.B. Strafrecht, Verwaltungsrecht. Privates Recht: Bürger vs. Bürger (Gleichordnung). Z.B. BGB, Handelsrecht.' },
+      { q: 'Was ist ein Vertrag im BGB?', a: 'Übereinstimmende Willenserklärungen (Angebot + Annahme) zweier Parteien. Er entsteht, wenn Angebot und Annahme inhaltlich übereinstimmen (Konsens) und form- und geschäftsfähige Parteien beteiligt sind.' },
+      { q: 'Was ist Geschäftsfähigkeit und ab wann besteht sie?', a: 'Fähigkeit, wirksam Rechtsgeschäfte abzuschließen. Volle Geschäftsfähigkeit ab 18 Jahren. 7–17 Jahre: beschränkt geschäftsfähig (§ 106 BGB) — vorteilhafte Geschäfte möglich ohne Einwilligung.' },
+      { q: 'Was ist eine Willenserklärung?', a: 'Eine Äußerung (ausdrücklich oder konkludent), die auf einen Rechtserfolg gerichtet ist. Bestandteile: objektiver Tatbestand (erkennbarer Wille) + subjektiver Tatbestand (Handlungswille, Erklärungswille, Geschäftswille).' },
+      { q: 'Wann ist ein Vertrag nichtig (§ 134, 138 BGB)?', a: '§ 134: Verstoß gegen ein gesetzliches Verbot (z.B. Drogenhandel). § 138: Sittenwidrigkeit oder Wucher (z.B. übermäßig hohe Zinsen). Nichtigkeit = Vertrag gilt von Anfang an nicht.' },
+    ],
+    quiz: [
+      { q: 'Das BGB regelt hauptsächlich:', options: ['Das Verhältnis Staat – Bürger', 'Das Verhältnis zwischen Privatpersonen', 'Straftatbestände', 'Verwaltungsakte'], correct: 1 },
+      { q: 'Ab welchem Alter ist man nach deutschem Recht voll geschäftsfähig?', options: ['16 Jahre', '17 Jahre', '18 Jahre', '21 Jahre'], correct: 2 },
+      { q: 'Ein Vertrag entsteht durch:', options: ['Gesetz und Richterspruch', 'Übereinstimmende Willenserklärungen (Angebot + Annahme)', 'Einseitige Willenserklärung', 'Notarielle Beurkundung'], correct: 1 },
+      { q: 'Was bedeutet „§ 138 BGB — sittenwidrig"?', options: ['Der Vertrag ist anfechtbar', 'Der Vertrag ist von Anfang an nichtig', 'Der Vertrag muss notariell beurkundet werden', 'Eine Vertragsstrafe wird fällig'], correct: 1 },
+    ],
+    erklaert: [
+      { titel: 'Aufbau des deutschen Rechtssystems', text: '<p>Das Recht gliedert sich in <strong>öffentliches Recht</strong> (Staat – Bürger) und <strong>privates Recht</strong> (Bürger – Bürger).</p><p>Die wichtigsten Rechtsquellen in der Hierarchie:<br>1. Grundgesetz (GG) — höchster Rang<br>2. Bundesgesetze (BGB, StGB, HGB…)<br>3. Landesgesetze<br>4. Rechtsverordnungen<br>5. Satzungen</p><p>Kein Gesetz darf dem Grundgesetz widersprechen (<strong>Normenhierarchie</strong>).</p>' },
+      { titel: 'Vertragsrecht einfach erklärt', text: '<p>Ein <strong>Vertrag</strong> besteht aus zwei übereinstimmenden Willenserklärungen: <strong>Angebot</strong> und <strong>Annahme</strong>. Das Angebot muss so bestimmt sein, dass ein einfaches „Ja" ausreicht.</p><p>Wichtige Grundsätze:<br>• <strong>Vertragsfreiheit:</strong> Man kann grundsätzlich jeden Vertrag mit jedem Inhalt schließen.<br>• <strong>Grenzen:</strong> Verbotene Verträge (§ 134) und sittenwidrige Verträge (§ 138) sind nichtig.<br>• <strong>Form:</strong> Grundsätzlich formfrei — Ausnahmen z.B. Grundstückskauf (Notarpflicht).</p>' },
+      { titel: 'Anfechtung & Nichtigkeit', text: '<p>Ein Vertrag kann <strong>nichtig</strong> oder <strong>anfechtbar</strong> sein — das ist ein wichtiger Unterschied:</p><p><strong>Nichtigkeit</strong> (§§ 134, 138): Der Vertrag ist von Anfang an ungültig. Niemand muss etwas tun; der Nichtige existiert rechtlich nicht.</p><p><strong>Anfechtbarkeit</strong> (§§ 119–123): Der Vertrag ist zunächst wirksam, kann aber durch Anfechtungserklärung rückwirkend vernichtet werden. Gründe: Irrtum (§ 119), arglistige Täuschung (§ 123), Drohung (§ 123).</p>' },
+    ]
+  },
+  {
+    id: 'makro',
+    name: 'Makroökonomik',
+    color: '#E74C3C',
+    karten: [
+      { q: 'Was ist das BIP und wie wird es berechnet?', a: 'Bruttoinlandsprodukt = Marktwert aller in einem Land produzierten Güter und Dienstleistungen in einem Jahr. Verwendungsansatz: BIP = C + I + G + (X − M) [Konsum + Investitionen + Staatsausgaben + Nettoexporte].' },
+      { q: 'Was ist Inflation und wie wird sie gemessen?', a: 'Inflation = anhaltender Anstieg des allgemeinen Preisniveaus. Gemessen am Verbraucherpreisindex (VPI): prozentualer Anstieg eines repräsentativen Warenkorbs im Jahresvergleich.' },
+      { q: 'Was ist die Quantitätstheorie des Geldes?', a: 'Fishersche Verkehrsgleichung: M · V = P · Y. M = Geldmenge, V = Umlaufgeschwindigkeit, P = Preisniveau, Y = reales BIP. Steigt M bei konstantem V und Y, steigt P (Inflation).' },
+      { q: 'Was ist der Multiplikatoreffekt?', a: 'Zusätzliche Staatsausgaben ΔG erhöhen das BIP um mehr als ΔG, weil das zusätzliche Einkommen wieder ausgegeben wird. Multiplikator = 1 / (1 − c), wobei c die marginale Konsumquote ist.' },
+      { q: 'Was ist die Phillips-Kurve?', a: 'Empirische Beziehung zwischen Inflation und Arbeitslosigkeit: niedrige Arbeitslosigkeit → höhere Inflation (kurzfristig). Langfristig gibt es keinen Trade-off — die Kurve ist vertikal bei der natürlichen Arbeitslosenquote.' },
+    ],
+    quiz: [
+      { q: 'Was wird im BIP NICHT erfasst?', options: ['Staatsausgaben', 'Importe', 'Hausarbeit und ehrenamtliche Arbeit', 'Private Investitionen'], correct: 2 },
+      { q: 'Welche Formel beschreibt die Quantitätsgleichung?', options: ['BIP = C + I + G + NX', 'M·V = P·Y', 'π = πᵉ − β·(u − uₙ)', 'Y = A·K^α·L^(1−α)'], correct: 1 },
+      { q: 'Was passiert laut IS-LM-Modell bei einer expansiven Geldpolitik?', options: ['LM-Kurve verschiebt sich nach links, Zinsen steigen', 'LM-Kurve verschiebt sich nach rechts, Zinsen sinken, BIP steigt', 'IS-Kurve verschiebt sich nach links', 'Das Preisniveau sinkt sofort'], correct: 1 },
+      { q: 'Was ist die „natürliche Arbeitslosenquote"?', options: ['0 % — Vollbeschäftigung', 'Die Arbeitslosenquote, bei der die Inflation stabil ist (NAIRU)', 'Die gesetzlich zulässige Höchstarbeitslosigkeit', 'Die strukturelle + konjunkturelle Arbeitslosigkeit'], correct: 1 },
+    ],
+    erklaert: [
+      { titel: 'BIP und volkswirtschaftliche Gesamtrechnung', text: '<p>Das <strong>Bruttoinlandsprodukt (BIP)</strong> misst den Wert aller in einem Land produzierten Güter und Dienstleistungen in einem Jahr. Drei Berechnungsmethoden — alle kommen zum gleichen Ergebnis:</p><p><strong>Verwendungsansatz:</strong></p><div class="formula">BIP = C + I + G + (X − M)</div><p>C = privater Konsum, I = Investitionen, G = Staatsausgaben, X−M = Nettoexporte</p><p>Unterschied <strong>nominal vs. real</strong>: Nominales BIP steigt auch durch Preisanstieg (Inflation). Reales BIP ist preisbereinigt und zeigt echtes Wachstum.</p>' },
+      { titel: 'Geld, Inflation & Geldpolitik', text: '<p><strong>Inflation</strong> bedeutet, dass das allgemeine Preisniveau steigt — die Kaufkraft des Geldes sinkt. Die EZB strebt 2 % Inflation an (Preisstabilität).</p><p>Die <strong>Quantitätsgleichung</strong> (Fisher) erklärt den Zusammenhang:</p><div class="formula">M · V = P · Y</div><p>Wenn die Geldmenge M schneller wächst als das reale BIP Y (bei konstantem V), steigt das Preisniveau P → <strong>Inflation</strong>.</p><p>Die EZB steuert die Geldmenge durch den <strong>Leitzins</strong>: Zinserhöhung → Kredit teurer → weniger Geldmenge → weniger Inflation.</p>' },
+      { titel: 'IS-LM-Modell: Fiskalpolitik vs. Geldpolitik', text: '<p>Das <strong>IS-LM-Modell</strong> erklärt, wie Gütermarkt (IS-Kurve) und Geldmarkt (LM-Kurve) zusammenwirken, um Gleichgewichtszins und Gleichgewichts-BIP zu bestimmen.</p><p><strong>Fiskalpolitik</strong> (Staatsausgaben ↑): IS-Kurve verschiebt nach rechts → BIP steigt, Zinsen steigen (Crowding-out!).</p><p><strong>Geldpolitik</strong> (Geldmenge ↑): LM-Kurve verschiebt nach rechts → BIP steigt, Zinsen sinken.</p><p>Beide Politiken haben Stärken: Geldpolitik ist schneller, Fiskalpolitik wirkt auch bei Liquiditätsfalle.</p>' },
+    ]
+  }
+];
+
+// ── State & localStorage ──────────────────────────────────────────────────────
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('lernapp_v1') || '{}'); }
+  catch { return {}; }
+}
+function saveState(s) {
+  localStorage.setItem('lernapp_v1', JSON.stringify(s));
+}
+
+let state = loadState();
+let currentSubjectId = null;
+let currentView = 'dash';
+
+function getSubjectState(id) {
+  if (!state[id]) state[id] = { kartenIdx: 0, kartenDone: 0, kartenTotal: 0, quizDone: 0, quizCorrect: 0 };
+  return state[id];
+}
+
+function progress(id) {
+  const s = getSubjectState(id);
+  const subj = SUBJECTS.find(x => x.id === id);
+  const total = subj.karten.length + subj.quiz.length;
+  const done  = (s.kartenDone || 0) + (s.quizCorrect || 0);
+  return Math.min(100, Math.round((done / total) * 100));
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+  currentView = id;
+}
+
+function goBack() {
+  showView('dash');
+  renderDash();
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+
+function renderDash() {
+  const list = document.getElementById('subject-list');
+  list.innerHTML = SUBJECTS.map(s => {
+    const pct = progress(s.id);
+    return `
+    <div class="card" style="border-left-color:${s.color}" onclick="openSubject('${s.id}')">
+      <div class="card-name">${s.name}</div>
+      <div class="progress-wrap">
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:${pct}%;background:${s.color}"></div>
+        </div>
+        <div class="progress-label">${pct}% abgeschlossen</div>
+      </div>
+      <div class="btn-row" onclick="event.stopPropagation()">
+        <button class="btn-subject" style="--c:${s.color}" onclick="openKarten('${s.id}')">Karteikarten</button>
+        <button class="btn-subject" onclick="openQuiz('${s.id}')">Quiz</button>
+        <button class="btn-subject" onclick="openErklaert('${s.id}')">Einfach erklärt</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openSubject(id) {
+  currentSubjectId = id;
+  openKarten(id);
+}
+
+// ── Karteikarten ──────────────────────────────────────────────────────────────
+
+let kartenFlipped = false;
+let kartenIndex = 0;
+
+function openKarten(id) {
+  currentSubjectId = id;
+  const subj = SUBJECTS.find(x => x.id === id);
+  const ss = getSubjectState(id);
+  kartenIndex = ss.kartenIdx || 0;
+  kartenFlipped = false;
+
+  document.getElementById('karten-title').textContent = 'Karteikarten';
+  document.getElementById('karten-accent').style.background = subj.color;
+  showView('karten');
+  renderKarte(subj);
+}
+
+function renderKarte(subj) {
+  const ss = getSubjectState(subj.id);
+  const karten = subj.karten;
+  if (!karten.length) {
+    document.getElementById('karten-content').innerHTML = '<div class="empty">Keine Karteikarten vorhanden.</div>';
+    return;
+  }
+  const k = karten[kartenIndex];
+  document.getElementById('karten-content').innerHTML = `
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-box-num" style="color:${subj.color}">${ss.kartenDone || 0}</div>
+        <div class="stat-box-label">Gelernt</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-num">${karten.length}</div>
+        <div class="stat-box-label">Gesamt</div>
+      </div>
+    </div>
+    <div class="flashcard" id="flashcard" onclick="flipKarte()">
+      <div class="flashcard-side">${kartenFlipped ? 'Antwort' : 'Frage'}</div>
+      <div class="flashcard-text">${kartenFlipped ? k.a : k.q}</div>
+      <div class="flashcard-hint">${kartenFlipped ? '' : 'Tippen zum Umdrehen'}</div>
+    </div>
+    <div class="card-nav">
+      <button class="card-nav-btn" onclick="prevKarte()" ${kartenIndex === 0 ? 'disabled style="opacity:.35"' : ''}>←</button>
+      <span class="card-counter">${kartenIndex + 1} / ${karten.length}</span>
+      <button class="card-nav-btn" onclick="nextKarte()">→</button>
+    </div>
+    ${kartenFlipped ? `
+    <div class="card-actions">
+      <button class="card-action-btn again" onclick="markKarte(false)">Nochmal</button>
+      <button class="card-action-btn good"  onclick="markKarte(true)">Gewusst ✓</button>
+    </div>` : ''}
+  `;
+}
+
+function flipKarte() {
+  kartenFlipped = !kartenFlipped;
+  const subj = SUBJECTS.find(x => x.id === currentSubjectId);
+  renderKarte(subj);
+}
+
+function prevKarte() {
+  kartenFlipped = false;
+  kartenIndex = Math.max(0, kartenIndex - 1);
+  const subj = SUBJECTS.find(x => x.id === currentSubjectId);
+  renderKarte(subj);
+}
+
+function nextKarte() {
+  kartenFlipped = false;
+  const subj = SUBJECTS.find(x => x.id === currentSubjectId);
+  kartenIndex = (kartenIndex + 1) % subj.karten.length;
+  renderKarte(subj);
+}
+
+function markKarte(known) {
+  const ss = getSubjectState(currentSubjectId);
+  if (known) ss.kartenDone = (ss.kartenDone || 0) + 1;
+  ss.kartenIdx = (kartenIndex + 1) % SUBJECTS.find(x => x.id === currentSubjectId).karten.length;
+  saveState(state);
+  kartenFlipped = false;
+  kartenIndex = ss.kartenIdx;
+  const subj = SUBJECTS.find(x => x.id === currentSubjectId);
+  renderKarte(subj);
+}
+
+// ── Quiz ──────────────────────────────────────────────────────────────────────
+
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function openQuiz(id) {
+  currentSubjectId = id;
+  const subj = SUBJECTS.find(x => x.id === id);
+  quizIndex = 0; quizScore = 0; quizAnswered = false;
+
+  document.getElementById('quiz-title').textContent = 'Quiz';
+  document.getElementById('quiz-accent').style.background = subj.color;
+  showView('quiz');
+  renderQuizQuestion(subj);
+}
+
+function renderQuizQuestion(subj) {
+  const q = subj.quiz[quizIndex];
+  if (!q) { renderQuizScore(subj); return; }
+  quizAnswered = false;
+
+  document.getElementById('quiz-content').innerHTML = `
+    <div class="section-title">Frage ${quizIndex + 1} von ${subj.quiz.length}</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options">
+      ${q.options.map((opt, i) => `
+        <button class="quiz-option" onclick="answerQuiz(${i})">${opt}</button>
+      `).join('')}
+    </div>
+    <div class="quiz-feedback" id="quiz-feedback"></div>
+    <button class="quiz-next-btn" id="quiz-next" onclick="nextQuizQuestion()">
+      ${quizIndex + 1 < subj.quiz.length ? 'Nächste Frage →' : 'Ergebnis anzeigen →'}
+    </button>
+  `;
+}
+
+function answerQuiz(chosen) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const subj = SUBJECTS.find(x => x.id === currentSubjectId);
+  const q = subj.quiz[quizIndex];
+  const correct = chosen === q.correct;
+  if (correct) quizScore++;
+
+  document.querySelectorAll('.quiz-option').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === chosen && !correct) btn.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('quiz-feedback');
+  fb.textContent = correct ? '✓ Richtig!' : '✗ Leider falsch.';
+  fb.className = 'quiz-feedback show ' + (correct ? 'correct' : 'wrong');
+
+  document.getElementById('quiz-next').classList.add('show');
+}
+
+function nextQuizQuestion() {
+  quizIndex++;
+  const subj = SUBJECTS.find(x => x.id === currentSubjectId);
+  renderQuizQuestion(subj);
+}
+
+function renderQuizScore(subj) {
+  const ss = getSubjectState(subj.id);
+  ss.quizDone = (ss.quizDone || 0) + 1;
+  ss.quizCorrect = (ss.quizCorrect || 0) + quizScore;
+  saveState(state);
+
+  const pct = Math.round((quizScore / subj.quiz.length) * 100);
+  document.getElementById('quiz-content').innerHTML = `
+    <div class="quiz-score">
+      <div class="quiz-score-num" style="color:${subj.color}">${quizScore}/${subj.quiz.length}</div>
+      <div class="quiz-score-label">${pct >= 75 ? '🎉 Sehr gut!' : pct >= 50 ? '👍 Gut gemacht!' : '📚 Übe weiter!'}</div>
+      <div class="quiz-score-label" style="margin-bottom:24px">${pct}% korrekt</div>
+      <button class="quiz-restart-btn" onclick="openQuiz('${subj.id}')">Nochmal</button>
+    </div>
+  `;
+}
+
+// ── Einfach erklärt ───────────────────────────────────────────────────────────
+
+function openErklaert(id) {
+  currentSubjectId = id;
+  const subj = SUBJECTS.find(x => x.id === id);
+
+  document.getElementById('erklaert-title').textContent = 'Einfach erklärt';
+  document.getElementById('erklaert-accent').style.background = subj.color;
+  showView('erklaert');
+
+  document.getElementById('erklaert-content').innerHTML = subj.erklaert.map((e, i) => `
+    <div class="erklaert-topic">
+      <button class="erklaert-topic-head" aria-expanded="false" onclick="toggleErklaert(this, ${i})">
+        <span>${e.titel}</span>
+        <span class="chevron">▾</span>
+      </button>
+      <div class="erklaert-body" id="erklaert-body-${i}">
+        ${e.text}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleErklaert(btn, i) {
+  const body = document.getElementById('erklaert-body-' + i);
+  const open = body.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+
+renderDash();
+</script>
+</body>
+</html>
