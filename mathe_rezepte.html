@@ -174,92 +174,104 @@ body { font-family: var(--font); color: var(--text); background: #fff; line-heig
 </header>
 
 <div class="intro-box">
-  Diese Rezepte basieren auf echten Klausuren der <strong>Mathematik für Wirtschaftswissenschaften</strong> (Uni Passau, Prof. Dr. Fritsch). Die Aufgabentypen sind nach Klausurhäufigkeit sortiert — lerne die ersten vier auswendig.
+  Diese Rezepte basieren auf echten Klausuren der <strong>Mathematik für Wirtschaftswissenschaften</strong> (Uni Passau, Prof. Dr. Fritsch). Häufigkeit aus 3 realen Klausuren (2021, 2022, 2025). <strong>Rezepte 4–6 (Gauß, Matrizen, Simplex) erschienen in allen 3 Klausuren — lerne diese zuerst auswendig.</strong>
 </div>
 
 <nav class="toc">
   <h2>Inhaltsverzeichnis</h2>
   <ol>
-    <li><a href="#ableitung">Ableitungsregeln &amp; Kurvendiskussion (1 Variable)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 20–30 Pkt</span></li>
-    <li><a href="#partabl">Partielle Ableitung &amp; Extrema (mehrere Variablen)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 20–30 Pkt</span></li>
-    <li><a href="#lagrange">Lagrange-Methode (Optimierung mit Nebenbedingung)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#grenzwerte">Grenzwerte &amp; L'Hôpital</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–20 Pkt</span></li>
+    <li><a href="#partabl">Partielle Ableitung &amp; Extrema (mehrere Variablen)</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#lagrange">Lagrange-Methode (Optimierung mit Nebenbedingung)</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
     <li><a href="#gauss">Gauß-Elimination (Lineares Gleichungssystem)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
-    <li><a href="#matrix">Matrizenrechnung (Mult., Det., Inverse)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 15–20 Pkt</span></li>
-    <li><a href="#simplex">Simplex-Methode (Lineare Programmierung)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#matrix">Matrizenrechnung (Det., Inverse via Adjunkte)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#simplex">Simplex-Methode (Lineare Programmierung)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
     <li><a href="#integral">Integralrechnung (bestimmtes Integral)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
-    <li><a href="#finanz">Finanzmathematik (Renten, Barwert)</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
-    <li><a href="#folgen">Folgen und Reihen (geometrisch, arithmetisch)</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#finanz">Finanzmathematik (Renten, Barwert)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#summen">Summen- &amp; Produktnotation + Ungleichungen</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 5–10 Pkt</span></li>
   </ol>
 </nav>
 
 <!-- ════════════════════════════════════════════════ -->
-<!-- REZEPT 1: ABLEITUNG & KURVENDISKUSSION -->
+<!-- REZEPT 1: GRENZWERTE & L'HÔPITAL -->
 <!-- ════════════════════════════════════════════════ -->
-<section class="recipe" id="ableitung">
+<section class="recipe" id="grenzwerte">
   <div class="recipe-header">
-    <div class="recipe-title">1 · Ableitungsregeln &amp; Kurvendiskussion</div>
+    <div class="recipe-title">1 · Grenzwerte &amp; L'Hôpital</div>
     <div class="recipe-meta">
-      <span class="badge badge-red">🔴 Pflicht</span>
-      <span class="recipe-pts">📊 20–30 Pkt</span>
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–20 Pkt</span>
     </div>
   </div>
 
-  <div class="label">Ableitungsregeln auf einen Blick</div>
-  <div class="formula">Potenzregel:    (xⁿ)'  = n·xⁿ⁻¹
-Produktregel:   (u·v)' = u'·v + u·v'
-Quotientenregel:(u/v)' = (u'·v − u·v') / v²
-Kettenregel:    (f(g(x)))' = f'(g(x)) · g'(x)
-ln(x):          (ln x)' = 1/x
-eˣ:             (eˣ)'  = eˣ
-eᵍ⁽ˣ⁾:          (e^g(x))' = g'(x)·e^g(x)</div>
+  <div class="label">Wann wird L'Hôpital angewendet?</div>
+  <div class="when-box">
+    <p>Nur bei <strong>unbestimmten Ausdrücken</strong>: <code>0/0</code> oder <code>∞/∞</code>. Prüfe zuerst direktes Einsetzen — wenn das einen definierten Wert ergibt, fertig.</p>
+  </div>
 
-  <div class="label">Schritt-für-Schritt Kurvendiskussion</div>
   <div class="steps">
-    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Definitionsbereich</h3><p>Ausschließen: Division durch 0, negativer Radikand, ln(0). Meist: D = ℝ oder D = ℝ \ {0}</p></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Nullstellen: f(x) = 0 lösen</h3><p>Ausklammern, PQ-Formel, oder numerisch schätzen.</p></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Erste Ableitung f'(x)</h3><p>Berechne f'(x) mit den Ableitungsregeln.</p></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Kritische Punkte: f'(x) = 0 lösen</h3><p>Jede Lösung x₀ ist ein Kandidat für Extremstellen.</p></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-body">
-      <h3>Zweite Ableitung f''(x) → Extremum prüfen</h3>
-      <div class="formula">f''(x₀) &gt; 0 → lokales Minimum
-f''(x₀) &lt; 0 → lokales Maximum
-f''(x₀) = 0 → weitere Untersuchung nötig (Vorzeichenwechsel f')</div>
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Direktes Einsetzen versuchen</h3>
+      <p>Setze den Grenzwert ein. Ergibt sich ein definierter Wert → das ist der Grenzwert. Fertig.</p>
     </div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-body"><h3>Wendepunkte: f''(x) = 0 und Vorzeichenwechsel</h3><div class="formula">f''(x₀) = 0 UND f'''(x₀) ≠ 0 → Wendepunkt bei x₀</div></div></div>
-    <div class="step"><div class="step-num">7</div><div class="step-body"><h3>Funktionswert berechnen und Ergebnis formulieren</h3><p>Setze x₀ in f(x) ein → Koordinaten des Extrempunkts (x₀ | f(x₀))</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Unbestimmten Ausdruck identifizieren</h3>
+      <div class="formula">0/0  oder  ∞/∞  → L'Hôpital anwendbar
+0·∞  → umformen zu 0/(1/∞) oder ∞/(1/0)
+∞−∞  → gemeinsamen Nenner suchen</div>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>L'Hôpital anwenden</h3>
+      <div class="formula">lim f(x)/g(x) = lim f'(x)/g'(x)</div>
+      <p>Zähler und Nenner <strong>getrennt</strong> ableiten (kein Quotientenregel!). Danach wieder einsetzen.</p>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Wiederholen falls nötig</h3>
+      <p>Ergibt sich erneut 0/0 oder ∞/∞ → L'Hôpital ein zweites Mal anwenden.</p>
+    </div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body">
+      <h3>Standardgrenzwerte kennen</h3>
+      <div class="formula">lim(x→∞) xⁿ/eˣ = 0   (eˣ wächst schneller als jedes Polynom)
+lim(x→∞) ln(x)/x = 0
+lim(x→0) sin(x)/x = 1
+lim(x→0) (eˣ−1)/x = 1</div>
+    </div></div>
   </div>
 
   <div class="example">
-    <div class="example-header">✦ Vollständiges Beispiel (aus Klausur 2025)</div>
-    <p><strong>f(x) = −2x³ + 12x² − 18x + 5</strong></p>
-    <div class="formula">f'(x) = −6x² + 24x − 18</div>
-    <p><strong>Kritische Punkte:</strong> f'(x) = 0</p>
-    <div class="formula">−6x² + 24x − 18 = 0  |÷(−6)
-x² − 4x + 3 = 0
-(x−1)(x−3) = 0
-→ x₁ = 1, x₂ = 3</div>
-    <div class="formula">f''(x) = −12x + 24
-f''(1) = −12 + 24 = <strong>+12 &gt; 0  → lokales Minimum</strong>
-f''(3) = −36 + 24 = <strong>−12 &lt; 0  → lokales Maximum</strong></div>
-    <div class="formula">f(1) = −2 + 12 − 18 + 5 = <strong>−3</strong>  → Tiefpunkt T(1|−3)
-f(3) = −54 + 108 − 54 + 5 = <strong>5</strong>  → Hochpunkt H(3|5)</div>
+    <div class="example-header">✦ Vollständiges Beispiel (angelehnt an Klausur 2022)</div>
+    <p><strong>Berechne: lim(x→0) (eˣ − 1 − x) / x²</strong></p>
+    <div class="formula">Direktes Einsetzen: (e⁰ − 1 − 0) / 0² = 0/0  → unbestimmt → L'Hôpital</div>
+    <div class="formula">1. Anwendung:  f'(x) = eˣ − 1,  g'(x) = 2x
+→ lim (eˣ − 1) / (2x)
+
+Einsetzen x=0:  (1−1)/0 = 0/0  → wieder unbestimmt → L'Hôpital nochmal</div>
+    <div class="formula">2. Anwendung:  f''(x) = eˣ,  g''(x) = 2
+→ lim eˣ / 2
+
+Einsetzen x=0:  e⁰ / 2 = 1/2</div>
+    <div class="formula">Ergebnis: lim(x→0) (eˣ − 1 − x) / x² = <strong>1/2</strong></div>
+    <p><strong>Weiteres Beispiel — Polynomgrenzwert:</strong></p>
+    <div class="formula">lim(x→∞) (3x² + 2x) / (x² − 5)
+= lim (3 + 2/x) / (1 − 5/x²)   |÷x²
+= (3 + 0) / (1 − 0) = <strong>3</strong></div>
   </div>
 
   <div class="tip">
     <div class="tip-header">💡 Klausur-Tipp</div>
     <ul>
-      <li><strong>Immer alle Schritte aufschreiben</strong>, auch wenn du das Ergebnis siehst — Punkte gibt es für den Rechenweg.</li>
-      <li>Kettenregel: Außenableitung mal Innenableitung — in genau dieser Reihenfolge aufschreiben.</li>
-      <li>f''(x₀) = 0 reicht NICHT für Wendepunkt — Vorzeichenwechsel prüfen!</li>
+      <li>Bevor du L'Hôpital anwendest: <strong>Typ prüfen</strong> (0/0 oder ∞/∞). Ansonsten ist L'Hôpital falsch angewendet.</li>
+      <li>Bei Polynomen durch x^höchste Potenz dividieren — oft schneller als L'Hôpital.</li>
+      <li>Nach jeder L'Hôpital-Anwendung wieder einsetzen — vielleicht ist es schon lösbar.</li>
     </ul>
   </div>
 
   <div class="errors">
     <h3>⚡ Häufige Fehler</h3>
     <ul>
-      <li>Produktregel vergessen: (x·eˣ)' ≠ eˣ; korrekt: eˣ + x·eˣ = eˣ(1+x)</li>
-      <li>f''(x₀) = 0 als Wendepunkt werten ohne Vorzeichenwechsel zu prüfen</li>
-      <li>Koordinaten des Extremums: auch f(x₀) berechnen, nicht nur x₀ angeben</li>
+      <li>L'Hôpital auf 1/0 anwenden (= ∞, kein unbestimmter Ausdruck) → nicht erlaubt</li>
+      <li>Quotientenregel statt getrennter Ableitung von Zähler und Nenner</li>
+      <li>Vergessen zu prüfen ob nach L'Hôpital nochmals 0/0 vorliegt</li>
     </ul>
   </div>
 </section>
@@ -269,8 +281,8 @@ f(3) = −54 + 108 − 54 + 5 = <strong>5</strong>  → Hochpunkt H(3|5)</div>
   <div class="recipe-header">
     <div class="recipe-title">2 · Partielle Ableitung &amp; Extrema (mehrere Variablen)</div>
     <div class="recipe-meta">
-      <span class="badge badge-red">🔴 Pflicht</span>
-      <span class="recipe-pts">📊 20–30 Pkt</span>
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
     </div>
   </div>
 
@@ -338,8 +350,8 @@ Minimum bei (1 | 2) mit Minimalwert 1</div>
   <div class="recipe-header">
     <div class="recipe-title">3 · Lagrange-Methode (Optimierung mit Nebenbedingung)</div>
     <div class="recipe-meta">
-      <span class="badge badge-red">🔴 Pflicht</span>
-      <span class="recipe-pts">📊 15–25 Pkt</span>
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
     </div>
   </div>
 
@@ -489,10 +501,10 @@ Zeile 1: 2x + 3 − (−1) = 8
 <!-- REZEPT 5: MATRIZEN -->
 <section class="recipe" id="matrix">
   <div class="recipe-header">
-    <div class="recipe-title">5 · Matrizenrechnung (Mult., Det., Inverse)</div>
+    <div class="recipe-title">5 · Matrizenrechnung (Det., Inverse via Adjunkte)</div>
     <div class="recipe-meta">
-      <span class="badge badge-orange">🟠 Wichtig</span>
-      <span class="recipe-pts">📊 15–20 Pkt</span>
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
     </div>
   </div>
 
@@ -551,7 +563,7 @@ A(m×n) · B(n×p)  →  C(m×p)</div>
   <div class="recipe-header">
     <div class="recipe-title">6 · Simplex-Methode (Lineare Programmierung)</div>
     <div class="recipe-meta">
-      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="badge badge-red">🔴 Pflicht</span>
       <span class="recipe-pts">📊 15–25 Pkt</span>
     </div>
   </div>
@@ -672,7 +684,7 @@ v' = eˣ, v  = eˣ
   <div class="recipe-header">
     <div class="recipe-title">8 · Finanzmathematik (Renten, Barwert)</div>
     <div class="recipe-meta">
-      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="badge badge-orange">🟠 Wichtig</span>
       <span class="recipe-pts">📊 10–15 Pkt</span>
     </div>
   </div>
@@ -719,49 +731,93 @@ BW = 1.000 · (1 − 0,78353) / 0,05
   </div>
 </section>
 
-<!-- REZEPT 9: FOLGEN & REIHEN -->
-<section class="recipe" id="folgen">
+<!-- REZEPT 9: SUMMEN / UNGLEICHUNGEN -->
+<section class="recipe" id="summen">
   <div class="recipe-header">
-    <div class="recipe-title">9 · Folgen und Reihen (geom. / arithm.)</div>
+    <div class="recipe-title">9 · Summen- &amp; Produktnotation + Ungleichungen</div>
     <div class="recipe-meta">
-      <span class="badge badge-yellow">🟡 Kann kommen</span>
-      <span class="recipe-pts">📊 10–15 Pkt</span>
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 5–10 Pkt</span>
     </div>
   </div>
 
-  <div class="label">Formeln</div>
-  <div class="formula">Arithmetische Folge: aₙ = a₁ + (n−1)·d
-Arithmetische Reihe: Sₙ = n·(a₁+aₙ)/2 = n·(2a₁+(n−1)d)/2
+  <div class="label">Warum wichtig?</div>
+  <div class="when-box">Erscheint regelmäßig als <strong>Aufwärmaufgabe</strong> in Fritsch-Klausuren — günstige Punkte, die mit etwas Übung sicher geholt werden können. Ungleichungen kamen in 2/3 Klausuren vor.</div>
 
-Geometrische Folge:  aₙ = a₁ · qⁿ⁻¹
-Geometrische Reihe:  Sₙ = a₁·(qⁿ−1)/(q−1)  (q ≠ 1)
-Unendliche Reihe:    S∞ = a₁/(1−q)           (|q| &lt; 1)</div>
+  <div class="label">Summen- und Produktnotation</div>
+  <div class="formula">Summe:   Σᵢ₌₁ⁿ aᵢ  = a₁ + a₂ + … + aₙ
+Produkt: Πᵢ₌₁ⁿ aᵢ  = a₁ · a₂ · … · aₙ
+
+Rechenregeln:
+Σ(aᵢ + bᵢ) = Σaᵢ + Σbᵢ
+Σ c·aᵢ    = c · Σaᵢ  (Konstante ausklammern)
+Σᵢ₌₁ⁿ 1   = n
+Σᵢ₌₁ⁿ i   = n(n+1)/2
+Σᵢ₌₁ⁿ i²  = n(n+1)(2n+1)/6</div>
+
+  <div class="label">Ungleichungen lösen</div>
+  <div class="formula">Wie Gleichung, AUSSER:
+Bei Multiplikation/Division mit negativer Zahl → Ungleichungszeichen umdrehen!
+−2x &gt; 6  →  x &lt; −3  (Zeichen dreht sich!)</div>
 
   <div class="steps">
-    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Typ bestimmen: arithmetisch oder geometrisch?</h3><p>Arithmetisch: konstante Differenz d = aₙ₊₁ − aₙ. Geometrisch: konstantes Verhältnis q = aₙ₊₁/aₙ.</p></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Parameter bestimmen: a₁, d oder q</h3><p>Entweder direkt gegeben oder aus zwei Gliedern ausrechnen.</p></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Formel anwenden und Ergebnis interpretieren</h3></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Summenausdruck konkret ausschreiben</h3>
+      <p>Schreibe die ersten 3 Glieder explizit hin — hilft beim Verstehen und zeigt dem Prüfer, dass du die Notation kennst.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Konstante ausklammern / umformen</h3>
+      <p>Konstanten (unabhängig von i) vor das Summenzeichen ziehen.</p>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Standardformel anwenden oder aufsummieren</h3>
+      <p>Σi, Σi², Σ1 sind bekannte Formeln. Sonst Term für Term berechnen.</p>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Ungleichung: Umformungen wie Gleichung, Vorzeichen beachten</h3>
+      <div class="formula">Schritt 1: Konstante auf eine Seite
+Schritt 2: Variable isolieren
+Schritt 3: Falls durch negative Zahl dividiert → &lt; wird &gt; (und umgekehrt)</div>
+    </div></div>
   </div>
 
   <div class="example">
-    <div class="example-header">✦ Vollständiges Beispiel (angelehnt an Klausur 2024)</div>
-    <p><strong>Geometrisch:</strong> a₁ = 100, q = 0,9. Berechne a₅ und S₅.</p>
-    <div class="formula">a₅ = 100 · 0,9⁴ = 100 · 0,6561 = <strong>65,61</strong>
-S₅ = 100 · (0,9⁵ − 1)/(0,9 − 1) = 100 · (0,59049−1)/(−0,1)
-   = 100 · (−0,40951)/(−0,1) = 100 · 4,0951 = <strong>409,51</strong></div>
-    <p><strong>Unendliche Summe</strong> (|q|=0,9 &lt; 1):</p>
-    <div class="formula">S∞ = 100 / (1−0,9) = 100 / 0,1 = <strong>1.000</strong></div>
-    <p><strong>Arithmetisch:</strong> a₁ = 3, d = 5. Welches Glied hat den Wert 48?</p>
-    <div class="formula">aₙ = 3 + (n−1)·5 = 48
-(n−1)·5 = 45  →  n−1 = 9  →  <strong>n = 10</strong></div>
+    <div class="example-header">✦ Vollständige Beispiele (aus Klausur-Aufwärmaufgaben)</div>
+    <p><strong>Summe auswerten: Σᵢ₌₁⁴ (2i − 1)</strong></p>
+    <div class="formula">i=1: 2·1−1 = 1
+i=2: 2·2−1 = 3
+i=3: 2·3−1 = 5
+i=4: 2·4−1 = 7
+Summe = 1 + 3 + 5 + 7 = <strong>16</strong>
+
+Alternativ: 2·Σi − Σ1 = 2·(4·5/2) − 4 = 20 − 4 = <strong>16 ✓</strong></div>
+    <p><strong>Ungleichung lösen: −3x + 5 &gt; 14</strong></p>
+    <div class="formula">−3x + 5 &gt; 14
+−3x &gt; 9           |÷(−3) → Zeichen dreht sich!
+x &lt; −3
+
+Lösungsmenge: x ∈ (−∞, −3)</div>
+    <p><strong>Ungleichungssystem: 2x − 1 ≤ 5 und x + 3 &gt; 1</strong></p>
+    <div class="formula">2x − 1 ≤ 5  →  x ≤ 3
+x + 3 &gt; 1  →  x &gt; −2
+Schnittmenge: <strong>−2 &lt; x ≤ 3</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Summen-Aufgaben immer konkret ausschreiben — gibt Punkte auch wenn die Formel fehlt</li>
+      <li>Ungleichung: nach dem Lösen immer einen Wert einsetzen und prüfen</li>
+      <li>Σᵢ₌₁ⁿ i = n(n+1)/2 auswendig lernen — kommt als Hilfsformel oft vor</li>
+    </ul>
   </div>
 
   <div class="errors">
     <h3>⚡ Häufige Fehler</h3>
     <ul>
-      <li>Exponent bei aₙ: ist n−1, nicht n</li>
-      <li>Geometrische Reihe mit q = 1: Formel nicht anwendbar → einfach n·a₁</li>
-      <li>S∞ nur bei |q| &lt; 1 möglich — sonst divergiert die Reihe</li>
+      <li>Vorzeichen bei Ungleichung vergessen umzudrehen — kostet immer Punkte</li>
+      <li>Laufindex i mit der Anzahl n verwechseln: Σᵢ₌₁⁵ bedeutet i geht von 1 bis 5</li>
+      <li>Π (Produkt) mit Σ (Summe) verwechseln — explizit ausschreiben hilft</li>
     </ul>
   </div>
 </section>
@@ -771,10 +827,10 @@ S₅ = 100 · (0,9⁵ − 1)/(0,9 − 1) = 100 · (0,59049−1)/(−0,1)
   <h2>📋 Formelreferenz — alle Formeln auf einen Blick</h2>
   <div class="ref-grid">
     <div class="ref-card">
-      <h4>Ableitungsregeln</h4>
-      <div class="formula">(xⁿ)' = n·xⁿ⁻¹</div>
-      <div class="formula">(u·v)' = u'v + uv'</div>
-      <div class="formula">(f(g))' = f'(g)·g'</div>
+      <h4>L'Hôpital</h4>
+      <div class="formula">Nur bei 0/0 oder ∞/∞</div>
+      <div class="formula">lim f/g = lim f'/g'</div>
+      <div class="formula">Zähler &amp; Nenner getrennt!</div>
     </div>
     <div class="ref-card">
       <h4>Hesse-Matrix</h4>
@@ -809,9 +865,10 @@ S₅ = 100 · (0,9⁵ − 1)/(0,9 − 1) = 100 · (0,59049−1)/(−0,1)
       <div class="formula">BW = R·(1−(1+i)^-n)/i</div>
     </div>
     <div class="ref-card">
-      <h4>Geometrische Reihe</h4>
-      <div class="formula">Sₙ = a₁·(qⁿ−1)/(q−1)</div>
-      <div class="formula">S∞ = a₁/(1−q), |q|&lt;1</div>
+      <h4>Summen</h4>
+      <div class="formula">Σi = n(n+1)/2</div>
+      <div class="formula">Σ1 = n</div>
+      <div class="formula">Ungleichung: ÷neg → dreht um</div>
     </div>
   </div>
 </section>

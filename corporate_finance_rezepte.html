@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporate Finance 1 — Klausur-Rezepte</title>
+<style>
+:root {
+  --accent: #27AE60;
+  --accent-bg: #edfbf3;
+  --accent-dark: #1e8449;
+  --amber: #E67E22;
+  --red: #E74C3C;
+  --blue: #2980B9;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "Courier New", Courier, monospace;
+  --border: #e8eaed;
+  --muted: #6b7280;
+  --text: #1a1a1a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--text); background: #fff; line-height: 1.65; }
+.page { max-width: 800px; margin: 0 auto; padding: 0 20px 80px; }
+
+.site-header { padding: 40px 0 24px; border-bottom: 2px solid var(--accent); margin-bottom: 32px; }
+.site-header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 6px; }
+.site-header .sub { color: var(--muted); font-size: 0.9rem; }
+
+.intro-box {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px; margin-bottom: 36px;
+  font-size: 0.9rem; color: #0d3d22;
+}
+
+.toc { background: #fafafa; border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; margin-bottom: 40px; }
+.toc h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+.toc ol { padding-left: 20px; }
+.toc li { margin-bottom: 6px; }
+.toc a { color: var(--accent-dark); text-decoration: none; font-size: 0.9rem; }
+.toc a:hover { text-decoration: underline; }
+.badge { display: inline-block; font-size: 0.7rem; padding: 1px 7px; border-radius: 99px; margin-left: 6px; vertical-align: middle; font-weight: 600; }
+.badge-red    { background: #fde8e8; color: #b91c1c; }
+.badge-orange { background: #fef3e2; color: #b45309; }
+.badge-yellow { background: #fefce8; color: #854d0e; }
+
+.recipe {
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 24px 24px 20px; margin-bottom: 40px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.07);
+}
+.recipe-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.recipe-title { font-size: 1.2rem; font-weight: 700; }
+.recipe-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.recipe-pts { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+
+.label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin: 20px 0 8px; }
+
+.steps { counter-reset: step; }
+.step { display: flex; gap: 16px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #f0f0f0; }
+.step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.step-num {
+  flex-shrink: 0; width: 28px; height: 28px;
+  background: var(--accent); color: #fff;
+  border-radius: 50%; font-size: 0.8rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.step-body { flex: 1; }
+.step-body h3 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 6px; }
+.step-body p  { font-size: 0.9rem; color: #374151; margin-bottom: 6px; }
+.step-body p:last-child { margin-bottom: 0; }
+
+.formula {
+  background: #f5f5f5; border-radius: 6px;
+  padding: 10px 14px; font-family: var(--mono);
+  font-size: 0.875rem; margin: 8px 0;
+  border: 1px solid #e5e5e5; overflow-x: auto;
+}
+
+.example {
+  background: var(--accent-bg); border-radius: 8px;
+  border: 1px solid #a8e6c3; padding: 18px 20px; margin: 20px 0;
+}
+.example-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent-dark); font-weight: 700; margin-bottom: 10px; }
+.example p { font-size: 0.9rem; color: #0d3d22; margin-bottom: 6px; }
+.example .formula { background: #d6f5e3; border-color: #7dd5a0; }
+
+.tip {
+  background: var(--accent-bg); border-left: 4px solid var(--accent);
+  border-radius: 0 6px 6px 0; padding: 14px 16px; margin: 20px 0;
+  font-size: 0.875rem; color: #0d3d22;
+}
+.tip-header { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent-dark); margin-bottom: 6px; }
+.tip ul { padding-left: 18px; }
+.tip li { margin-bottom: 4px; }
+
+.warn {
+  background: #fff8f0; border-left: 4px solid var(--amber);
+  border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.875rem; color: #7c4a00;
+}
+.warn-header { font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--amber); margin-bottom: 4px; }
+
+.errors { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.errors h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: #b91c1c; font-weight: 700; margin-bottom: 8px; }
+.errors ul { padding-left: 18px; }
+.errors li { font-size: 0.875rem; color: #374151; margin-bottom: 5px; }
+
+.ref-section { margin-top: 60px; padding-top: 32px; border-top: 2px solid var(--border); }
+.ref-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+.ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 500px) { .ref-grid { grid-template-columns: 1fr; } }
+.ref-card { background: #fafafa; border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
+.ref-card h4 { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: .05em; }
+.ref-card .formula { margin: 4px 0; font-size: 0.8rem; }
+
+.cf-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 10px 0; overflow-x: auto; display: block; }
+.cf-table th { background: #d6f5e3; color: #0d3d22; padding: 6px 10px; text-align: center; font-weight: 600; border: 1px solid #a8e6c3; }
+.cf-table td { padding: 5px 10px; text-align: right; border: 1px solid #e5e7eb; color: #1a1a1a; }
+.cf-table td:first-child { text-align: left; font-weight: 500; }
+.cf-table tr.total td { background: #edfbf3; font-weight: 700; border-top: 2px solid var(--accent); }
+.cf-table tr.highlight td { background: #fff8e1; }
+
+@media print {
+  .recipe { break-inside: avoid; border-left-color: #999 !important; box-shadow: none; }
+  .tip, .example, .intro-box { background: #f8f8f8 !important; border-color: #ccc !important; border-left-color: #999 !important; }
+  .warn { background: #f8f8f8 !important; border-left-color: #999 !important; }
+  .step-num { background: #555 !important; }
+  a { color: #000 !important; text-decoration: none; }
+  .cf-table th { background: #eee !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="site-header">
+  <h1>💹 Corporate Finance 1 — Klausur-Rezepte</h1>
+  <div class="sub">Uni Passau · BWL 2. Semester · Finanzierung &amp; Investition</div>
+</header>
+
+<div class="intro-box">
+  Diese Rezepte decken die klausurrelevanten Kernthemen der <strong>Corporate Finance 1</strong> ab. Die ersten vier Rezepte (Zeitwert, NPV, IRR, Renten) erscheinen in fast jeder Klausur — lerne diese Formeln auswendig und trainiere sie mit Zahlen.
+</div>
+
+<nav class="toc">
+  <h2>Inhaltsverzeichnis</h2>
+  <ol>
+    <li><a href="#zeitwert">Zeitwert des Geldes — Barwert &amp; Zukunftswert</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#npv">Kapitalwert (NPV) — Investitionsentscheidung</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 20–30 Pkt</span></li>
+    <li><a href="#irr">Interner Zinsfuß (IRR)</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–25 Pkt</span></li>
+    <li><a href="#renten">Annuität &amp; Ewige Rente</a> <span class="badge badge-red">🔴 Pflicht</span> <span class="badge badge-orange">📊 15–20 Pkt</span></li>
+    <li><a href="#rendite">Rendite &amp; Risiko (Erwartungswert, Standardabweichung)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–20 Pkt</span></li>
+    <li><a href="#portfolio">Portfoliotheorie (Markowitz)</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–20 Pkt</span></li>
+    <li><a href="#capm">CAPM — Capital Asset Pricing Model</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#wacc">WACC — Gewichtete Kapitalkosten</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#bewertung">Aktien- &amp; Anleihebewertung</a> <span class="badge badge-orange">🟠 Wichtig</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+    <li><a href="#leverage">Kapitalstruktur &amp; Leverage-Effekt</a> <span class="badge badge-yellow">🟡 Kann kommen</span> <span class="badge badge-orange">📊 10–15 Pkt</span></li>
+  </ol>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 1: ZEITWERT DES GELDES -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="zeitwert">
+  <div class="recipe-header">
+    <div class="recipe-title">1 · Zeitwert des Geldes — Barwert &amp; Zukunftswert</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Kernidee</div>
+  <p style="font-size:.9rem;color:#374151;margin-bottom:8px">1 € heute ist mehr wert als 1 € in der Zukunft — weil man den heutigen Euro anlegen und verzinsen kann. Alle CF-Berechnungen bauen darauf auf.</p>
+
+  <div class="label">Formeln</div>
+  <div class="formula">Zukunftswert:  FV = PV × (1 + r)ⁿ
+Barwert:       PV = FV / (1 + r)ⁿ   =   FV × (1+r)⁻ⁿ
+
+r = Kalkulationszinssatz (Diskontierungsrate)
+n = Anzahl Perioden
+Abzinsungsfaktor: (1+r)⁻ⁿ = 1 / (1+r)ⁿ</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Was ist gesucht — Zukunftswert oder Barwert?</h3>
+      <p>Zukunftswert: Wie viel ist ein heutiger Betrag in n Jahren wert? → FV = PV × (1+r)ⁿ</p>
+      <p>Barwert: Wie viel ist ein zukünftiger Betrag heute wert? → PV = FV / (1+r)ⁿ</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Werte einsetzen und ausrechnen</h3>
+      <p>Achte auf die Einheit des Zinssatzes: r = 6% → r = 0,06 in der Formel. Nicht 6 einsetzen!</p>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Bei mehreren Zahlungszeitpunkten: jeden Cashflow einzeln diskontieren</h3>
+      <p>Jeder CF bekommt seinen eigenen Abzinsungsfaktor abhängig von seinem Zeitpunkt t.</p>
+      <div class="formula">PV_gesamt = Σ CF_t / (1+r)^t  für t = 1 bis n</div>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel</div>
+    <p><strong>Aufgabe A — Zukunftswert:</strong> Du legst heute 2.000 € zu 5% p.a. für 4 Jahre an. Wie viel hast du am Ende?</p>
+    <div class="formula">FV = 2.000 × (1,05)⁴ = 2.000 × 1,2155 = <strong>2.431 €</strong></div>
+    <p><strong>Aufgabe B — Barwert:</strong> Du erhältst in 3 Jahren 5.000 €. Kalkulationszins 8%. Was ist das heute wert?</p>
+    <div class="formula">PV = 5.000 / (1,08)³ = 5.000 / 1,2597 = <strong>3.969 €</strong></div>
+    <p><strong>Aufgabe C — Mehrere Cashflows:</strong> Zahlungen: Jahr 1: 1.000 €, Jahr 2: 2.000 €, Jahr 3: 3.000 €. r = 10%</p>
+    <div class="formula">PV₁ = 1.000 / 1,10¹ =   909,09 €
+PV₂ = 2.000 / 1,10² = 1.652,89 €
+PV₃ = 3.000 / 1,10³ = 2.253,94 €
+PV_gesamt =           <strong>4.815,92 €</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Zeitstrahl zeichnen — immer! Fehler passieren fast immer beim falschen Zeitpunkt.</li>
+      <li>r in Dezimalzahl umrechnen: 6% = 0,06. Nie 6 in die Formel einsetzen.</li>
+      <li>Wenn CF am Anfang einer Periode (t=0): kein Abzinsen nötig — Betrag bleibt wie er ist.</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>r als Prozent statt Dezimalzahl: FV = 1000 × (1+6)⁵ statt × (1+0,06)⁵</li>
+      <li>n falsch zählen: "in 3 Jahren" → n=3, nicht n=4 (Perioden, nicht Jahreszahlen)</li>
+      <li>Barwert und Zukunftswert vertauschen: PV = FV × (1+r)ⁿ ist FALSCH</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 2: KAPITALWERT (NPV) -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="npv">
+  <div class="recipe-header">
+    <div class="recipe-title">2 · Kapitalwert (NPV) — Investitionsentscheidung</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 20–30 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Formel</div>
+  <div class="formula">NPV = −I₀ + Σ (CF_t / (1+r)^t)   für t = 1 bis n
+
+I₀  = Anfangsinvestition (negativ, weil Auszahlung)
+CF_t = Cashflow in Periode t (nach Steuern, vor Finanzierung)
+r    = Kalkulationszinssatz (= Opportunitätskosten des Kapitals)
+n    = Laufzeit</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Anfangsinvestition I₀ identifizieren (t=0)</h3>
+      <p>Alles, was heute gezahlt wird, ist I₀ — tritt als negatives Vorzeichen auf.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Jeden zukünftigen Cashflow diskontieren</h3>
+      <div class="formula">PV(CF_t) = CF_t / (1+r)^t</div>
+      <p>Liquidationserlös am Ende der Laufzeit ebenfalls diskontieren (CF im letzten Jahr).</p>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Entscheidungsregel anwenden</h3>
+      <div class="formula">NPV &gt; 0  →  Investition durchführen (schafft Wert)
+NPV = 0  →  Investition gerade noch akzeptabel
+NPV &lt; 0  →  Investition ablehnen (vernichtet Wert)
+Bei Alternativen: höchster NPV gewinnt</div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Interpretation formulieren</h3>
+      <p>NPV = 5.000 € bedeutet: Die Investition schafft heute 5.000 € mehr Wert als die beste Alternative (Opportunitätskosten = Kalkulationszinssatz).</p>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel (angelehnt an Klausur)</div>
+    <p><strong>Investition:</strong> I₀ = 10.000 €, Laufzeit 3 Jahre, r = 10%, Liquidationserlös Jahr 3 = 1.000 €</p>
+    <table class="cf-table">
+      <tr><th>Jahr</th><th>CF (€)</th><th>Abzinsungsfaktor (1,10)⁻ᵗ</th><th>Barwert (€)</th></tr>
+      <tr><td>0 (I₀)</td><td>−10.000</td><td>1,0000</td><td>−10.000,00</td></tr>
+      <tr><td>1</td><td>4.000</td><td>0,9091</td><td>3.636,36</td></tr>
+      <tr><td>2</td><td>4.000</td><td>0,8264</td><td>3.305,79</td></tr>
+      <tr><td>3</td><td>5.000 + 1.000</td><td>0,7513</td><td>4.507,89</td></tr>
+      <tr class="total"><td colspan="3">NPV</td><td><strong>+1.450,04 €</strong></td></tr>
+    </table>
+    <div class="formula">NPV = −10.000 + 3.636,36 + 3.305,79 + 4.507,89 = <strong>+1.450,04 €</strong>
+→ NPV &gt; 0: <strong>Investition durchführen!</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Tabelle anlegen: Jahr | CF | Abzinsungsfaktor | Barwert — das gibt Teilpunkte auch bei Rechenfehlern.</li>
+      <li>Liquidationserlös am Ende immer dem letzten CF addieren (gleicher Zeitpunkt, gleicher Abzinsungsfaktor).</li>
+      <li>r ist die geforderte Mindestrendite — also die Opportunitätskosten, nicht der Kreditzins!</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>I₀ mit positivem Vorzeichen einsetzen → NPV wird zu hoch</li>
+      <li>Liquidationserlös vergessen oder doppelt abzinsen</li>
+      <li>Abzinsungsfaktor für Jahr t mit (1+r)^t multiplizieren statt dividieren</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 3: INTERNER ZINSFUSS (IRR) -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="irr">
+  <div class="recipe-header">
+    <div class="recipe-title">3 · Interner Zinsfuß (IRR)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–25 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Was ist der IRR?</div>
+  <p style="font-size:.9rem;color:#374151;margin-bottom:8px">Der IRR ist der Zinssatz r*, bei dem der NPV genau 0 ist. Er gibt die Rendite an, die die Investition tatsächlich erwirtschaftet.</p>
+
+  <div class="formula">NPV(r*) = −I₀ + Σ CF_t / (1+r*)^t = 0   → r* gesucht</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Probierweise zwei Zinssätze wählen</h3>
+      <p>Wähle r_tief (NPV positiv) und r_hoch (NPV negativ). Normalerweise gibt die Aufgabe einen Hinweis.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>NPV für beide Zinssätze berechnen</h3>
+      <p>Vollständige NPV-Berechnung für r_tief und r_hoch (wie Rezept 2).</p>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Lineare Interpolation</h3>
+      <div class="formula">IRR = r_tief + (r_hoch − r_tief) × NPV_tief / (NPV_tief − NPV_hoch)
+
+Merke: NPV_tief ist positiv, NPV_hoch ist negativ
+→ (NPV_tief − NPV_hoch) ist die Summe der Beträge</div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Entscheidungsregel</h3>
+      <div class="formula">IRR &gt; Kalkulationszinssatz r  →  Investition durchführen
+IRR &lt; Kalkulationszinssatz r  →  Investition ablehnen
+Bei Alternativen: höchster IRR gewinnt</div>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel</div>
+    <p><strong>Investition:</strong> I₀ = 10.000 €, CF₁ = 4.000 €, CF₂ = 4.000 €, CF₃ = 6.000 €. Kalkulationszins = 10%</p>
+    <p><strong>Schritt 1+2: NPV bei r = 10% und r = 15% berechnen</strong></p>
+    <table class="cf-table">
+      <tr><th>Jahr</th><th>CF (€)</th><th>PV bei 10%</th><th>PV bei 15%</th></tr>
+      <tr><td>0</td><td>−10.000</td><td>−10.000,00</td><td>−10.000,00</td></tr>
+      <tr><td>1</td><td>4.000</td><td>3.636,36</td><td>3.478,26</td></tr>
+      <tr><td>2</td><td>4.000</td><td>3.305,79</td><td>3.025,44</td></tr>
+      <tr><td>3</td><td>6.000</td><td>4.507,89</td><td>3.945,97</td></tr>
+      <tr class="total"><td colspan="2">NPV</td><td><strong>+1.450,04 €</strong></td><td><strong>−550,33 €</strong></td></tr>
+    </table>
+    <p><strong>Schritt 3: Lineare Interpolation</strong></p>
+    <div class="formula">IRR = 10% + (15% − 10%) × 1.450,04 / (1.450,04 + 550,33)
+    = 10% + 5% × 1.450,04 / 2.000,37
+    = 10% + 5% × 0,7249
+    = 10% + 3,62%
+    = <strong>13,62%</strong></div>
+    <div class="formula">IRR = 13,62% &gt; Kalkulationszins 10% → <strong>Investition durchführen!</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Interpolation nur genau, wenn r_tief und r_hoch nah beieinander liegen (≤ 5 Prozentpunkte).</li>
+      <li>Wenn die Aufgabe NPV-Werte vorgibt (ohne eigene Berechnung): direkt interpolieren.</li>
+      <li>Formel merken: IRR = r_tief + Δr × NPV_tief / (NPV_tief − NPV_hoch) — Δr ist immer positiv.</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Formel falsch: (NPV_tief − NPV_hoch) im Nenner ist positiv (z.B. 1.450 − (−550) = 2.000)</li>
+      <li>NPV_hoch positiv statt negativ wählen → Interpolation funktioniert nicht</li>
+      <li>Nur IRR berechnen, aber Entscheidungsregel vergessen (Vergleich mit Kalkulationszins)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 4: ANNUITÄT & EWIGE RENTE -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="renten">
+  <div class="recipe-header">
+    <div class="recipe-title">4 · Annuität &amp; Ewige Rente</div>
+    <div class="recipe-meta">
+      <span class="badge badge-red">🔴 Pflicht</span>
+      <span class="recipe-pts">📊 15–20 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Alle Formeln auf einen Blick</div>
+  <div class="formula">— Endliche Rente (Annuität, nachschüssig) —
+BW = R × [1 − (1+r)⁻ⁿ] / r   (Rentenbarwertfaktor × Rate)
+KW = R × [(1+r)ⁿ − 1] / r    (Rentenendwertfaktor × Rate)
+
+— Annuität aus Barwert berechnen —
+R = BW × r / [1 − (1+r)⁻ⁿ]  (= BW / Rentenbarwertfaktor)
+
+— Ewige Rente (perpetuity) —
+BW = R / r
+
+— Wachsende ewige Rente (Gordon Growth Model) —
+BW = R₁ / (r − g)    (r &gt; g zwingend erforderlich!)</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Typ identifizieren: endliche Rente, ewige Rente oder wachsend?</h3>
+      <p>Endlich: n Perioden, gleiche Rate R. Ewig: n → ∞. Wachsend ewig: Rate wächst jährlich um g%.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Formel anwenden und Rentenbarwertfaktor berechnen</h3>
+      <div class="formula">RBWF = [1 − (1+r)⁻ⁿ] / r   →  BW = R × RBWF</div>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Nachschüssig vs. vorschüssig prüfen</h3>
+      <div class="warn"><div class="warn-header">⚠ Vorschüssige Rente</div>Wenn Zahlung am Anfang der Periode: BW_vorschüssig = BW_nachschüssig × (1+r) — einen Zinszeitraum aufzinsen!</div>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständige Zahlenbeispiele</div>
+    <p><strong>A — Endliche Rente:</strong> 1.000 €/Jahr, 5 Jahre, r = 8%</p>
+    <div class="formula">RBWF = [1 − (1,08)⁻⁵] / 0,08
+       = [1 − 0,6806] / 0,08
+       = 0,3194 / 0,08 = 3,9927
+BW = 1.000 × 3,9927 = <strong>3.992,71 €</strong></div>
+    <p><strong>B — Ewige Rente:</strong> 500 €/Jahr ewig, r = 5%</p>
+    <div class="formula">BW = 500 / 0,05 = <strong>10.000 €</strong></div>
+    <p><strong>C — Wachsende ewige Rente:</strong> Erste Zahlung 600 €, Wachstum g = 2%, r = 7%</p>
+    <div class="formula">BW = 600 / (0,07 − 0,02) = 600 / 0,05 = <strong>12.000 €</strong></div>
+    <p><strong>D — Annuität aus Kredit:</strong> Kredit 20.000 €, 4 Jahre, r = 6%. Jährliche Rate?</p>
+    <div class="formula">RBWF = [1 − (1,06)⁻⁴] / 0,06 = [1 − 0,7921] / 0,06 = 3,4651
+R = 20.000 / 3,4651 = <strong>5.772,79 €/Jahr</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Ewige Rente BW = R/r auswendig lernen — taucht in fast jeder Klausur auf.</li>
+      <li>Bei wachsender ewiger Rente: r &gt; g prüfen, sonst kein endlicher Barwert!</li>
+      <li>Annuität aus Kredit: BW ist der Kreditbetrag, R ist die gesuchte Rate.</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Ewige Rente: BW = R × r statt R / r — fataler Vorzeichenfehler</li>
+      <li>Vorschüssig/nachschüssig verwechseln — immer lesen, wann die erste Zahlung erfolgt</li>
+      <li>Bei BW = R₁/(r−g): R₁ ist die Zahlung in t=1, nicht in t=0</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 5: RENDITE & RISIKO -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="rendite">
+  <div class="recipe-header">
+    <div class="recipe-title">5 · Rendite &amp; Risiko</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–20 Pkt</span>
+    </div>
+  </div>
+
+  <div class="formula">Rendite einer Aktie:
+R = (P₁ − P₀ + D) / P₀  × 100%
+  P₀ = Kaufpreis, P₁ = Verkaufspreis, D = Dividende
+
+Erwartete Rendite (mit Szenarien):
+E(R) = Σ pᵢ × Rᵢ
+
+Varianz (Risiko):
+σ² = Σ pᵢ × [Rᵢ − E(R)]²
+
+Standardabweichung:
+σ = √σ²   (in %, gleiche Einheit wie Rendite)</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Erwartungswert E(R) berechnen</h3>
+      <p>Wahrscheinlichkeit × Rendite für jedes Szenario addieren.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Varianz σ² berechnen</h3>
+      <p>Für jedes Szenario: pᵢ × (Rᵢ − E(R))². Alle addieren.</p>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Standardabweichung σ = √σ²</h3>
+      <p>σ ist die Risikomaßzahl — je größer, desto unsicherer die Rendite. Einheit: %.</p>
+    </div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel</div>
+    <p><strong>Aktie mit 3 Szenarien:</strong></p>
+    <table class="cf-table">
+      <tr><th>Szenario</th><th>Wahrscheinlichkeit</th><th>Rendite Rᵢ</th><th>pᵢ × Rᵢ</th><th>pᵢ × (Rᵢ − E(R))²</th></tr>
+      <tr><td>Boom</td><td>30%</td><td>25%</td><td>7,5%</td><td>0,30 × (25−10)² = 67,5</td></tr>
+      <tr><td>Normal</td><td>50%</td><td>10%</td><td>5,0%</td><td>0,50 × (10−10)² =  0,0</td></tr>
+      <tr><td>Rezession</td><td>20%</td><td>−5%</td><td>−1,0%</td><td>0,20 × (−5−10)² = 45,0</td></tr>
+      <tr class="total"><td colspan="3">E(R)</td><td><strong>11,5%</strong></td><td>σ² = <strong>112,5</strong></td></tr>
+    </table>
+    <div class="formula">E(R) = 7,5% + 5,0% − 1,0% = <strong>11,5%</strong>
+
+Varianz σ² = 67,5 + 0 + 45,0 = <strong>112,5 (%²)</strong>
+
+Standardabweichung σ = √112,5 = <strong>10,61%</strong></div>
+
+    <p><strong>Aktienrendite Beispiel:</strong> Kauf bei 50 €, Verkauf nach 1 Jahr bei 55 €, Dividende 2 €</p>
+    <div class="formula">R = (55 − 50 + 2) / 50 = 7 / 50 = <strong>14%</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Zwischenschritt aufschreiben: E(R) zuerst, dann Varianz. Nie überspringen.</li>
+      <li>Die Einheit von σ² ist %² — keine direkte Aussage möglich. Immer √ ziehen.</li>
+      <li>Kovarianz Formel: σ₁₂ = Σ pᵢ × (R₁ᵢ − E(R₁)) × (R₂ᵢ − E(R₂)) — für Portfolio nötig.</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Varianzformel: (Rᵢ − E(R)) nicht quadrieren → Ergebnis immer 0 (Auslöschungseffekt)</li>
+      <li>σ² als Risikokennzahl ausgeben statt σ — immer Wurzel ziehen</li>
+      <li>Rendite: Dividende vergessen bei der Renditeformel (Gesamtrendite = Kursgewinn + Dividende)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 6: PORTFOLIOTHEORIE (MARKOWITZ) -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="portfolio">
+  <div class="recipe-header">
+    <div class="recipe-title">6 · Portfoliotheorie (Markowitz)</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–20 Pkt</span>
+    </div>
+  </div>
+
+  <div class="formula">Portfolio aus 2 Assets (Gewichte w₁ + w₂ = 1):
+
+Rendite:  E(Rₚ) = w₁·E(R₁) + w₂·E(R₂)
+
+Varianz:  σ²ₚ = w₁²·σ₁² + w₂²·σ₂² + 2·w₁·w₂·σ₁₂
+
+Kovarianz:   σ₁₂ = ρ₁₂ · σ₁ · σ₂
+Korrelation: −1 ≤ ρ ≤ +1
+
+ρ = −1:  perfekte Diversifikation möglich
+ρ =  0:  unkorreliert, deutlicher Diversifikationseffekt
+ρ = +1:  kein Diversifikationseffekt (σₚ = w₁σ₁ + w₂σ₂)</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Portfolio-Rendite berechnen</h3><p>E(Rₚ) = gewichteter Durchschnitt der Einzelrenditen. Einfachster Schritt — niemals vergessen.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Kovarianz berechnen (wenn nicht gegeben)</h3>
+      <div class="formula">σ₁₂ = ρ₁₂ × σ₁ × σ₂</div>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Portfolio-Varianz berechnen (3 Terme!)</h3>
+      <div class="formula">σ²ₚ = w₁²σ₁² + w₂²σ₂² + 2w₁w₂σ₁₂
+                 ↑Term 1  ↑Term 2  ↑Term 3 (Kovarianzterm)</div>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Diversifikationseffekt zeigen</h3><p>σₚ vergleichen mit gewichtetem Durchschnitt w₁σ₁ + w₂σ₂. Wenn σₚ kleiner: Diversifikation wirkt.</p></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel</div>
+    <p><strong>Asset A:</strong> E(R) = 12%, σ = 20% &nbsp;|&nbsp; <strong>Asset B:</strong> E(R) = 8%, σ = 10% &nbsp;|&nbsp; ρ = 0,3, Gewichte: je 50%</p>
+    <div class="formula">E(Rₚ) = 0,5 × 12% + 0,5 × 8% = <strong>10%</strong>
+
+σ₁₂ = 0,3 × 20% × 10% = 0,3 × 0,20 × 0,10 = 0,006
+
+σ²ₚ = (0,5)²×(0,20)² + (0,5)²×(0,10)² + 2×0,5×0,5×0,006
+     = 0,25×0,04 + 0,25×0,01 + 0,5×0,006
+     = 0,01 + 0,0025 + 0,003
+     = <strong>0,0155</strong>
+
+σₚ = √0,0155 = <strong>12,45%</strong></div>
+    <div class="formula">Ohne Diversifikation: 0,5×20% + 0,5×10% = 15%
+Mit Diversifikation:  σₚ = 12,45% &lt; 15%
+→ Risikoersparnis durch Diversifikation: <strong>2,55 Prozentpunkte</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Kovarianzterm 2·w₁·w₂·σ₁₂ — den Faktor "2" vergessen ist der häufigste Fehler.</li>
+      <li>σ in Dezimalzahlen rechnen (σ=20% → 0,20), dann zum Schluss in % umrechnen.</li>
+      <li>Wenn ρ = 0 gegeben: Kovarianzterm fällt weg (vereinfacht die Aufgabe stark).</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Faktor 2 im Kovarianzterm vergessen: σ²ₚ = w₁²σ₁² + w₂²σ₂² + w₁w₂σ₁₂ (statt 2w₁w₂) → zu kleines Ergebnis</li>
+      <li>σ% nicht in Dezimalzahl umrechnen vor dem Quadrieren: (20)² = 400 statt (0,20)² = 0,04</li>
+      <li>σ₁₂ = ρ×σ₁×σ₂ vergessen und stattdessen ρ direkt einsetzen</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 7: CAPM -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="capm">
+  <div class="recipe-header">
+    <div class="recipe-title">7 · CAPM — Capital Asset Pricing Model</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="formula">E(Rᵢ) = Rf + βᵢ × (E(Rm) − Rf)
+
+Rᵢ  = geforderte Rendite auf Aktie i
+Rf  = risikoloser Zinssatz (Staatsanleihen, z.B. 3%)
+βᵢ  = Beta — systematisches Risiko der Aktie
+E(Rm) = erwartete Marktrendite (z.B. 10%)
+(E(Rm) − Rf) = Marktrisikoprämie (MRP)
+
+Beta-Interpretation:
+β = 1,0  → Aktie schwankt wie der Markt
+β &gt; 1,0  → aggressiver (z.B. β=1,5: +10% Markt → +15% Aktie)
+β &lt; 1,0  → defensiver (z.B. β=0,5: +10% Markt → +5% Aktie)
+β = 0    → kein systematisches Risiko (risikoloser Zins)</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Marktrisikoprämie berechnen</h3><div class="formula">MRP = E(Rm) − Rf</div><p>Typisch: 5–8% in Europa. Häufig direkt gegeben.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>CAPM-Formel einsetzen</h3><div class="formula">E(Rᵢ) = Rf + β × MRP</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Bewertung: Über- oder unterbewertete Aktie?</h3><div class="formula">Tatsächliche erwartete Rendite &gt; CAPM-Rendite → Aktie unterbewert (kaufen)
+Tatsächliche erwartete Rendite &lt; CAPM-Rendite → Aktie überbewert (verkaufen)</div></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel</div>
+    <p><strong>Gegeben:</strong> Rf = 3%, E(Rm) = 10%, β_A = 1,5, β_B = 0,7</p>
+    <div class="formula">MRP = 10% − 3% = 7%
+
+Aktie A (β=1,5, aggressiv):
+E(R_A) = 3% + 1,5 × 7% = 3% + 10,5% = <strong>13,5%</strong>
+
+Aktie B (β=0,7, defensiv):
+E(R_B) = 3% + 0,7 × 7% = 3% + 4,9% = <strong>7,9%</strong></div>
+    <p><strong>Beta berechnen</strong> (wenn Kovarianz gegeben):</p>
+    <div class="formula">β = σᵢm / σ²m  =  Cov(Rᵢ, Rm) / Var(Rm)
+
+Beispiel: Cov(R_A, Rm) = 0,03, σ²m = 0,02
+β_A = 0,03 / 0,02 = <strong>1,5</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Formel auswendig: Rf + β × (Rm − Rf) — die Klammer ist die Marktrisikoprämie.</li>
+      <li>Beta-Interpretation immer nennen: β &gt; 1 = "aggressiv", β &lt; 1 = "defensiv".</li>
+      <li>CAPM gibt die Mindestrendite — nicht die erwartete Rendite der Aktie selbst.</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>E(Rm) statt MRP multiplizieren: E(Rᵢ) = Rf + β × E(Rm) → falsch</li>
+      <li>Beta-Definition verwechseln: β misst nur systematisches (Markt-)Risiko, nicht Gesamtrisiko</li>
+      <li>β = Kovarianz/Varianz — nicht Kovarianz/Standardabweichung</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 8: WACC -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="wacc">
+  <div class="recipe-header">
+    <div class="recipe-title">8 · WACC — Gewichtete Kapitalkosten</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="formula">WACC = (E/V) × Re + (D/V) × Rd × (1 − T)
+
+E  = Marktwert Eigenkapital
+D  = Marktwert Fremdkapital (zinstragendes)
+V  = E + D  (Gesamtkapital)
+Re = Eigenkapitalkosten (aus CAPM oder gegeben)
+Rd = Fremdkapitalkosten (Kreditzinssatz)
+T  = Steuersatz (Tax Shield: Zinsen steuerlich absetzbar)</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Kapitalstruktur-Gewichte berechnen</h3><div class="formula">E/V = Eigenkapitalanteil  (z.B. 600/1.000 = 0,6 = 60%)
+D/V = Fremdkapitalanteil (z.B. 400/1.000 = 0,4 = 40%)</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Eigenkapitalkosten Re bestimmen</h3><p>Oft aus CAPM: Re = Rf + β × MRP. Oder direkt gegeben.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>WACC einsetzen — Tax Shield beachten</h3><p>Fremdkapitalkosten werden mit (1−T) multipliziert, weil Zinsen steuerlich absetzbar sind (Tax Shield). Eigenkapitalkosten haben keinen Steuerabzug.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>WACC als Diskontierungsrate für NPV verwenden</h3><p>WACC = Mindestrendite für das Gesamtunternehmen. Wird als r im NPV-Kalkül eingesetzt.</p></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel</div>
+    <p><strong>Gegeben:</strong> E = 600.000 €, D = 400.000 €, Re = 12%, Rd = 6%, T = 30%</p>
+    <div class="formula">V = 600.000 + 400.000 = 1.000.000 €
+E/V = 0,60  |  D/V = 0,40
+
+WACC = 0,60 × 12% + 0,40 × 6% × (1 − 0,30)
+     = 7,20% + 0,40 × 6% × 0,70
+     = 7,20% + 1,68%
+     = <strong>8,88%</strong></div>
+    <p>Interpretation: Das Unternehmen muss auf sein Gesamtkapital mindestens 8,88% Rendite erwirtschaften — sonst vernichtet es Wert.</p>
+    <div class="formula">Tax Shield: Ohne Steuern wäre WACC = 0,60×12% + 0,40×6% = 9,60%
+Steuervorteil des FK: 9,60% − 8,88% = <strong>0,72 Prozentpunkte</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Tax Shield (1−T) gilt nur für Fremdkapitalkosten — niemals für Eigenkapitalkosten!</li>
+      <li>Wenn Re nicht gegeben: aus CAPM berechnen und dann in WACC einsetzen (Zweischrittaufgabe).</li>
+      <li>WACC sinkt, wenn mehr FK genutzt wird (wegen Tax Shield) — aber Risiko steigt.</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>(1−T) auch auf Eigenkapitalkosten anwenden → WACC zu niedrig</li>
+      <li>Buchwerte statt Marktwerte für Gewichte verwenden (Aufgabe fast immer: "Marktwert")</li>
+      <li>Re und Rd vertauschen: Re ist immer höher als Rd (höheres Risiko = höhere Rendite)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 9: AKTIEN & ANLEIHEBEWERTUNG -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="bewertung">
+  <div class="recipe-header">
+    <div class="recipe-title">9 · Aktien- &amp; Anleihebewertung</div>
+    <div class="recipe-meta">
+      <span class="badge badge-orange">🟠 Wichtig</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Aktienbewertung — Dividenden-Diskontierungsmodell (DDM)</div>
+  <div class="formula">Ohne Wachstum (ewige gleiche Dividende):
+P₀ = D / Re
+
+Mit konstantem Wachstum g (Gordon Growth Model):
+P₀ = D₁ / (Re − g)   wobei D₁ = D₀ × (1+g)
+
+Implizite Eigenkapitalrendite (wenn P₀ bekannt):
+Re = D₁/P₀ + g   (Dividendenrendite + Wachstumsrate)</div>
+
+  <div class="label">Anleihebewertung</div>
+  <div class="formula">P = Σ Coupon / (1+r)^t  +  Nennwert / (1+r)^n
+
+Coupon = Nennwert × Couponrate (jährliche Zinszahlung)
+r = Marktzinssatz (YTM = Yield to Maturity)
+n = Restlaufzeit
+
+Daumenregel: Marktzins &gt; Couponrate → Anleihe unter Nennwert
+             Marktzins &lt; Couponrate → Anleihe über Nennwert</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Typ identifizieren: Aktie oder Anleihe?</h3><p>Aktie: Dividenden + Kurswachstum. Anleihe: feste Coupons + Nennwert bei Fälligkeit.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Cashflows des Wertpapiers aufstellen</h3><p>Anleihe: t=1 bis n: Coupon; t=n: Coupon + Nennwert. Aktie: t=1 bis ∞: wachsende Dividenden.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Alle Cashflows auf t=0 diskontieren und addieren</h3></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständige Zahlenbeispiele</div>
+    <p><strong>A — Aktie (Gordon Growth Model):</strong> D₀ = 3 €, g = 4%, Re = 10%</p>
+    <div class="formula">D₁ = 3 × 1,04 = 3,12 €
+P₀ = 3,12 / (0,10 − 0,04) = 3,12 / 0,06 = <strong>52,00 €</strong></div>
+    <p><strong>B — Anleihe:</strong> Nennwert 1.000 €, Couponrate 5%, Laufzeit 3 Jahre, Marktzins 7%</p>
+    <table class="cf-table">
+      <tr><th>Jahr</th><th>Cashflow</th><th>Abzinsungsfaktor (1,07)⁻ᵗ</th><th>Barwert</th></tr>
+      <tr><td>1</td><td>50 €</td><td>0,9346</td><td>46,73 €</td></tr>
+      <tr><td>2</td><td>50 €</td><td>0,8734</td><td>43,67 €</td></tr>
+      <tr><td>3</td><td>1.050 €</td><td>0,8163</td><td>857,11 €</td></tr>
+      <tr class="total"><td colspan="3">Anleihepreis P</td><td><strong>947,51 €</strong></td></tr>
+    </table>
+    <div class="formula">Marktzins 7% &gt; Couponrate 5% → Anleihe unter Nennwert (947,51 &lt; 1.000) ✓</div>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Gordon-Modell: D₀ statt D₁ einsetzen → P₀ ist um Faktor (1+g) zu niedrig</li>
+      <li>Anleihe: Nennwert im letzten Jahr vergessen → Preis viel zu niedrig</li>
+      <li>Daumenregel falsch: Zins↑ → Anleihepreis↓ (inverse Beziehung)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REZEPT 10: KAPITALSTRUKTUR & LEVERAGE -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="recipe" id="leverage">
+  <div class="recipe-header">
+    <div class="recipe-title">10 · Kapitalstruktur &amp; Leverage-Effekt</div>
+    <div class="recipe-meta">
+      <span class="badge badge-yellow">🟡 Kann kommen</span>
+      <span class="recipe-pts">📊 10–15 Pkt</span>
+    </div>
+  </div>
+
+  <div class="label">Modigliani-Miller (MM) — Theoretische Basis</div>
+  <div class="formula">MM Theorem I (ohne Steuern):
+V_L = V_U   (Kapitalstruktur irrelevant ohne Steuern)
+
+MM Theorem I (mit Steuern):
+V_L = V_U + T × D   (Tax Shield erhöht Unternehmenswert)
+T = Steuersatz, D = Fremdkapital
+
+MM Theorem II (ohne Steuern):
+Re = Ru + (Ru − Rd) × D/E
+→ EK-Kosten steigen linear mit Verschuldungsgrad</div>
+
+  <div class="label">Leverage-Effekt</div>
+  <div class="formula">Re = EBIT/EK (unverschuldet) + (EBIT/EK − Rd) × D/E
+oder vereinfacht:
+Re_verschuldet = Ru + (Ru − Rd) × D/E
+
+Leverage wirkt positiv solange: Ru &gt; Rd
+Leverage wirkt negativ (Leverage-Risiko) wenn: EBIT sinkt</div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>EK-Rendite unverschuldet berechnen: Ru = EBIT/Gesamtkapital</h3></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Zinsen auf FK berechnen: Zinsen = Rd × D</h3></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>EK-Rendite verschuldet: Re = (EBIT − Zinsen) / EK</h3></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Leverage-Effekt zeigen: Re verschuldet &gt; Ru wenn Ru &gt; Rd</h3></div></div>
+  </div>
+
+  <div class="example">
+    <div class="example-header">✦ Vollständiges Zahlenbeispiel</div>
+    <p><strong>EBIT = 100.000 €, Rd = 6%</strong></p>
+    <table class="cf-table">
+      <tr><th>Szenario</th><th>A: 100% EK</th><th>B: 50% EK / 50% FK</th></tr>
+      <tr><td>Gesamtkapital</td><td>1.000.000 €</td><td>1.000.000 €</td></tr>
+      <tr><td>Eigenkapital</td><td>1.000.000 €</td><td>500.000 €</td></tr>
+      <tr><td>Fremdkapital</td><td>—</td><td>500.000 €</td></tr>
+      <tr><td>EBIT</td><td>100.000 €</td><td>100.000 €</td></tr>
+      <tr><td>− Zinsen (6% × D)</td><td>—</td><td>−30.000 €</td></tr>
+      <tr class="highlight"><td>Gewinn</td><td>100.000 €</td><td>70.000 €</td></tr>
+      <tr class="total"><td>EK-Rendite Re</td><td>10,0%</td><td><strong>14,0%</strong></td></tr>
+    </table>
+    <div class="formula">Leverage-Formel Probe:
+Re = 10% + (10% − 6%) × (500.000/500.000)
+   = 10% + 4% × 1
+   = <strong>14% ✓</strong>
+
+Tax Shield (bei T = 30%):
+V_L = V_U + T×D = 1.000.000 + 0,30×500.000 = <strong>1.150.000 €</strong></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-header">💡 Klausur-Tipp</div>
+    <ul>
+      <li>Leverage wirkt positiv nur wenn Ru &gt; Rd — wenn EBIT fällt, kann Leverage die EK-Rendite stark ins Minus drücken.</li>
+      <li>MM ohne Steuern: Kapitalstruktur irrelevant — eine Vereinfachung der Realität.</li>
+      <li>Tax Shield: T × D = konkreter Wert, um den das Unternehmen durch FK-Finanzierung mehr wert ist.</li>
+    </ul>
+  </div>
+
+  <div class="errors">
+    <h3>⚡ Häufige Fehler</h3>
+    <ul>
+      <li>Leverage-Effekt-Formel: Re = Ru + (Ru − Rd) × D/E — D/E ist Verhältnis FK zu EK, nicht zu Gesamtkapital</li>
+      <li>Tax Shield vergessen: Ohne Tax Shield ist MM I trivial (V bleibt gleich)</li>
+      <li>Leverage als immer positiv darstellen — bei sinkendem EBIT und hoher Verschuldung wirkt Leverage negativ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FORMELREFERENZ -->
+<section class="ref-section">
+  <h2>📋 Formelreferenz — alle Formeln auf einen Blick</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h4>Zeitwert</h4>
+      <div class="formula">FV = PV × (1+r)ⁿ</div>
+      <div class="formula">PV = FV / (1+r)ⁿ</div>
+    </div>
+    <div class="ref-card">
+      <h4>NPV</h4>
+      <div class="formula">NPV = −I₀ + Σ CF_t/(1+r)^t</div>
+      <div class="formula">NPV &gt; 0 → investieren</div>
+    </div>
+    <div class="ref-card">
+      <h4>IRR-Interpolation</h4>
+      <div class="formula">IRR = r_l + Δr × NPV_l/(NPV_l−NPV_h)</div>
+    </div>
+    <div class="ref-card">
+      <h4>Renten</h4>
+      <div class="formula">BW = R × [1−(1+r)⁻ⁿ]/r</div>
+      <div class="formula">Ewig: BW = R/r</div>
+      <div class="formula">Wachsend: BW = R₁/(r−g)</div>
+    </div>
+    <div class="ref-card">
+      <h4>Rendite &amp; Risiko</h4>
+      <div class="formula">E(R) = Σ pᵢRᵢ</div>
+      <div class="formula">σ² = Σ pᵢ(Rᵢ−E(R))²</div>
+    </div>
+    <div class="ref-card">
+      <h4>Portfolio (2 Assets)</h4>
+      <div class="formula">σ²ₚ = w₁²σ₁²+w₂²σ₂²+2w₁w₂σ₁₂</div>
+      <div class="formula">σ₁₂ = ρ·σ₁·σ₂</div>
+    </div>
+    <div class="ref-card">
+      <h4>CAPM</h4>
+      <div class="formula">E(Rᵢ) = Rf + β×(Rm−Rf)</div>
+      <div class="formula">β = Cov(i,m)/Var(m)</div>
+    </div>
+    <div class="ref-card">
+      <h4>WACC</h4>
+      <div class="formula">= (E/V)Re + (D/V)Rd(1−T)</div>
+    </div>
+    <div class="ref-card">
+      <h4>Aktie (DDM)</h4>
+      <div class="formula">P₀ = D₁/(Re−g)</div>
+      <div class="formula">Re = D₁/P₀ + g</div>
+    </div>
+    <div class="ref-card">
+      <h4>Leverage &amp; MM</h4>
+      <div class="formula">Re = Ru + (Ru−Rd)×D/E</div>
+      <div class="formula">V_L = V_U + T×D</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /page -->
+</body>
+</html>
