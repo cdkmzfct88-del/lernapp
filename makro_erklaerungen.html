@@ -11,11 +11,9 @@
   --green:     #27AE60;
   --green-bg:  #f0faf0;
   --blue:      #2980B9;
-  --blue-bg:   #eef6fd;
   --amber:     #f39c12;
   --amber-bg:  #fffbf0;
   --purple:    #7B68EE;
-  --purple-bg: #f0f0ff;
   --text:      #1a1a1a;
   --text-mid:  #444;
   --muted:     #888;
@@ -34,11 +32,7 @@ body {
 .page { max-width: 860px; margin: 0 auto; padding: 0 24px 100px; }
 
 /* ── Header ── */
-.site-header {
-  padding: 48px 0 28px;
-  border-bottom: 2px solid var(--accent);
-  margin-bottom: 36px;
-}
+.site-header { padding: 48px 0 28px; border-bottom: 2px solid var(--accent); margin-bottom: 36px; }
 .site-header h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -.02em; }
 .site-header .sub { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
 
@@ -49,413 +43,248 @@ body {
   border-radius: 0 10px 10px 0;
   padding: 16px 20px;
   margin-bottom: 36px;
-  font-size: 0.9rem;
-  color: #5a0a0a;
-  line-height: 1.65;
+  font-size: 0.9rem; color: #5a0a0a; line-height: 1.65;
 }
-
-/* ── TOC ── */
-.toc {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 22px 28px;
-  margin-bottom: 52px;
-  box-shadow: var(--shadow);
-}
-.toc h2 {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  color: var(--muted);
-  margin-bottom: 14px;
-  font-weight: 700;
-}
-.toc-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
-@media (max-width: 560px) { .toc-sections { grid-template-columns: 1fr; } }
-.toc-section-title {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--accent);
-  margin: 12px 0 6px;
-}
-.toc ol { padding-left: 18px; }
-.toc li { margin-bottom: 5px; }
-.toc a {
-  color: var(--text-mid);
-  text-decoration: none;
-  font-size: 0.88rem;
-}
-.toc a:hover { color: var(--accent); text-decoration: underline; }
 
 /* ── Badges ── */
-.badge {
-  display: inline-block;
-  font-size: 0.68rem;
-  padding: 2px 9px;
-  border-radius: 99px;
-  margin-left: 6px;
-  vertical-align: middle;
-  font-weight: 700;
-  letter-spacing: .02em;
-}
+.badge { display: inline-block; font-size: 0.68rem; padding: 2px 9px; border-radius: 99px; font-weight: 700; letter-spacing: .02em; }
 .badge-red    { background: #fde8e8; color: #b91c1c; }
 .badge-orange { background: #fef3e2; color: #b45309; }
 .badge-yellow { background: #fefce8; color: #854d0e; }
 
-/* School badges */
-.school-badge {
-  display: inline-block;
-  font-size: 0.68rem;
-  padding: 3px 10px;
-  border-radius: 99px;
-  font-weight: 700;
-  letter-spacing: .03em;
-}
-.school-klassik    { background: #f0f0f0; color: #555; }
-.school-keynes     { background: #dbeafe; color: #1e40af; }
-.school-monetarism { background: #d1fae5; color: #065f46; }
-.school-neoklassik { background: #ede9fe; color: #5b21b6; }
-.school-neue       { background: #fef3c7; color: #92400e; }
+/* ── School badges ── */
+.sb { display: inline-block; font-size: 0.68rem; padding: 3px 10px; border-radius: 99px; font-weight: 700; }
+.sb-klassik  { background: #f0f0f0; color: #555; }
+.sb-keynes   { background: #dbeafe; color: #1e40af; }
+.sb-monetar  { background: #d1fae5; color: #065f46; }
+.sb-neo      { background: #ede9fe; color: #5b21b6; }
+.sb-neue     { background: #fef3c7; color: #92400e; }
 
-/* ── Section divider ── */
-.section-divider {
-  margin: 56px 0 32px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+/* ── Section heading ── */
+.sec-head {
+  display: flex; align-items: center; gap: 14px;
+  margin: 52px 0 20px;
 }
-.section-divider h2 {
-  font-size: 1.3rem;
-  font-weight: 800;
-  white-space: nowrap;
-  letter-spacing: -.01em;
+.sec-head h2 { font-size: 1.2rem; font-weight: 800; white-space: nowrap; letter-spacing: -.01em; }
+.sec-head::after { content: ''; flex: 1; height: 2px; background: var(--border); }
+
+/* ── Comparison table ── */
+.cmp-wrap { overflow-x: auto; margin: 24px 0 44px; border-radius: 10px; box-shadow: var(--shadow); }
+.cmp-table { border-collapse: collapse; width: 100%; min-width: 580px; background: #fff; font-size: 0.85rem; }
+.cmp-table thead th { padding: 12px 16px; text-align: left; font-weight: 700; font-size: 0.77rem; text-transform: uppercase; letter-spacing: .07em; border-bottom: 2px solid var(--border); }
+.cmp-table thead th:first-child { background: #f8f8f8; color: var(--muted); }
+.cmp-table thead th.hk  { background: #f4f4f4; color: #444; }
+.cmp-table thead th.hky { background: #dbeafe; color: #1e40af; }
+.cmp-table thead th.hm  { background: #d1fae5; color: #065f46; }
+.cmp-table thead th.hn  { background: #ede9fe; color: #5b21b6; }
+.cmp-table tbody td { padding: 10px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: top; color: var(--text-mid); }
+.cmp-table tbody td:first-child { font-weight: 600; color: var(--text); background: #fafafa; white-space: nowrap; }
+.cmp-table tbody tr:last-child td { border-bottom: none; }
+.cmp-table .yes { color: #065f46; font-weight: 700; }
+.cmp-table .no  { color: #b91c1c; font-weight: 700; }
+
+/* ── Accordion ── */
+.acc-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.acc-item { background: #fff; border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; }
+.acc-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; cursor: pointer; user-select: none;
+  gap: 12px; transition: background .15s;
+  border-left: 4px solid transparent;
 }
-.section-divider::after {
-  content: '';
-  flex: 1;
-  height: 2px;
-  background: var(--border);
+.acc-item.open .acc-header { border-left-color: var(--accent); background: #fefefe; }
+.acc-item.t-keynes.open .acc-header  { border-left-color: var(--blue); }
+.acc-item.t-monetar.open .acc-header { border-left-color: var(--green); }
+.acc-item.t-neo.open .acc-header     { border-left-color: var(--purple); }
+.acc-item.t-neue.open .acc-header    { border-left-color: var(--amber); }
+.acc-header:hover { background: #f9f9f9; }
+.acc-title-wrap { flex: 1; min-width: 0; }
+.acc-title { font-size: 1rem; font-weight: 700; display: block; }
+.acc-sub   { font-size: 0.78rem; color: var(--muted); display: block; margin-top: 1px; }
+.acc-meta  { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.acc-chevron {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #f0f0f0; display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; color: var(--muted); flex-shrink: 0;
+  transition: transform .3s ease, background .2s;
+}
+.acc-item.open .acc-chevron { transform: rotate(180deg); background: var(--accent-bg); color: var(--accent); }
+
+.acc-body { height: 0; overflow: hidden; transition: height .35s ease; }
+.acc-content {
+  padding: 20px 22px 24px;
+  border-top: 1px solid #f4f4f4;
 }
 
-/* ── Card ── */
-.card {
-  background: #fff;
-  border-left: 4px solid var(--accent);
-  border-radius: 0 12px 12px 0;
-  padding: 26px 28px 22px;
-  margin-bottom: 28px;
-  box-shadow: var(--shadow);
-}
-.card.keynes    { border-left-color: var(--blue); }
-.card.monetar   { border-left-color: var(--green); }
-.card.neoklassik{ border-left-color: var(--purple); }
-.card.neue      { border-left-color: var(--amber); }
-.card.model     { border-left-color: var(--accent); }
-
-.card-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-.card-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -.01em;
-}
-.card-subtitle {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-top: 2px;
-  font-weight: 400;
-}
-.card-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
-
-/* ── Core claim box ── */
-.kernaussage {
+/* ── Kernaussage box ── */
+.kern {
   background: var(--amber-bg);
   border-left: 3px solid var(--amber);
   border-radius: 0 8px 8px 0;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  font-size: 0.9rem;
-  color: #5c3c00;
+  padding: 11px 16px; margin-bottom: 16px;
+  font-size: 0.9rem; color: #5c3c00;
 }
-.kernaussage-tag {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--amber);
-  margin-bottom: 4px;
-}
-.kernaussage p { font-style: italic; font-size: 0.95rem; color: #3a2500; }
+.kern-tag { display: block; font-size: 0.63rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--amber); margin-bottom: 3px; }
+.kern p   { font-style: italic; color: #3a2500; }
 
 /* ── Thesis list ── */
 .thesen { padding-left: 20px; margin: 10px 0; }
 .thesen li { margin-bottom: 7px; font-size: 0.9rem; color: var(--text-mid); }
 .thesen li strong { color: var(--text); }
 
-/* ── Formula box ── */
-.formula {
+/* ── Info grid ── */
+.info-row { display: grid; grid-template-columns: 150px 1fr; gap: 5px 14px; font-size: 0.88rem; margin: 12px 0; }
+.info-row .lbl { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; padding-top: 1px; }
+.info-row .val { color: var(--text-mid); }
+
+/* ── Model step ── */
+.mstep { padding: 13px 0; border-bottom: 1px solid #f2f2f2; }
+.mstep:last-child { border-bottom: none; padding-bottom: 0; }
+.mstep-lbl   { font-size: 0.63rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 700; margin-bottom: 3px; }
+.mstep-title { display: block; font-size: 0.98rem; font-weight: 700; color: var(--text); margin-bottom: 7px; }
+.mstep-body  { font-size: 0.9rem; color: var(--text-mid); }
+.mstep-body p { margin-bottom: 6px; }
+.mstep-body p:last-child { margin-bottom: 0; }
+
+/* ── Formula display ── */
+.fml {
   background: var(--accent-bg);
   border-left: 3px solid var(--accent);
   border-radius: 0 8px 8px 0;
-  padding: 12px 18px;
+  padding: 14px 20px;
   margin: 10px 0;
-  font-size: 0.925rem;
+  font-size: 1.05rem;
   color: #5a0a0a;
-  line-height: 1.9;
+  line-height: 2.3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
 }
-.formula strong { color: var(--accent); }
+.fml .frow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.fml .note { font-size: 0.8rem; color: #8a3020; line-height: 1.5; text-align: center; }
+.fml.green { background: #f0faf0; border-left-color: var(--green); color: #144a28; }
+.fml.green .note { color: #1a5c30; }
+
+/* ── Fraction ── */
+.frac {
+  display: inline-flex; flex-direction: column;
+  align-items: center; vertical-align: middle;
+  line-height: 1.2; margin: 0 3px;
+}
+.frac .num { border-bottom: 1.5px solid currentColor; padding: 1px 5px 3px; min-width: 18px; text-align: center; }
+.frac .den { padding: 3px 5px 1px; min-width: 18px; text-align: center; }
 
 /* ── Insight box ── */
 .insight {
-  background: var(--green-bg);
-  border-left: 3px solid var(--green);
-  border-radius: 0 8px 8px 0;
-  padding: 12px 16px;
-  margin: 14px 0;
-  font-size: 0.9rem;
-  color: #1a3a2a;
+  background: #f0faf0; border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0;
+  font-size: 0.88rem; color: #1a3a2a;
 }
-.insight-tag {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--green);
-  margin-bottom: 5px;
-}
+.insight-tag { display: block; font-size: 0.63rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--green); margin-bottom: 4px; }
 
 /* ── Tip box ── */
 .tip {
-  background: var(--amber-bg);
-  border-left: 3px solid var(--amber);
-  border-radius: 0 8px 8px 0;
-  padding: 14px 18px;
-  margin: 16px 0;
-  font-size: 0.88rem;
-  color: #5c3c00;
+  background: var(--amber-bg); border-left: 3px solid var(--amber);
+  border-radius: 0 8px 8px 0; padding: 13px 16px; margin: 14px 0;
+  font-size: 0.88rem; color: #5c3c00;
 }
-.tip-tag {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--amber);
-  margin-bottom: 6px;
-}
-.tip ul { padding-left: 18px; margin-top: 6px; }
-.tip li { margin-bottom: 5px; }
-
-/* ── Error box ── */
-.errors {
-  background: #fff5f5;
-  border-left: 3px solid var(--accent);
-  border-radius: 0 8px 8px 0;
-  padding: 14px 18px;
-  margin-top: 16px;
-}
-.errors-tag {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
-.errors ul { padding-left: 18px; }
-.errors li { font-size: 0.875rem; color: #5a0a0a; margin-bottom: 5px; }
-
-/* ── Info grid (within cards) ── */
-.info-row {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 6px 16px;
-  font-size: 0.88rem;
-  margin: 10px 0;
-}
-.info-row .lbl { color: var(--muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: .06em; padding-top: 2px; }
-.info-row .val { color: var(--text-mid); }
-
-/* ── Comparison table ── */
-.compare-wrap { overflow-x: auto; margin: 20px 0; border-radius: 10px; box-shadow: var(--shadow); }
-.compare-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 0.85rem;
-  min-width: 560px;
-  background: #fff;
-}
-.compare-table thead th {
-  padding: 12px 16px;
-  text-align: left;
-  font-weight: 700;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: .07em;
-  border-bottom: 2px solid var(--border);
-}
-.compare-table thead th:first-child { background: #f8f8f8; color: var(--muted); }
-.compare-table thead th.h-klassik  { background: #f5f5f5; color: #555; }
-.compare-table thead th.h-keynes   { background: #dbeafe; color: #1e40af; }
-.compare-table thead th.h-monetar  { background: #d1fae5; color: #065f46; }
-.compare-table tbody tr td {
-  padding: 11px 16px;
-  border-bottom: 1px solid #f0f0f0;
-  vertical-align: top;
-}
-.compare-table tbody tr td:first-child { font-weight: 600; color: var(--text); background: #fafafa; width: 140px; }
-.compare-table tbody tr:last-child td { border-bottom: none; }
-.compare-table tbody tr:nth-child(even) td:not(:first-child) { background: #fafafe; }
-.yes  { color: #065f46; font-weight: 700; }
-.no   { color: #b91c1c; font-weight: 700; }
-.neu  { color: #1e40af; }
-
-/* ── Model step ── */
-.model-step { padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
-.model-step:last-child { border-bottom: none; padding-bottom: 0; }
-.model-step-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--muted);
-  font-weight: 700;
-  margin-bottom: 3px;
-}
-.model-step-title {
-  display: block;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 7px;
-}
-.model-step-body { font-size: 0.9rem; color: var(--text-mid); }
-.model-step-body p { margin-bottom: 6px; }
-.model-step-body p:last-child { margin-bottom: 0; }
-
-/* ── Result box ── */
-.result {
-  background: #d1fae5;
-  border-left: 3px solid var(--green);
-  border-radius: 0 6px 6px 0;
-  padding: 10px 16px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: #0f3d20;
-  margin-top: 10px;
-}
+.tip-tag { display: block; font-size: 0.63rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--amber); margin-bottom: 5px; }
+.tip ul { padding-left: 18px; margin-top: 4px; }
+.tip li { margin-bottom: 4px; }
 
 /* ── Policy grid ── */
-.policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-@media (max-width: 600px) { .policy-grid { grid-template-columns: 1fr; } }
-.policy-card {
-  border-radius: 10px;
-  padding: 16px 18px;
-  font-size: 0.88rem;
-}
-.policy-card.expansiv { background: #eefaf3; border: 1px solid #a7f3d0; }
-.policy-card.restriktiv { background: #fff0f0; border: 1px solid #fca5a5; }
-.policy-card h4 {
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  margin-bottom: 8px;
-}
-.policy-card.expansiv h4 { color: var(--green); }
-.policy-card.restriktiv h4 { color: var(--accent); }
-.policy-card ul { padding-left: 16px; }
-.policy-card li { margin-bottom: 4px; color: var(--text-mid); }
-
-/* ── Quick-ref table ── */
-.quickref {
-  background: #fff;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  margin: 16px 0;
-}
-.quickref-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 16px;
-  padding: 12px 18px;
-  border-bottom: 1px solid #f0f0f0;
-  align-items: center;
-  font-size: 0.88rem;
-}
-.quickref-row:last-child { border-bottom: none; }
-.quickref-row .stmt { color: var(--text-mid); font-style: italic; }
-.quickref-row .school { flex-shrink: 0; }
-
-/* ── Verwechslung table ── */
-.verwechslung { margin: 16px 0; }
-.verwechslung-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-@media (max-width: 560px) { .verwechslung-row { grid-template-columns: 1fr; } }
-.verwechslung-cell {
-  background: #fff;
-  border-radius: 8px;
-  padding: 14px 16px;
-  font-size: 0.88rem;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-.verwechslung-cell .cell-label {
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin-bottom: 6px;
-}
-.verwechslung-cell.wrong .cell-label { color: var(--accent); }
-.verwechslung-cell.right .cell-label { color: var(--green); }
-.verwechslung-cell p { color: var(--text-mid); }
+.pol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+@media (max-width: 580px) { .pol-grid { grid-template-columns: 1fr; } }
+.pol-card { border-radius: 8px; padding: 14px 16px; font-size: 0.875rem; }
+.pol-exp { background: #eefaf3; border: 1px solid #a7f3d0; }
+.pol-res { background: #fff0f0; border: 1px solid #fca5a5; }
+.pol-card h4 { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.pol-exp h4 { color: var(--green); }
+.pol-res h4 { color: var(--accent); }
+.pol-card ul { padding-left: 16px; }
+.pol-card li { margin-bottom: 4px; color: var(--text-mid); }
 
 /* ── Arrow chain ── */
-.chain {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.875rem;
-  margin: 10px 0;
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.875rem; margin: 10px 0; }
+.chain-item { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 5px 11px; font-weight: 600; white-space: nowrap; }
+.chain-arr { color: var(--muted); }
+
+/* ── Result ── */
+.result { background: #d1fae5; border-left: 3px solid var(--green); border-radius: 0 6px 6px 0; padding: 10px 16px; font-weight: 700; font-size: 0.93rem; color: #0f3d20; margin-top: 10px; }
+
+/* ── Quick-ref ── */
+.qref { background: #fff; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); margin: 14px 0; }
+.qref-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 11px 18px; border-bottom: 1px solid #f2f2f2; align-items: center; font-size: 0.875rem; }
+.qref-row:last-child { border-bottom: none; }
+.qref-row .stmt { color: var(--text-mid); font-style: italic; }
+
+/* ── Verwechslung ── */
+.vw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+@media (max-width: 540px) { .vw-row { grid-template-columns: 1fr; } }
+.vw-cell { background: #fff; border-radius: 8px; padding: 12px 14px; font-size: 0.875rem; border: 1px solid var(--border); }
+.vw-cell .vlbl { font-size: 0.63rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 5px; display: block; }
+.vw-cell.wrong .vlbl { color: var(--accent); }
+.vw-cell.right .vlbl { color: var(--green); }
+.vw-cell p { color: var(--text-mid); }
+
+/* ── Klausur card (always visible) ── */
+.klausur-card { background: #fff; border-radius: 10px; box-shadow: var(--shadow); padding: 24px 26px; margin-top: 8px; }
+.klausur-card h3 { font-size: 0.95rem; font-weight: 700; margin: 18px 0 8px; color: var(--text); }
+.klausur-card h3:first-child { margin-top: 0; }
+
+/* ── Fachbegriff tooltip ── */
+.term {
+  color: var(--accent);
+  border-bottom: 1.5px dotted var(--accent);
+  cursor: help;
+  position: relative;
+  display: inline;
 }
-.chain-item {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 5px 12px;
-  font-weight: 600;
-  color: var(--text);
-  white-space: nowrap;
+.term .tip-box {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  padding: 9px 13px;
+  border-radius: 8px;
+  width: 230px;
+  z-index: 300;
+  white-space: normal;
+  text-align: left;
+  box-shadow: 0 4px 16px rgba(0,0,0,.35);
+  pointer-events: none;
+  font-style: normal;
+  font-weight: 400;
 }
-.chain-arrow { color: var(--muted); font-size: 1rem; }
+.term .tip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a1a2e;
+}
+.term.active .tip-box { display: block; }
+@media (hover: hover) { .term:hover .tip-box { display: block; } }
+
+/* ── Aufgabentypen list ── */
+.at-list { padding-left: 20px; margin: 8px 0; }
+.at-list li { font-size: 0.88rem; color: var(--text-mid); margin-bottom: 6px; }
+.at-list li strong { color: var(--text); }
 
 /* ── Print ── */
 @media print {
   body { background: #fff; }
-  .card { box-shadow: none; break-inside: avoid; }
-  .formula { background: #f5f5f5 !important; border-left-color: #999 !important; }
-  .insight, .tip, .errors { background: #f5f5f5 !important; border-left-color: #aaa !important; }
-  a { color: #000 !important; }
-  .compare-wrap { box-shadow: none; }
+  .acc-item { box-shadow: none; page-break-inside: avoid; }
+  .acc-body { height: auto !important; }
+  .fml { background: #f5f5f5 !important; border-left-color: #999 !important; }
+  .tip, .kern, .insight { background: #f5f5f5 !important; border-left-color: #aaa !important; }
 }
 </style>
 </head>
@@ -468,1119 +297,814 @@ body {
 </header>
 
 <div class="intro-box">
-  Diese Seite erklärt die <strong>makroökonomischen Schulen, Modelle und Politikinstrumente</strong> — das konzeptionelle Fundament hinter den Anki-Karten. Nicht auswendig lernen, sondern <strong>verstehen, warum</strong> Keynes, Monetarismus und IS-LM so funktionieren wie sie es tun.
-</div>
-
-<nav class="toc">
-  <h2>Inhaltsverzeichnis</h2>
-  <div class="toc-sections">
-    <div>
-      <div class="toc-section-title">Theorien</div>
-      <ol>
-        <li><a href="#klassik">Klassik — Say, Smith, Ricardo</a></li>
-        <li><a href="#keynes">Keynesianismus — Keynes 1936</a></li>
-        <li><a href="#monetarismus">Monetarismus — Friedman</a></li>
-        <li><a href="#neoklassik">Neoklassische Synthese</a></li>
-        <li><a href="#neueKlassik">Neue Klassik &amp; Rat. Erwartungen</a></li>
-        <li><a href="#vergleich">Theorie-Vergleichstabelle</a></li>
-      </ol>
-      <div class="toc-section-title">Wirtschaftspolitik</div>
-      <ol>
-        <li><a href="#fiskalpolitik">Fiskalpolitik</a></li>
-        <li><a href="#geldpolitik">Geldpolitik &amp; EZB</a></li>
-      </ol>
-    </div>
-    <div>
-      <div class="toc-section-title">Modelle</div>
-      <ol>
-        <li><a href="#vgr">VGR &amp; BIP</a></li>
-        <li><a href="#keynesKreuz">Keynesianisches Kreuz</a></li>
-        <li><a href="#is">IS-Kurve</a></li>
-        <li><a href="#lm">LM-Kurve</a></li>
-        <li><a href="#islm">IS-LM Modell</a></li>
-        <li><a href="#phillips">Phillipskurve</a></li>
-        <li><a href="#quantitaet">Quantitätstheorie</a></li>
-      </ol>
-      <div class="toc-section-title">Klausurvorbereitung</div>
-      <ol>
-        <li><a href="#klausur">Tipps, Zuordnung, Verwechslungen</a></li>
-      </ol>
-    </div>
-  </div>
-</nav>
-
-
-<!-- ════════════════════════════════════════════════ -->
-<!--  SECTION 1: THEORIEN                            -->
-<!-- ════════════════════════════════════════════════ -->
-<div class="section-divider"><h2>1 · Makroökonomische Theorien</h2></div>
-
-<!-- KLASSIK -->
-<div class="card" id="klassik">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Klassik</div>
-      <div class="card-subtitle">Smith, Ricardo, Say — ca. 1776–1870</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-klassik">Klassik</span>
-      <span class="badge badge-yellow">🟡 Grundlage</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Kernaussage</span>
-    <p>Märkte regulieren sich selbst — staatliche Eingriffe sind überflüssig und schädlich.</p>
-  </div>
-
-  <ul class="thesen">
-    <li><strong>Say'sches Theorem:</strong> Jedes Angebot schafft sich seine eigene Nachfrage — Überproduktion ist dauerhaft unmöglich.</li>
-    <li><strong>Vollständige Preisflexibilität:</strong> Löhne und Preise passen sich sofort an Marktveränderungen an.</li>
-    <li><strong>Laissez-faire:</strong> Der Staat soll nicht in den Markt eingreifen — der Markt reguliert sich selbst zum Optimum.</li>
-    <li><strong>Langfristige Perspektive:</strong> Kurzfristige Schwankungen sind irrelevant — die Volkswirtschaft kehrt stets ins Gleichgewicht zurück.</li>
-    <li><strong>Selbstheilungskräfte:</strong> Arbeitslosigkeit entsteht nur, wenn Löhne zu starr sind (freiwillig oder institutionell bedingt).</li>
-  </ul>
-
-  <div class="info-row">
-    <span class="lbl">Wirtschaftspolitik</span>
-    <span class="val">Keine staatlichen Eingriffe nötig</span>
-    <span class="lbl">Arbeitslosigkeit</span>
-    <span class="val">Nur freiwillig — bei flexiblen Löhnen gibt es kein Gleichgewichtsarbeitslosigkeit</span>
-    <span class="lbl">Zeitrahmen</span>
-    <span class="val">Langfristig</span>
-  </div>
-
-  <div class="insight">
-    <span class="insight-tag">🔑 Klausur-Wissen</span>
-    <p>Say's Theorem ist die zentrale Abgrenzung zur Keynes-Kritik. Keynes widerlegte genau diese Annahme: Nachfrageausfälle können dauerhaft bestehen bleiben.</p>
-  </div>
-</div>
-
-
-<!-- KEYNES -->
-<div class="card keynes" id="keynes">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Keynesianismus</div>
-      <div class="card-subtitle">John Maynard Keynes — Allgemeine Theorie, 1936</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-keynes">Keynes</span>
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Kernaussage</span>
-    <p>Die gesamtwirtschaftliche Nachfrage — nicht das Angebot — bestimmt das Einkommen und die Beschäftigung.</p>
-  </div>
-
-  <ul class="thesen">
-    <li><strong>Gesamtnachfrage ist entscheidend:</strong> Y = C + I + G + NX — fehlt Nachfrage, sinkt das Einkommen.</li>
-    <li><strong>Märkte räumen sich nicht automatisch:</strong> Löhne und Preise sind nach unten starr (Lohnrigiditäten, Verträge).</li>
-    <li><strong>Unfreiwillige Arbeitslosigkeit:</strong> Menschen wollen zum herrschenden Lohn arbeiten, finden aber keinen Job.</li>
-    <li><strong>Staatliche Eingriffe notwendig:</strong> Der Staat muss durch Fiskalpolitik die Nachfrage stützen.</li>
-    <li><strong>Multiplikatoreffekt:</strong> 1 € Staatsausgabe erzeugt mehr als 1 € BIP-Anstieg, weil jeder Euro mehrfach ausgegeben wird.</li>
-    <li><strong>Kurzfristige Perspektive:</strong> „Im langen Frist sind wir alle tot" — kurzfristige Stabilisierung ist entscheidend.</li>
-  </ul>
-
-  <div class="formula">
-    Multiplikator: &nbsp;<strong>m = 1 ⁄ (1 − c)</strong><br>
-    wobei c = marginale Konsumquote (z.B. 0,8)<br><br>
-    Beispiel: c = 0,8 &nbsp;→&nbsp; m = 1⁄(1−0,8) = 1⁄0,2 = <strong>5</strong><br>
-    ΔG = 100 → ΔY = 5 × 100 = <strong>500</strong>
-  </div>
-
-  <div class="info-row">
-    <span class="lbl">Modell</span>
-    <span class="val">Keynesianisches Kreuz, IS-LM</span>
-    <span class="lbl">Instrument</span>
-    <span class="val">Aktive Fiskalpolitik (G↑, T↓)</span>
-    <span class="lbl">Zeitrahmen</span>
-    <span class="val">Kurzfristig</span>
-  </div>
-
-  <div class="insight">
-    <span class="insight-tag">🔑 Klausur-Wissen</span>
-    <p>Keynes richtig zitieren: nicht „Staat soll immer eingreifen", sondern „In einer Rezession mit Nachfrageausfall ist staatliche Nachfragestimulierung sinnvoll, weil der Markt sich nicht selbst korrigiert."</p>
-  </div>
-</div>
-
-
-<!-- MONETARISMUS -->
-<div class="card monetar" id="monetarismus">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Monetarismus</div>
-      <div class="card-subtitle">Milton Friedman — 1960er Jahre</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-monetarism">Monetarismus</span>
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Kernaussage</span>
-    <p>Die Geldmenge bestimmt langfristig das Preisniveau — mehr Geld bedeutet nur mehr Inflation, nicht mehr Output.</p>
-  </div>
-
-  <ul class="thesen">
-    <li><strong>Quantitätsgleichung:</strong> M · V = P · Y — bei konstantem V bewirkt mehr M nur Inflation.</li>
-    <li><strong>Umlaufgeschwindigkeit V konstant:</strong> V wird durch Zahlungsgewohnheiten bestimmt, nicht durch Geldpolitik.</li>
-    <li><strong>Neutralität des Geldes:</strong> Geldpolitik wirkt kurzfristig auf Y, langfristig nur auf P (Preisniveau).</li>
-    <li><strong>Natürliche Arbeitslosenquote (NAIRU):</strong> Es gibt eine strukturell bedingte Arbeitslosenquote u*, die Geldpolitik nicht dauerhaft unterschreiten kann.</li>
-    <li><strong>Fiskalpolitik ineffektiv:</strong> Staatsausgaben verdrängen private Investitionen vollständig (vollständiges Crowding-out).</li>
-    <li><strong>Regelgebundene Geldpolitik:</strong> Kein Diskretionismus — die Geldmenge soll konstant im Einklang mit dem BIP-Wachstum wachsen (k%-Regel).</li>
-  </ul>
-
-  <div class="formula">
-    Quantitätsgleichung: &nbsp;<strong>M · V = P · Y</strong><br><br>
-    Bei V = const. und Y = const.:<br>
-    ΔM ↑ 10 % → Δπ ↑ 10 % &nbsp;(langfristig)<br><br>
-    Friedman-Erwartungen (Phillipskurve):<br>
-    π = πᵉ − α · (u − u*)<br>
-    Wenn πᵉ steigt, verschiebt sich die PKurve nach oben
-  </div>
-
-  <div class="info-row">
-    <span class="lbl">Instrument</span>
-    <span class="val">Regelgebundene Geldmengenpolitik</span>
-    <span class="lbl">Fiskalpolitik</span>
-    <span class="val">Ineffektiv — vollständiges Crowding-out</span>
-    <span class="lbl">Zeitrahmen</span>
-    <span class="val">Kurzfristig real, langfristig nur nominal</span>
-  </div>
-
-  <div class="insight">
-    <span class="insight-tag">🔑 Klausur-Wissen</span>
-    <p>Friedmans Kritik an der Phillipskurve: Der ursprüngliche Trade-off gilt nur kurzfristig. Langfristig lernen Wirtschaftsakteure, Inflation zu antizipieren → Phillipskurve ist langfristig senkrecht bei u*.</p>
-  </div>
-</div>
-
-
-<!-- NEOKLASSISCHE SYNTHESE -->
-<div class="card neoklassik" id="neoklassik">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Neoklassische Synthese</div>
-      <div class="card-subtitle">Hicks, Samuelson — 1950er–1960er</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-neoklassik">Neoklassik</span>
-      <span class="badge badge-orange">🟠 Wichtig</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Kernaussage</span>
-    <p>Kurzfristig hat Keynes recht; langfristig hat die Klassik recht. Beides lässt sich im IS-LM vereinen.</p>
-  </div>
-
-  <ul class="thesen">
-    <li><strong>Kurzfristig:</strong> Keynesianische Nachfragesteuerung — Güterpreise sind starr, Output kann durch Nachfrage beeinflusst werden.</li>
-    <li><strong>Langfristig:</strong> Klassisches Gleichgewicht — Preise passen sich an, die Wirtschaft kehrt zu Y* zurück.</li>
-    <li><strong>IS-LM als Synthese-Modell:</strong> Gütermarkt (IS) und Geldmarkt (LM) bestimmen gemeinsam Zins und Einkommen.</li>
-    <li><strong>Angebots- und Nachfrageseite:</strong> Das AD-AS Modell zeigt beide Perspektiven: kurzfristig Nachfragesteuerung, langfristig Angebotspolitik.</li>
-  </ul>
-
-  <div class="insight">
-    <span class="insight-tag">🔑 Klausur-Wissen</span>
-    <p>IS-LM wurde von Hicks (1937) entwickelt als vereinfachte Interpretation von Keynes. Es ist das Standard-Modell der neoklassischen Synthese und das meistgefragte Modell in der Klausur.</p>
-  </div>
-</div>
-
-
-<!-- NEUE KLASSIK -->
-<div class="card neue" id="neueKlassik">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Neue Klassik &amp; Rationale Erwartungen</div>
-      <div class="card-subtitle">Lucas, Sargent — 1970er–1980er</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-neue">Neue Klassik</span>
-      <span class="badge badge-yellow">🟡 Grundbegriffe</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Kernaussage</span>
-    <p>Wirtschaftsakteure handeln rational und antizipieren staatliche Politik — deshalb ist antizipierte Politik wirkungslos.</p>
-  </div>
-
-  <ul class="thesen">
-    <li><strong>Rationale Erwartungen:</strong> Individuen nutzen alle verfügbaren Informationen optimal — sie irren sich systematisch nicht.</li>
-    <li><strong>Antizipierte Politik wirkungslos:</strong> Wenn alle wissen, dass die Geldmenge um 5 % wächst, verlangen Arbeitnehmer sofort 5 % mehr Lohn → kein Realeffekt.</li>
-    <li><strong>Nur unerwartete Schocks wirken:</strong> Überraschende Geldpolitik kann kurzfristig reale Effekte haben — systematische Politik aber nicht.</li>
-    <li><strong>Philippskurve langfristig senkrecht:</strong> Selbst kurzfristig gilt der Trade-off nur bei unerwarteten Schocks.</li>
-  </ul>
-</div>
-
-
-<!-- VERGLEICHSTABELLE -->
-<div id="vergleich">
-  <h3 style="font-size:1.05rem; font-weight:700; margin: 24px 0 14px;">Theorie-Vergleich im Überblick</h3>
-  <div class="compare-wrap">
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>Aspekt</th>
-          <th class="h-klassik">Klassik</th>
-          <th class="h-keynes">Keynesianismus</th>
-          <th class="h-monetar">Monetarismus</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Preisflexibilität</td>
-          <td>Vollständig flexibel</td>
-          <td>Starr (nach unten)</td>
-          <td>Langfristig flexibel</td>
-        </tr>
-        <tr>
-          <td>Staatliche Eingriffe</td>
-          <td class="no">Nein — Laissez-faire</td>
-          <td class="yes">Ja — nötig</td>
-          <td class="no">Nein — schädlich</td>
-        </tr>
-        <tr>
-          <td>Instrument</td>
-          <td>Keines nötig</td>
-          <td class="neu">Fiskalpolitik (G, T)</td>
-          <td class="green" style="color:#065f46">Geldmengenpolitik</td>
-        </tr>
-        <tr>
-          <td>Zeitrahmen</td>
-          <td>Langfristig</td>
-          <td>Kurzfristig</td>
-          <td>Langfristig</td>
-        </tr>
-        <tr>
-          <td>Arbeitslosigkeit</td>
-          <td>Nur freiwillig</td>
-          <td>Unfreiwillig möglich</td>
-          <td>Natürliche Rate u*</td>
-        </tr>
-        <tr>
-          <td>Crowding-out</td>
-          <td>Vollständig</td>
-          <td>Gering (bei Liquiditätsfalle: null)</td>
-          <td>Vollständig</td>
-        </tr>
-        <tr>
-          <td>Märkte</td>
-          <td>Räumen sich selbst</td>
-          <td>Versagen — Nachfrageausfall möglich</td>
-          <td>Räumen sich (langsam)</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  Diese Seite erklärt die <strong>makroökonomischen Schulen, Modelle und Politikinstrumente</strong> — das konzeptionelle Fundament hinter den Anki-Karten. Nicht auswendig lernen, sondern <strong>verstehen, warum</strong> Keynes, Monetarismus und IS-LM so funktionieren wie sie es tun. <em>Fachbegriffe mit gepunkteter Unterstreichung anklicken für eine kurze Definition.</em>
 </div>
 
 
 <!-- ════════════════════════════════════════════════ -->
-<!--  SECTION 2: MODELLE                             -->
+<!--  IMMER SICHTBAR: VERGLEICHSTABELLE              -->
 <!-- ════════════════════════════════════════════════ -->
-<div class="section-divider"><h2>2 · Die wichtigsten Modelle</h2></div>
+<div class="sec-head"><h2>Schulen im Überblick</h2></div>
 
-<!-- VGR -->
-<div class="card model" id="vgr">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Volkswirtschaftliche Gesamtrechnung (VGR)</div>
-      <div class="card-subtitle">Wie wird BIP gemessen?</div>
-    </div>
-    <div class="card-meta"><span class="badge badge-orange">🟠 Wichtig</span></div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Methode 1</span>
-    <span class="model-step-title">Verwendungsrechnung</span>
-    <div class="model-step-body">
-      <div class="formula">
-        <strong>Y = C + I + G + NX</strong><br><br>
-        C &nbsp;= Privater Konsum<br>
-        I &nbsp;= Bruttoinvestitionen (Unternehmen)<br>
-        G &nbsp;= Staatliche Käufe (ohne Transfers!)<br>
-        NX = Nettoexporte (Exporte − Importe)
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Methode 2</span>
-    <span class="model-step-title">Entstehungsrechnung</span>
-    <div class="model-step-body">
-      <p>Summe der Wertschöpfung aller Produktionsstufen. Vermeidet Doppelzählung durch Abzug von Vorleistungen.</p>
-      <div class="formula">BIP = Σ Bruttowertschöpfung aller Sektoren + Gütersteuern − Gütersubventionen</div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Methode 3</span>
-    <span class="model-step-title">Verteilungsrechnung</span>
-    <div class="model-step-body">
-      <p>BIP = Arbeitnehmerentgelt + Unternehmensgewinne + Abschreibungen + Produktions- und Importabgaben</p>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Wichtig</span>
-    <span class="model-step-title">Reales vs. Nominales BIP</span>
-    <div class="model-step-body">
-      <div class="formula">
-        Nominales BIP: zu laufenden Preisen (steigt auch bei Inflation)<br>
-        Reales BIP: &nbsp;&nbsp;zu Preisen des Basisjahres (nur Mengenänderung)<br><br>
-        BIP-Deflator = (Nominales BIP ⁄ Reales BIP) × 100<br><br>
-        Beispiel: Nom. BIP = 1.100, Real BIP (Basis) = 1.000<br>
-        → Deflator = 110 → Inflationsrate = 10 %
-      </div>
-    </div>
-  </div>
-
-  <div class="tip">
-    <span class="tip-tag">💡 Klausur-Tipp</span>
-    <p>Transfers (Renten, Sozialleistungen) zählen <strong>nicht</strong> zum G in der Verwendungsrechnung — sie sind keine Käufe von Gütern und Dienstleistungen. Nur staatliche Käufe (Beamtengehälter, Straßenbau usw.) zählen.</p>
-  </div>
-</div>
-
-
-<!-- KEYNESIANISCHES KREUZ -->
-<div class="card model" id="keynesKreuz">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Keynesianisches Kreuz</div>
-      <div class="card-subtitle">Gütermarktgleichgewicht in geschlossener VW</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-keynes">Keynes</span>
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Was zeigt es?</span>
-    <p>Das gleichgewichtige Einkommen, bei dem Produktion = Ausgaben. Grundmodell der keynesianischen Nachfragesteuerung.</p>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Baustein 1</span>
-    <span class="model-step-title">Konsumfunktion</span>
-    <div class="model-step-body">
-      <div class="formula">
-        C = C₀ + c · Y<br><br>
-        C₀ = autonomer Konsum (konsumiert auch ohne Einkommen)<br>
-        c &nbsp;= marginale Konsumquote (0 &lt; c &lt; 1)<br>
-        Y &nbsp;= Volkseinkommen
-      </div>
-      <p>Bedeutung: Steigt Y um 1 €, steigt C um c €. Bei c = 0,8: 80 Cent von jedem zusätzlichen Euro werden konsumiert.</p>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Baustein 2</span>
-    <span class="model-step-title">Gleichgewichtsbedingung</span>
-    <div class="model-step-body">
-      <div class="formula">
-        Y = C + I + G &nbsp;&nbsp;(geschlossene Volkswirtschaft)<br><br>
-        Einsetzen: Y = C₀ + c·Y + I + G<br>
-        Y − c·Y = C₀ + I + G<br>
-        Y · (1 − c) = C₀ + I + G<br>
-        <strong>Y* = (C₀ + I + G) ⁄ (1 − c)</strong>
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Baustein 3</span>
-    <span class="model-step-title">Multiplikator berechnen</span>
-    <div class="model-step-body">
-      <div class="formula">
-        <strong>m = 1 ⁄ (1 − c)</strong><br><br>
-        Steigen Staatsausgaben um ΔG, steigt Y* um:<br>
-        ΔY = m · ΔG = ΔG ⁄ (1 − c)
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Vollständiges Beispiel</span>
-    <span class="model-step-title">Berechnung mit Zahlen</span>
-    <div class="model-step-body">
-      <div class="formula">
-        Gegeben: c = 0,8, C₀ = 200, I = 300, G = 400<br><br>
-        Multiplikator: m = 1⁄(1−0,8) = 1⁄0,2 = 5<br><br>
-        Y* = (200 + 300 + 400) ⁄ 0,2 = 900⁄0,2 = 4.500<br><br>
-        Jetzt: ΔG = 100 (Konjunkturprogramm)<br>
-        ΔY = 5 × 100 = <strong>500</strong>
-      </div>
-      <div class="result">Neues Gleichgewicht: Y** = 4.500 + 500 = 5.000</div>
-    </div>
-  </div>
-
-  <div class="tip">
-    <span class="tip-tag">💡 Klausur-Tipp</span>
-    <p>Der Steuermultiplikator ist kleiner als der Ausgabenmultiplikator! ΔT = −100 bewirkt nur ΔY = −c⁄(1−c) × 100 = −0,8⁄0,2 × 100 = −400 (nicht −500), weil Steuersenkungen zuerst das verfügbare Einkommen erhöhen, davon aber nur c % konsumiert werden.</p>
-  </div>
-</div>
-
-
-<!-- IS-KURVE -->
-<div class="card model" id="is">
-  <div class="card-header">
-    <div>
-      <div class="card-title">IS-Kurve</div>
-      <div class="card-subtitle">Investment-Saving — Gütermarktgleichgewicht</div>
-    </div>
-    <div class="card-meta">
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Was zeigt die IS-Kurve?</span>
-    <p>Alle Kombinationen von Zins (i) und Einkommen (Y), bei denen der Gütermarkt im Gleichgewicht ist (Investitionen = Ersparnis).</p>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Warum</span>
-    <span class="model-step-title">Warum ist die IS-Kurve negativ geneigt?</span>
-    <div class="model-step-body">
-      <div class="chain">
-        <div class="chain-item">Zins i ↑</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Investitionen I ↓</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Gesamtnachfrage ↓</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Gleichgewichts-Y ↓</div>
-      </div>
-      <p style="margin-top:8px;">Höherer Zins → teurer Kredit → weniger Investitionen → weniger Output. Daher: höheres i ↔ niedrigeres Y → fallende IS-Kurve.</p>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Verschiebungen</span>
-    <span class="model-step-title">Was verschiebt die IS-Kurve?</span>
-    <div class="model-step-body">
-      <div class="formula">
-        IS verschiebt <strong>rechts</strong> (höheres Y bei gleichem i):<br>
-        → Staatsausgaben G ↑<br>
-        → Steuern T ↓<br>
-        → Autonomer Konsum C₀ ↑<br>
-        → Exporte ↑<br><br>
-        IS verschiebt <strong>links</strong>:<br>
-        → G ↓, T ↑, Exporte ↓, Konsumvertrauen sinkt
-      </div>
-    </div>
-  </div>
-
-  <div class="insight">
-    <span class="insight-tag">🔑 Merksatz</span>
-    <p><strong>IS = Gütermarkt = Fiskalpolitik.</strong> Wenn Fiskalpolitik betrieben wird, verschiebt sich die IS-Kurve. Die LM-Kurve bleibt unverändert.</p>
-  </div>
-</div>
-
-
-<!-- LM-KURVE -->
-<div class="card model" id="lm">
-  <div class="card-header">
-    <div>
-      <div class="card-title">LM-Kurve</div>
-      <div class="card-subtitle">Liquidity-Money — Geldmarktgleichgewicht</div>
-    </div>
-    <div class="card-meta">
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Was zeigt die LM-Kurve?</span>
-    <p>Alle Kombinationen von Zins (i) und Einkommen (Y), bei denen der Geldmarkt im Gleichgewicht ist (Geldangebot = Geldnachfrage).</p>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Warum</span>
-    <span class="model-step-title">Warum ist die LM-Kurve positiv geneigt?</span>
-    <div class="model-step-body">
-      <div class="chain">
-        <div class="chain-item">Einkommen Y ↑</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Geldnachfrage ↑</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Zins i muss steigen</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Spekulation ↓</div>
-      </div>
-      <p style="margin-top:8px;">Steigt Y, brauchen Menschen mehr Geld für Transaktionen → Geldnachfrage steigt → Zins steigt, um Geldmarkt ins Gleichgewicht zu bringen.</p>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Verschiebungen</span>
-    <span class="model-step-title">Was verschiebt die LM-Kurve?</span>
-    <div class="model-step-body">
-      <div class="formula">
-        LM verschiebt <strong>rechts</strong> (höheres Y bei gleichem i):<br>
-        → Geldmenge M ↑ (Zentralbank expandiert)<br>
-        → Geldnachfrage sinkt (Vertrauen in digitales Zahlen)<br><br>
-        LM verschiebt <strong>links</strong>:<br>
-        → Geldmenge M ↓ (restriktive Geldpolitik)
-      </div>
-    </div>
-  </div>
-
-  <div class="insight">
-    <span class="insight-tag">🔑 Merksatz</span>
-    <p><strong>LM = Geldmarkt = Geldpolitik.</strong> Wenn die Zentralbank die Geldmenge ändert, verschiebt sich die LM-Kurve. Die IS-Kurve bleibt unverändert.</p>
-  </div>
-</div>
-
-
-<!-- IS-LM -->
-<div class="card model" id="islm">
-  <div class="card-header">
-    <div>
-      <div class="card-title">IS-LM Modell</div>
-      <div class="card-subtitle">Simultanes Gleichgewicht auf Güter- und Geldmarkt</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-neoklassik">Neoklassische Synthese</span>
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="kernaussage">
-    <span class="kernaussage-tag">💡 Was zeigt IS-LM?</span>
-    <p>Der Schnittpunkt von IS und LM bestimmt gleichzeitig das gleichgewichtige Einkommen Y* und den gleichgewichtigen Zins i*.</p>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Analyse 1</span>
-    <span class="model-step-title">Fiskalpolitik im IS-LM</span>
-    <div class="model-step-body">
-      <div class="chain">
-        <div class="chain-item">G ↑</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">IS rechts</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Y ↑ und i ↑</div>
-      </div>
-      <div class="formula" style="margin-top:12px;">
-        Problem: <strong>Crowding-out</strong><br>
-        Höheres i durch steigende Staatsnachfrage → Kredite teurer → private Investitionen I ↓<br>
-        → Teil des Multiplikatoreffekts wird neutralisiert<br><br>
-        Stärke des Crowding-out hängt ab von:<br>
-        · Zinssensitivität der Investitionen<br>
-        · Steilheit der LM-Kurve (flache LM → wenig Crowding-out)
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Analyse 2</span>
-    <span class="model-step-title">Geldpolitik im IS-LM</span>
-    <div class="model-step-body">
-      <div class="chain">
-        <div class="chain-item">M ↑</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">LM rechts</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Y ↑ und i ↓</div>
-      </div>
-      <p style="margin-top:8px;">Geldpolitik senkt den Zins → private Investitionen steigen → Y steigt. Kein Crowding-out, da der Zins sinkt.</p>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Sonderfall</span>
-    <span class="model-step-title">Liquiditätsfalle</span>
-    <div class="model-step-body">
-      <div class="formula">
-        LM-Kurve ist <strong>waagerecht</strong> (bei sehr niedrigem Zins)<br><br>
-        → Menschen halten lieber Bargeld als Anleihen (Zins zu niedrig zum Anlegen)<br>
-        → Geldpolitik wirkungslos: M↑ → LM verschiebt sich, aber Y bleibt gleich!<br>
-        → Nur Fiskalpolitik wirksam (kein Crowding-out, da i nicht steigt)
-      </div>
-    </div>
-  </div>
-
-  <div class="tip">
-    <span class="tip-tag">💡 Klausur-Tipp — IS vs. LM merken</span>
-    <ul>
-      <li><strong>IS</strong> = <em>I</em>nvestment/<em>S</em>aving = <em>G</em>ütermarkt = <em>F</em>iskalpolitik verschiebt</li>
-      <li><strong>LM</strong> = <em>L</em>iquidity/<em>M</em>oney = <em>G</em>eldmarkt = <em>G</em>eldpolitik verschiebt</li>
-      <li>Bei Fiskalpolitik: IS-Kurve verschiebt, Y und i steigen → Crowding-out</li>
-      <li>Bei Geldpolitik: LM-Kurve verschiebt, Y steigt, i sinkt → kein Crowding-out</li>
-    </ul>
-  </div>
-</div>
-
-
-<!-- PHILLIPSKURVE -->
-<div class="card model" id="phillips">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Phillipskurve</div>
-      <div class="card-subtitle">Trade-off zwischen Inflation und Arbeitslosigkeit</div>
-    </div>
-    <div class="card-meta">
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Kurzfristig</span>
-    <span class="model-step-title">Ursprüngliche Phillipskurve (Phillips 1958)</span>
-    <div class="model-step-body">
-      <div class="formula">
-        π = πᵉ − α · (u − u*)<br><br>
-        π &nbsp;= tatsächliche Inflationsrate<br>
-        πᵉ = erwartete Inflationsrate<br>
-        u &nbsp;= tatsächliche Arbeitslosenquote<br>
-        u* = natürliche Arbeitslosenquote (NAIRU)<br>
-        α &nbsp;= Sensitivitätsparameter
-      </div>
-      <p>Trade-off: Weniger Arbeitslosigkeit (u &lt; u*) erkauft man sich durch höhere Inflation (π &gt; πᵉ).</p>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Langfristig</span>
-    <span class="model-step-title">Vertikale Phillipskurve (Friedman/Phelps)</span>
-    <div class="model-step-body">
-      <p>Langfristig passen sich die Inflationserwartungen πᵉ an die tatsächliche Inflation an. Dann gilt:</p>
-      <div class="formula">
-        Langfristig: π = πᵉ &nbsp;→&nbsp; u = u* (immer!)<br><br>
-        → Die Phillipskurve ist langfristig <strong>senkrecht</strong> bei u = u*<br>
-        → Kein dauerhafter Trade-off möglich
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Sonderfall</span>
-    <span class="model-step-title">Stagflation — warum verschiebt sich die Phillipskurve?</span>
-    <div class="model-step-body">
-      <p>1970er Ölpreisschock: Hohe Inflation UND hohe Arbeitslosigkeit gleichzeitig — scheinbarer Widerspruch zur Phillipskurve.</p>
-      <div class="formula">
-        Erklärung: Angebotsschock verschiebt die gesamte Phillipskurve nach <strong>oben</strong><br><br>
-        Negativer Angebotsschock → höhere Produktionskosten<br>
-        → Inflation steigt OHNE dass u sinkt<br>
-        → Neue Phillipskurve liegt oberhalb der alten<br><br>
-        Ebenso: Steigende Inflationserwartungen πᵉ verschieben die KF-Phillipskurve nach oben
-      </div>
-    </div>
-  </div>
-
-  <div class="insight">
-    <span class="insight-tag">🔑 Klausur-Wissen</span>
-    <p>Bewegung <em>entlang</em> der Phillipskurve = Geldpolitik/Fiskalpolitik. Verschiebung der Phillipskurve = Angebotsschock oder geänderte Erwartungen.</p>
-  </div>
-</div>
-
-
-<!-- QUANTITÄTSTHEORIE -->
-<div class="card model" id="quantitaet">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Quantitätstheorie des Geldes</div>
-      <div class="card-subtitle">Irving Fisher / Milton Friedman</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-monetarism">Monetarismus</span>
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Grundformel</span>
-    <span class="model-step-title">Quantitätsgleichung</span>
-    <div class="model-step-body">
-      <div class="formula">
-        <strong>M · V = P · Y</strong><br><br>
-        M = Geldmenge (Menge des umlaufenden Geldes)<br>
-        V = Umlaufgeschwindigkeit des Geldes (wie oft wird 1 € pro Jahr ausgegeben?)<br>
-        P = Preisniveau<br>
-        Y = Reales BIP (Output)<br><br>
-        P · Y = Nominales BIP
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Monetaristen-Annahme</span>
-    <span class="model-step-title">V und Y kurzfristig konstant</span>
-    <div class="model-step-body">
-      <div class="formula">
-        V = konstant (Zahlungsgewohnheiten ändern sich kaum)<br>
-        Y = konstant (kurz- bis mittelfristig, da Output durch Angebotsseite bestimmt)<br><br>
-        → ΔM ↑ 10 % &nbsp;führt zu&nbsp; ΔP ↑ 10 %<br>
-        → <strong>Mehr Geld bedeutet nur mehr Inflation</strong>
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Politikregel</span>
-    <span class="model-step-title">Friedmans k%-Regel</span>
-    <div class="model-step-body">
-      <p>Die Zentralbank soll die Geldmenge jährlich konstant um denselben Prozentsatz (k) wachsen lassen, der dem langfristigen BIP-Wachstum entspricht.</p>
-      <div class="formula">
-        Ziel: Preisstabilität durch verlässliche Geldmengenregel<br>
-        Kein Diskretionismus — keine situativen Eingriffe<br>
-        Begründung: Zeitinkonsistenz und Informationsprobleme bei diskretionärer Politik
-      </div>
-    </div>
-  </div>
+<div class="cmp-wrap">
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th>Aspekt</th>
+        <th class="hk">Klassik</th>
+        <th class="hky">Keynesianismus</th>
+        <th class="hm">Monetarismus</th>
+        <th class="hn">Neoklassik</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Preisflexibilität</td>
+        <td>Vollständig flexibel</td>
+        <td>Starr (nach unten)</td>
+        <td>Langfristig flexibel</td>
+        <td>KF starr, LF flexibel</td>
+      </tr>
+      <tr>
+        <td>Staatliche Eingriffe</td>
+        <td class="no">Nein — Laissez-faire</td>
+        <td class="yes">Ja — notwendig</td>
+        <td class="no">Nein — schädlich</td>
+        <td>KF: ja; LF: nein</td>
+      </tr>
+      <tr>
+        <td>Instrument</td>
+        <td>Keines nötig</td>
+        <td>Fiskalpolitik G, T</td>
+        <td>Geldmengenpolitik</td>
+        <td>IS-LM kombiniert</td>
+      </tr>
+      <tr>
+        <td>Zeitrahmen</td>
+        <td>Langfristig</td>
+        <td>Kurzfristig</td>
+        <td>LF (real neutral)</td>
+        <td>KF Keynes; LF Klassik</td>
+      </tr>
+      <tr>
+        <td>Arbeitslosigkeit</td>
+        <td>Nur freiwillig</td>
+        <td>Unfreiwillig möglich</td>
+        <td>Natürliche Rate u*</td>
+        <td>Wie Monetarismus</td>
+      </tr>
+      <tr>
+        <td>Crowding-out</td>
+        <td>Vollständig</td>
+        <td>Gering bis null</td>
+        <td>Vollständig</td>
+        <td>Partiell</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 
 <!-- ════════════════════════════════════════════════ -->
-<!--  SECTION 3: WIRTSCHAFTSPOLITIK                  -->
+<!--  ACCORDION: THEORIEN                            -->
 <!-- ════════════════════════════════════════════════ -->
-<div class="section-divider"><h2>3 · Wirtschaftspolitik</h2></div>
+<div class="sec-head"><h2>Die Theorien im Detail</h2></div>
 
-<!-- FISKALPOLITIK -->
-<div class="card model" id="fiskalpolitik">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Fiskalpolitik</div>
-      <div class="card-subtitle">Staatliche Einnahmen und Ausgaben als Steuerungsinstrument</div>
-    </div>
-    <div class="card-meta">
-      <span class="school-badge school-keynes">Keynes</span>
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
+<div class="acc-group">
 
-  <div class="model-step">
-    <span class="model-step-label">Instrumente</span>
-    <span class="model-step-title">Was kann der Staat steuern?</span>
-    <div class="model-step-body">
-      <div class="formula">
-        G = Staatliche Ausgaben (Infrastruktur, Beamte, Militär)<br>
-        T = Steuern (Einkommensteuer, Unternehmenssteuer, MwSt.)
+  <!-- KLASSIK -->
+  <div class="acc-item open" id="klassik">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Klassik</span>
+        <span class="acc-sub">Smith, Ricardo, Say — ca. 1776–1870</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-klassik">Klassik</span>
+        <span class="badge badge-yellow">🟡 Grundlage</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <div class="kern">
+          <span class="kern-tag">💡 Kernaussage</span>
+          <p>Märkte regulieren sich selbst — staatliche Eingriffe sind überflüssig und schädlich.</p>
+        </div>
+        <ul class="thesen">
+          <li><strong><span class="term">Say'sches Theorem<span class="tip-box">Jedes Angebot schafft sich seine eigene Nachfrage — dauerhafte Überproduktion ist unmöglich, da jede Produktion Einkommen erzeugt, das für Käufe genutzt wird.</span></span>:</strong> Jedes Angebot schafft seine eigene Nachfrage — dauerhafte Überproduktion ist unmöglich.</li>
+          <li><strong>Vollständige Preisflexibilität:</strong> Löhne und Preise passen sich sofort an — kein dauerhaftes Ungleichgewicht möglich.</li>
+          <li><strong><span class="term">Laissez-faire<span class="tip-box">Französisch für „machen lassen" — Prinzip, dass der Staat sich nicht in wirtschaftliche Prozesse einmischt, da der Markt effiziente Ergebnisse erzeugt.</span></span>:</strong> Der Staat soll nicht eingreifen. Der Markt reguliert sich zum Optimum.</li>
+          <li><strong>Langfristige Perspektive:</strong> Kurzfristige Schwankungen sind irrelevant — die VW kehrt stets ins Gleichgewicht zurück.</li>
+          <li><strong>Selbstheilungskräfte:</strong> Arbeitslosigkeit entsteht nur, wenn Löhne zu starr sind (institutionell bedingt, nicht systemisch).</li>
+        </ul>
+        <div class="info-row">
+          <span class="lbl">Wirtschaftspolitik</span><span class="val">Keine staatlichen Eingriffe nötig</span>
+          <span class="lbl">Arbeitslosigkeit</span><span class="val">Nur freiwillig — bei flexiblen Löhnen kein dauerhaftes Ungleichgewicht</span>
+          <span class="lbl">Zeitrahmen</span><span class="val">Langfristig</span>
+        </div>
+        <div class="insight">
+          <span class="insight-tag">🔑 Klausur-Wissen</span>
+          Say's Theorem ist die zentrale Abgrenzung zur Keynes-Kritik. Keynes widerlegte genau diese Annahme: Nachfrageausfälle können dauerhaft bestehen bleiben.
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="model-step">
-    <span class="model-step-label">Wirkungsrichtung</span>
-    <span class="model-step-title">Expansiv vs. Restriktiv</span>
-    <div class="model-step-body">
-      <div class="policy-grid">
-        <div class="policy-card expansiv">
-          <h4>Expansiv (in der Rezession)</h4>
+  <!-- KEYNESIANISMUS -->
+  <div class="acc-item t-keynes" id="keynes">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Keynesianismus</span>
+        <span class="acc-sub">John Maynard Keynes — Allgemeine Theorie, 1936</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-keynes">Keynes</span>
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <div class="kern">
+          <span class="kern-tag">💡 Kernaussage</span>
+          <p>Die gesamtwirtschaftliche Nachfrage — nicht das Angebot — bestimmt Einkommen und Beschäftigung.</p>
+        </div>
+        <ul class="thesen">
+          <li><strong>Gesamtnachfrage ist entscheidend:</strong> Y = C + I + G + NX — fehlt Nachfrage, sinkt das Einkommen.</li>
+          <li><strong>Märkte räumen sich nicht automatisch:</strong> Löhne und Preise sind nach unten starr (Verträge, Gewerkschaften).</li>
+          <li><strong>Unfreiwillige Arbeitslosigkeit möglich:</strong> Menschen wollen zum herrschenden Lohn arbeiten, finden aber keinen Job.</li>
+          <li><strong>Staatliche Eingriffe nötig:</strong> Der Staat muss durch Fiskalpolitik die Nachfrage stützen.</li>
+          <li><strong><span class="term">Multiplikator<span class="tip-box">Faktor, um den ein Anstieg der Staatsausgaben das BIP erhöht. Bei c = 0,8 beträgt er 5: 1 € Staatsausgabe → 5 € BIP-Anstieg, da jeder Euro mehrfach ausgegeben wird.</span></span>:</strong> 1 € Staatsausgabe → mehr als 1 € BIP-Anstieg, da jeder Euro mehrfach ausgegeben wird.</li>
+          <li><strong>Kurzfristige Perspektive:</strong> „Im langen Frist sind wir alle tot" — kurzfristige Stabilisierung ist entscheidend.</li>
+        </ul>
+        <div class="fml">
+          <div class="frow">Multiplikator &nbsp; m = <span class="frac"><span class="num">1</span><span class="den">1 − c</span></span></div>
+          <div class="note">c = marginale Konsumquote (0 &lt; c &lt; 1)</div>
+          <div class="frow">Beispiel: c = 0,8 &nbsp;→&nbsp; m = <span class="frac"><span class="num">1</span><span class="den">0,2</span></span> = 5 &nbsp;→&nbsp; ΔG = 100 führt zu ΔY = <strong>500</strong></div>
+        </div>
+        <div class="info-row">
+          <span class="lbl">Modell</span><span class="val">Keynesianisches Kreuz, IS-LM</span>
+          <span class="lbl">Instrument</span><span class="val">Aktive Fiskalpolitik (G ↑, T ↓)</span>
+          <span class="lbl">Zeitrahmen</span><span class="val">Kurzfristig</span>
+        </div>
+        <div class="insight">
+          <span class="insight-tag">🔑 Klausur-Wissen</span>
+          Keynes richtig zitieren: nicht „Staat soll immer eingreifen", sondern „In einer Rezession mit Nachfrageausfall ist staatliche Nachfragestimulierung sinnvoll, weil der Markt sich nicht selbst korrigiert."
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONETARISMUS -->
+  <div class="acc-item t-monetar" id="monetarismus">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Monetarismus</span>
+        <span class="acc-sub">Milton Friedman — 1960er Jahre</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-monetar">Monetarismus</span>
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <div class="kern">
+          <span class="kern-tag">💡 Kernaussage</span>
+          <p>Die Geldmenge bestimmt langfristig das Preisniveau — mehr Geld bedeutet nur mehr Inflation, nicht mehr Output.</p>
+        </div>
+        <ul class="thesen">
+          <li><strong><span class="term">Quantitätsgleichung<span class="tip-box">M · V = P · Y — verbindet Geldmenge (M), Umlaufgeschwindigkeit (V), Preisniveau (P) und reales BIP (Y). Kernformel des Monetarismus.</span></span>:</strong> M · V = P · Y — bei konstantem V bewirkt mehr M nur Inflation.</li>
+          <li><strong>Neutralität des Geldes:</strong> Geldpolitik wirkt kurzfristig auf Y, langfristig nur auf P.</li>
+          <li><strong><span class="term">NAIRU<span class="tip-box">Non-Accelerating Inflation Rate of Unemployment — die „natürliche" Arbeitslosenquote u*, die keine Inflationsbeschleunigung verursacht. Sie ist strukturell bedingt und durch Geldpolitik nicht dauerhaft senkbar.</span></span>:</strong> Es gibt eine natürliche Arbeitslosenquote u*, die Geldpolitik nicht dauerhaft unterschreiten kann.</li>
+          <li><strong>Fiskalpolitik ineffektiv:</strong> Staatsausgaben verdrängen private Investitionen vollständig (Crowding-out).</li>
+          <li><strong><span class="term">Diskretionismus<span class="tip-box">Situative, fallweise Wirtschaftspolitik, die auf aktuelle Lage reagiert. Monetaristen lehnen ihn ab: Regelgebundenheit (feste Geldmengenregel) sei besser als diskretionäre Entscheidungen.</span></span> ablehnen:</strong> Regelgebundene Geldpolitik statt situativer Eingriffe — die k%-Regel.</li>
+        </ul>
+        <div class="fml">
+          <div class="frow"><strong>M · V = P · Y</strong></div>
+          <div class="note">Bei V = const., Y = const.: ΔM ↑ 10 % → Δπ ↑ 10 % (langfristig)</div>
+          <div class="frow" style="font-size:0.9rem;">Friedman-Phillipskurve: &nbsp; π = π<sup>e</sup> − α(u − u*)</div>
+          <div class="note">Wenn π<sup>e</sup> steigt, verschiebt sich die gesamte Phillipskurve nach oben</div>
+        </div>
+        <div class="info-row">
+          <span class="lbl">Instrument</span><span class="val">Regelgebundene Geldmengenpolitik (k%-Regel)</span>
+          <span class="lbl">Fiskalpolitik</span><span class="val">Ineffektiv — vollständiges Crowding-out</span>
+          <span class="lbl">Zeitrahmen</span><span class="val">Kurzfristig real, langfristig nur nominal</span>
+        </div>
+        <div class="insight">
+          <span class="insight-tag">🔑 Klausur-Wissen</span>
+          Friedmans Kritik an der Phillipskurve: Der Trade-off gilt nur kurzfristig. Langfristig antizipieren Akteure die Inflation → Phillipskurve ist langfristig senkrecht bei u*.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEOKLASSISCHE SYNTHESE -->
+  <div class="acc-item t-neo" id="neoklassik">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Neoklassische Synthese</span>
+        <span class="acc-sub">Hicks, Samuelson — 1950er–1960er</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-neo">Neoklassik</span>
+        <span class="badge badge-orange">🟠 Wichtig</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <div class="kern">
+          <span class="kern-tag">💡 Kernaussage</span>
+          <p>Kurzfristig hat Keynes recht; langfristig hat die Klassik recht. IS-LM vereint beide Sichten.</p>
+        </div>
+        <ul class="thesen">
+          <li><strong>Kurzfristig:</strong> Keynesianische Nachfragesteuerung — Güterpreise sind starr, Output ist durch Nachfrage beeinflussbar.</li>
+          <li><strong>Langfristig:</strong> Klassisches Gleichgewicht — Preise passen sich an, die Wirtschaft kehrt zu Y* zurück.</li>
+          <li><strong>IS-LM als Synthese-Modell:</strong> Gütermarkt (IS) und Geldmarkt (LM) bestimmen gemeinsam Zins und Einkommen.</li>
+          <li><strong>AD-AS Modell:</strong> Kurzfristig Nachfragesteuerung (AD-Schocks), langfristig Angebotspolitik (AS-Position).</li>
+        </ul>
+        <div class="insight">
+          <span class="insight-tag">🔑 Klausur-Wissen</span>
+          IS-LM wurde von Hicks (1937) als vereinfachte Keynes-Interpretation entwickelt. Es ist das Standard-Modell der Neoklassischen Synthese und das meistgefragte Modell in der Klausur.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEUE KLASSIK -->
+  <div class="acc-item t-neue" id="neueKlassik">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Neue Klassik &amp; Rationale Erwartungen</span>
+        <span class="acc-sub">Lucas, Sargent — 1970er–1980er</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-neue">Neue Klassik</span>
+        <span class="badge badge-yellow">🟡 Grundbegriffe</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <div class="kern">
+          <span class="kern-tag">💡 Kernaussage</span>
+          <p>Wirtschaftsakteure handeln rational und antizipieren staatliche Politik — deshalb ist antizipierte Politik wirkungslos.</p>
+        </div>
+        <ul class="thesen">
+          <li><strong><span class="term">Rationale Erwartungen<span class="tip-box">Annahme, dass Wirtschaftsakteure alle verfügbaren Informationen optimal nutzen und sich systematisch nicht irren. Folge: Antizipierte Politik hat keinen Realeffekt.</span></span>:</strong> Individuen nutzen alle verfügbaren Informationen optimal — sie irren sich systematisch nicht.</li>
+          <li><strong>Antizipierte Politik wirkungslos:</strong> Wenn alle wissen, dass M um 5 % wächst, verlangen Arbeitnehmer sofort 5 % mehr Lohn → kein Realeffekt.</li>
+          <li><strong>Nur unerwartete Schocks wirken:</strong> Überraschende Geldpolitik kann kurzfristig reale Effekte haben — systematische Politik aber nicht.</li>
+          <li><strong>Phillipskurve senkrecht:</strong> Selbst kurzfristig gilt der Trade-off nur bei unerwarteten Schocks.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /acc-group Theorien -->
+
+
+<!-- ════════════════════════════════════════════════ -->
+<!--  ACCORDION: MODELLE                             -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="sec-head"><h2>Die Modelle</h2></div>
+
+<div class="acc-group">
+
+  <!-- VGR / BIP -->
+  <div class="acc-item open" id="vgr">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Volkswirtschaftliche Gesamtrechnung (VGR)</span>
+        <span class="acc-sub">Wie wird BIP gemessen?</span>
+      </div>
+      <div class="acc-meta">
+        <span class="badge badge-orange">🟠 Wichtig</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="mstep">
+          <div class="mstep-lbl">Methode 1</div>
+          <span class="mstep-title">Verwendungsrechnung</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow"><strong>Y = C + I + G + NX</strong></div>
+              <div class="note">C = Privater Konsum &nbsp;|&nbsp; I = Bruttoinvestitionen &nbsp;|&nbsp; G = Staatskäufe (ohne Transfers!) &nbsp;|&nbsp; NX = Nettoexporte</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Methode 2</div>
+          <span class="mstep-title">Entstehungsrechnung</span>
+          <div class="mstep-body">
+            <p>Summe der Wertschöpfung aller Produktionsstufen. Vermeidet Doppelzählung durch Abzug von Vorleistungen.</p>
+            <div class="fml">
+              <div class="frow">BIP = Σ Bruttowertschöpfung aller Sektoren + Gütersteuern − Gütersubventionen</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Methode 3</div>
+          <span class="mstep-title">Reales vs. Nominales BIP &amp; BIP-Deflator</span>
+          <div class="mstep-body">
+            <p>Nominales BIP: zu laufenden Preisen (steigt auch bei Inflation). Reales BIP: zu Preisen des Basisjahres (nur Mengenänderung).</p>
+            <div class="fml">
+              <div class="frow"><span class="term">BIP-Deflator<span class="tip-box">Preisindex für alle im Inland produzierten Güter. Misst Inflation breiter als der CPI, da auch Investitionsgüter und Staatsausgaben erfasst werden.</span></span> = <span class="frac"><span class="num">Nominales BIP</span><span class="den">Reales BIP</span></span> × 100</div>
+              <div class="note">Beispiel: Nom. BIP = 1.100, Real BIP (Basis) = 1.000 → Deflator = 110 → Inflationsrate = 10 %</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-tag">💡 Klausur-Tipp</span>
+          Transfers (Renten, Sozialleistungen) zählen <strong>nicht</strong> zum G — sie sind keine Käufe von Gütern und Dienstleistungen. Nur staatliche Käufe (Beamtengehälter, Straßenbau) zählen.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- KEYNESIANISCHES KREUZ -->
+  <div class="acc-item" id="keynesKreuz">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Keynesianisches Kreuz</span>
+        <span class="acc-sub">Gütermarktgleichgewicht in geschlossener VW</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-keynes">Keynes</span>
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="kern">
+          <span class="kern-tag">💡 Was zeigt es?</span>
+          <p>Das gleichgewichtige Einkommen, bei dem Produktion = Ausgaben. Grundmodell der keynesianischen Nachfragesteuerung.</p>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Baustein 1</div>
+          <span class="mstep-title">Konsumfunktion</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow"><span class="term">Konsumfunktion<span class="tip-box">C = C₀ + c · Y — zeigt, wie der Konsum vom Einkommen abhängt. C₀ = autonomer Konsum (auch ohne Einkommen), c = marginale Konsumquote (Anteil des Einkommenszuwachses, der konsumiert wird).</span></span>: &nbsp; C = C<sub>0</sub> + c · Y</div>
+              <div class="note">C<sub>0</sub> = autonomer Konsum &nbsp;|&nbsp; c = marginale Konsumquote (0 &lt; c &lt; 1)</div>
+              <div class="note">Bei c = 0,8: von jedem zusätzlichen Euro werden 80 Cent konsumiert</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Baustein 2</div>
+          <span class="mstep-title">Gleichgewichtsbedingung &amp; Multiplikator</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow">Y = C + I + G &nbsp;→&nbsp; Y = C<sub>0</sub> + c · Y + I + G</div>
+              <div class="frow">Y(1 − c) = C<sub>0</sub> + I + G</div>
+              <div class="frow"><strong>Y* = <span class="frac"><span class="num">C<sub>0</sub> + I + G</span><span class="den">1 − c</span></span></strong></div>
+              <div class="frow">Multiplikator: &nbsp; m = <span class="frac"><span class="num">1</span><span class="den">1 − c</span></span> &nbsp;→&nbsp; ΔY = m · ΔG</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Vollständiges Zahlenbeispiel</div>
+          <span class="mstep-title">c = 0,8, C₀ = 200, I = 300, G = 400</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow">m = <span class="frac"><span class="num">1</span><span class="den">1 − 0,8</span></span> = <span class="frac"><span class="num">1</span><span class="den">0,2</span></span> = <strong>5</strong></div>
+              <div class="frow">Y* = <span class="frac"><span class="num">200 + 300 + 400</span><span class="den">0,2</span></span> = <span class="frac"><span class="num">900</span><span class="den">0,2</span></span> = 4.500</div>
+              <div class="frow">Konjunkturprogramm ΔG = 100 → ΔY = 5 × 100 = <strong>500</strong></div>
+            </div>
+            <div class="result">Neues Gleichgewicht: Y** = 4.500 + 500 = 5.000</div>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-tag">💡 Klausur-Tipp — Steuermultiplikator</span>
+          Der Steuermultiplikator ist kleiner als der Ausgabenmultiplikator:<br>
+          m<sub>T</sub> = −<span class="frac"><span class="num">c</span><span class="den">1 − c</span></span> &nbsp;→&nbsp; bei c = 0,8: m<sub>T</sub> = −4 (nicht −5), weil Steuersenkungen zuerst das verfügbare Einkommen erhöhen, davon aber nur c % konsumiert werden.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- IS-KURVE -->
+  <div class="acc-item" id="is">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">IS-Kurve</span>
+        <span class="acc-sub">Investment-Saving — Gütermarktgleichgewicht</span>
+      </div>
+      <div class="acc-meta">
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="kern">
+          <span class="kern-tag">💡 Was zeigt die IS-Kurve?</span>
+          <p>Alle Kombinationen von Zins (i) und Einkommen (Y), bei denen der Gütermarkt im Gleichgewicht ist (Investitionen = Ersparnis).</p>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Warum</div>
+          <span class="mstep-title">Warum ist die IS-Kurve negativ geneigt?</span>
+          <div class="mstep-body">
+            <div class="chain">
+              <div class="chain-item">Zins i ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">Investitionen I ↓</div><span class="chain-arr">→</span>
+              <div class="chain-item">Gesamtnachfrage ↓</div><span class="chain-arr">→</span>
+              <div class="chain-item">Gleichgewichts-Y ↓</div>
+            </div>
+            <p>Höherer Zins → teurer Kredit → weniger Investitionen → weniger Output. Daher: höheres i ↔ niedrigeres Y.</p>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Verschiebungen</div>
+          <span class="mstep-title">Was verschiebt die IS-Kurve?</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow">IS verschiebt <strong>rechts</strong> (höheres Y bei gleichem i):</div>
+              <div class="note">G ↑ &nbsp;|&nbsp; T ↓ &nbsp;|&nbsp; Autonomer Konsum C<sub>0</sub> ↑ &nbsp;|&nbsp; Exporte ↑</div>
+              <div class="frow">IS verschiebt <strong>links</strong>:</div>
+              <div class="note">G ↓ &nbsp;|&nbsp; T ↑ &nbsp;|&nbsp; Exporte ↓ &nbsp;|&nbsp; Konsumvertrauen sinkt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight">
+          <span class="insight-tag">🔑 Merksatz</span>
+          <strong>IS = Gütermarkt = Fiskalpolitik.</strong> Wenn Fiskalpolitik betrieben wird, verschiebt sich die IS-Kurve. Die LM-Kurve bleibt unverändert.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- LM-KURVE -->
+  <div class="acc-item" id="lm">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">LM-Kurve</span>
+        <span class="acc-sub">Liquidity-Money — Geldmarktgleichgewicht</span>
+      </div>
+      <div class="acc-meta">
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="kern">
+          <span class="kern-tag">💡 Was zeigt die LM-Kurve?</span>
+          <p>Alle Kombinationen von Zins (i) und Einkommen (Y), bei denen der Geldmarkt im Gleichgewicht ist (Geldangebot = Geldnachfrage).</p>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Warum</div>
+          <span class="mstep-title">Warum ist die LM-Kurve positiv geneigt?</span>
+          <div class="mstep-body">
+            <div class="chain">
+              <div class="chain-item">Einkommen Y ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">Geldnachfrage ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">Zins i muss steigen</div><span class="chain-arr">→</span>
+              <div class="chain-item">Spekulation ↓</div>
+            </div>
+            <p>Steigt Y, brauchen Menschen mehr Geld für Transaktionen → Geldnachfrage steigt → Zins steigt, um Geldmarkt ins Gleichgewicht zu bringen.</p>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Verschiebungen</div>
+          <span class="mstep-title">Was verschiebt die LM-Kurve?</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow">LM verschiebt <strong>rechts</strong> (niedrigerer i bei gleichem Y):</div>
+              <div class="note">Geldmenge M ↑ (Zentralbank expansiv)</div>
+              <div class="frow">LM verschiebt <strong>links</strong>:</div>
+              <div class="note">Geldmenge M ↓ (restriktive Geldpolitik)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight">
+          <span class="insight-tag">🔑 Merksatz</span>
+          <strong>LM = Geldmarkt = Geldpolitik.</strong> Wenn die Zentralbank die Geldmenge ändert, verschiebt sich die LM-Kurve. Die IS-Kurve bleibt unverändert.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- IS-LM MODELL -->
+  <div class="acc-item" id="islm">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">IS-LM Modell</span>
+        <span class="acc-sub">Simultanes Gleichgewicht auf Güter- und Geldmarkt</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-neo">Neoklassik</span>
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="kern">
+          <span class="kern-tag">💡 Was zeigt IS-LM?</span>
+          <p>Der Schnittpunkt von IS und LM bestimmt gleichzeitig das gleichgewichtige Einkommen Y* und den gleichgewichtigen Zins i*.</p>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Analyse 1</div>
+          <span class="mstep-title">Fiskalpolitik im IS-LM</span>
+          <div class="mstep-body">
+            <div class="chain">
+              <div class="chain-item">G ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">IS rechts</div><span class="chain-arr">→</span>
+              <div class="chain-item">Y ↑ und i ↑</div>
+            </div>
+            <div class="fml">
+              <div class="frow">Problem: <strong><span class="term">Crowding-out<span class="tip-box">Verdrängungseffekt: Staatliche Kreditaufnahme erhöht den Zinssatz, wodurch private Investitionen zurückgehen. Der Fiskalimpuls wird teilweise neutralisiert.</span></span></strong></div>
+              <div class="note">G ↑ → Zins steigt → I privat ↓ → Teil des Multiplikators neutralisiert</div>
+              <div class="note">Stark bei: zinssensitiven Investitionen, steiler LM-Kurve</div>
+              <div class="note">Schwach bei: flacher LM-Kurve (Liquiditätsfalle: gar kein Crowding-out)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Analyse 2</div>
+          <span class="mstep-title">Geldpolitik im IS-LM</span>
+          <div class="mstep-body">
+            <div class="chain">
+              <div class="chain-item">M ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">LM rechts</div><span class="chain-arr">→</span>
+              <div class="chain-item">Y ↑ und i ↓</div>
+            </div>
+            <p>Zins sinkt → private Investitionen steigen → Y steigt. Kein Crowding-out, da Zins sinkt.</p>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Sonderfall</div>
+          <span class="mstep-title">Liquiditätsfalle</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow"><strong><span class="term">Liquiditätsfalle<span class="tip-box">Zustand, in dem der Zins so niedrig ist, dass alle lieber Bargeld halten als Anleihen zu kaufen. Geldpolitik wird wirkungslos: mehr Geld landet als Bargeldhaltung, nicht als Kredit.</span></span>:</strong> LM-Kurve ist waagerecht</div>
+              <div class="note">M ↑ → LM verschiebt sich, aber Y ändert sich kaum → Geldpolitik wirkungslos</div>
+              <div class="note">Fiskalpolitik wirksam (IS rechts → Y steigt, i bleibt unverändert → kein Crowding-out)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-tag">💡 IS vs. LM — Merkhilfe</span>
           <ul>
-            <li>Staatsausgaben G ↑</li>
-            <li>Steuern T ↓</li>
-            <li>→ Gesamtnachfrage ↑</li>
-            <li>→ BIP steigt, Arbeitslosigkeit sinkt</li>
-            <li>→ Staatsdefizit entsteht</li>
+            <li><strong>IS</strong> = <em>I</em>nvestment/<em>S</em>aving = Gütermarkt = <strong>Fiskalpolitik</strong> verschiebt</li>
+            <li><strong>LM</strong> = <em>L</em>iquidity/<em>M</em>oney = Geldmarkt = <strong>Geldpolitik</strong> verschiebt</li>
+            <li>Fiskalpolitik: IS rechts → Y ↑, i ↑ → Crowding-out möglich</li>
+            <li>Geldpolitik: LM rechts → Y ↑, i ↓ → kein Crowding-out</li>
           </ul>
         </div>
-        <div class="policy-card restriktiv">
-          <h4>Restriktiv (bei Inflation)</h4>
-          <ul>
-            <li>Staatsausgaben G ↓</li>
-            <li>Steuern T ↑</li>
-            <li>→ Gesamtnachfrage ↓</li>
-            <li>→ Inflation sinkt</li>
-            <li>→ Staatshaushalt verbessert sich</li>
-          </ul>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PHILLIPSKURVE -->
+  <div class="acc-item" id="phillips">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Phillipskurve</span>
+        <span class="acc-sub">Trade-off zwischen Inflation und Arbeitslosigkeit</span>
+      </div>
+      <div class="acc-meta">
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="mstep">
+          <div class="mstep-lbl">Kurzfristig</div>
+          <span class="mstep-title">Ursprüngliche Phillipskurve (Phillips 1958)</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow">π = π<sup>e</sup> − α(u − u*)</div>
+              <div class="note">π = tatsächliche Inflationsrate &nbsp;|&nbsp; π<sup>e</sup> = erwartete Inflation &nbsp;|&nbsp; u = Arbeitslosenquote &nbsp;|&nbsp; u* = NAIRU &nbsp;|&nbsp; α = Sensitivität</div>
+              <div class="note">Trade-off: u &lt; u* → π &gt; π<sup>e</sup> (weniger Arbeitslosigkeit = mehr Inflation)</div>
+            </div>
+          </div>
         </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Langfristig</div>
+          <span class="mstep-title">Vertikale Phillipskurve (Friedman/Phelps)</span>
+          <div class="mstep-body">
+            <p>Langfristig passen sich die Inflationserwartungen π<sup>e</sup> an die tatsächliche Inflation an:</p>
+            <div class="fml">
+              <div class="frow">π = π<sup>e</sup> &nbsp;→&nbsp; u = u* (immer)</div>
+              <div class="note">Die Phillipskurve ist langfristig <strong>senkrecht</strong> bei u = u* — kein dauerhafter Trade-off</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Sonderfall</div>
+          <span class="mstep-title">Stagflation — warum verschiebt sich die Phillipskurve?</span>
+          <div class="mstep-body">
+            <p>1970er Ölpreisschock: Hohe Inflation UND hohe Arbeitslosigkeit gleichzeitig — scheinbarer Widerspruch.</p>
+            <div class="fml">
+              <div class="frow"><span class="term">Stagflation<span class="tip-box">Gleichzeitiges Auftreten von hoher Inflation und hoher Arbeitslosigkeit. Erklärt durch einen negativen Angebotsschock, der die gesamte Phillipskurve nach oben verschiebt.</span></span>: Angebotsschock verschiebt die Phillipskurve nach oben</div>
+              <div class="note">Höhere Produktionskosten → π steigt OHNE dass u sinkt → neue Kurve liegt oberhalb der alten</div>
+              <div class="note">Auch: steigende Inflationserwartungen π<sup>e</sup> verschieben die kurzfristige Phillipskurve nach oben</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight">
+          <span class="insight-tag">🔑 Klausur-Wissen</span>
+          Bewegung <em>entlang</em> der Phillipskurve = Geldpolitik/Fiskalpolitik. Verschiebung der Phillipskurve = Angebotsschock oder geänderte Erwartungen.
+        </div>
+
       </div>
     </div>
   </div>
 
-  <div class="model-step">
-    <span class="model-step-label">Automatisch</span>
-    <span class="model-step-title">Automatische Stabilisatoren</span>
-    <div class="model-step-body">
-      <p>Reagieren ohne aktiven Beschluss des Staates antizyklisch auf Konjunkturschwankungen:</p>
-      <div class="formula">
-        In der Rezession (Y sinkt):<br>
-        · Arbeitslosengeld steigt automatisch → C bleibt stabiler<br>
-        · Steuereinnahmen sinken automatisch → Netto-Belastung sinkt<br><br>
-        Im Boom (Y steigt):<br>
-        · Progressive Steuer → Belastung steigt automatisch → dämpft Überhitzung<br>
-        · Arbeitslosengeld sinkt → weniger Ausgaben
+  <!-- QUANTITÄTSTHEORIE -->
+  <div class="acc-item" id="quantitaet">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Quantitätstheorie des Geldes</span>
+        <span class="acc-sub">Irving Fisher / Milton Friedman</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-monetar">Monetarismus</span>
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="mstep">
+          <div class="mstep-lbl">Grundformel</div>
+          <span class="mstep-title">Quantitätsgleichung</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow"><strong>M · V = P · Y</strong></div>
+              <div class="note">M = Geldmenge &nbsp;|&nbsp; V = Umlaufgeschwindigkeit &nbsp;|&nbsp; P = Preisniveau &nbsp;|&nbsp; Y = Reales BIP</div>
+              <div class="note">P · Y = Nominales BIP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Monetaristen-Annahme</div>
+          <span class="mstep-title">V und Y konstant → Geld ist neutral</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow">V = const., Y = const. (kurzfristig)</div>
+              <div class="frow">→ ΔM ↑ 10 % führt zu ΔP ↑ 10 %</div>
+              <div class="note"><strong>Mehr Geld bedeutet nur mehr Inflation, nicht mehr Output</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Politikregel</div>
+          <span class="mstep-title">Friedmans k%-Regel</span>
+          <div class="mstep-body">
+            <p>Zentralbank soll Geldmenge jährlich konstant um k % wachsen lassen — gleich dem langfristigen BIP-Wachstum. Kein Diskretionismus.</p>
+            <div class="fml">
+              <div class="frow">Ziel: Preisstabilität durch verlässliche, regelgebundene Geldmengenpolitik</div>
+              <div class="note">Begründung: Zeitinkonsistenz und Informationsprobleme bei diskretionärer Politik machen Regeln überlegen</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <div class="model-step">
-    <span class="model-step-label">Einschränkung 1</span>
-    <span class="model-step-title">Crowding-out</span>
-    <div class="model-step-body">
-      <div class="formula">
-        G ↑ → IS rechts → i ↑ → Investitionen I ↓<br><br>
-        Vollständiges Crowding-out (klassisch/monetaristisch): ΔI = −ΔG → kein Netto-Effekt<br>
-        Partielles Crowding-out (keynesianisch): ΔI &lt; ΔG → positiver Netto-Effekt<br><br>
-        Bedingung für wenig Crowding-out:<br>
-        · Investitionen wenig zinssensitiv<br>
-        · LM-Kurve flach (Liquiditätsfalle: kein Crowding-out)
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Einschränkung 2</span>
-    <span class="model-step-title">Ricardianische Äquivalenz</span>
-    <div class="model-step-body">
-      <p>Barro (1974): Staatsverschuldung heute ist zukünftige Steuerbelastung. Rational handelnde Haushalte antizipieren dies und sparen entsprechend mehr.</p>
-      <div class="formula">
-        G ↑ (durch Schulden finanziert)<br>
-        → Haushalte erwarten höhere Steuern in der Zukunft<br>
-        → Private Ersparnis steigt um denselben Betrag<br>
-        → C sinkt → kein Multiplikatoreffekt<br><br>
-        Fazit: Staatsschulden vs. Steuerfinanzierung ist egal<br>
-        (Voraussetzung: vollständige Information, vollkommener Kapitalmarkt)
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- GELDPOLITIK -->
-<div class="card model" id="geldpolitik">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Geldpolitik &amp; EZB</div>
-      <div class="card-subtitle">Europäische Zentralbank — Instrumente und Transmission</div>
-    </div>
-    <div class="card-meta">
-      <span class="badge badge-red">🔴 Pflicht</span>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Ziel</span>
-    <span class="model-step-title">Primärziel der EZB</span>
-    <div class="model-step-body">
-      <div class="formula">
-        Preisstabilität: Inflation &lt; 2 % im Euroraum (mittelfristig)<br><br>
-        Sekundärziele (soweit Preisstabilität nicht gefährdet):<br>
-        · Beschäftigung · Wirtschaftswachstum · Finanzstabilität
-      </div>
-      <p>Die EZB ist <strong>politisch unabhängig</strong> — kein Weisungsrecht von Regierungen. Begründung: Schutz vor politisch motivierter Inflationserzeugung vor Wahlen.</p>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Instrument 1</span>
-    <span class="model-step-title">Leitzinsen</span>
-    <div class="model-step-body">
-      <div class="formula">
-        Hauptrefinanzierungssatz (MRO): Zins, zu dem Banken sich bei der EZB refinanzieren<br>
-        Einlagefazilität: Zins, den EZB auf Einlagen von Banken zahlt<br>
-        Spitzenrefinanzierungsfazilität: Overnight-Kredit für Banken<br><br>
-        Zins ↓ → Bankzinsen ↓ → Kredite billiger → I ↑ → Y ↑
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Instrument 2</span>
-    <span class="model-step-title">Offenmarktgeschäfte</span>
-    <div class="model-step-body">
-      <p>EZB kauft oder verkauft Wertpapiere (meist Staatsanleihen) auf dem offenen Markt:</p>
-      <div class="formula">
-        Kauf von Anleihen → Geldmenge M steigt → Zins sinkt (expansiv)<br>
-        Verkauf von Anleihen → Geldmenge M sinkt → Zins steigt (restriktiv)<br><br>
-        QE (Quantitative Easing): Massiver Ankauf von Anleihen bei Nullzins-Umfeld<br>
-        → Ziel: Langfristige Zinsen senken, Deflationsrisiko bekämpfen
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Instrument 3</span>
-    <span class="model-step-title">Mindestreserve &amp; Geldschöpfungsmultiplikator</span>
-    <div class="model-step-body">
-      <div class="formula">
-        Mindestreservesatz r: Banken müssen Anteil r der Einlagen bei EZB halten<br><br>
-        <strong>Geldschöpfungsmultiplikator:</strong> m = 1 ⁄ r<br><br>
-        Beispiel: r = 10 % → m = 10<br>
-        → 100 € Zentralbankgeld kann zu 1.000 € Buchgeld werden<br><br>
-        r ↑ → weniger Kreditvergabe → Geldmenge sinkt (restriktiv)<br>
-        r ↓ → mehr Kreditvergabe → Geldmenge steigt (expansiv)
-      </div>
-    </div>
-  </div>
-
-  <div class="model-step">
-    <span class="model-step-label">Wirkungsmechanismus</span>
-    <span class="model-step-title">Transmissionsmechanismus</span>
-    <div class="model-step-body">
-      <p>Wie kommt Geldpolitik in der Realwirtschaft an?</p>
-      <div class="chain">
-        <div class="chain-item">EZB senkt Leitzins</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Bankzinsen sinken</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Kredite billiger</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">I und C steigen</div>
-        <span class="chain-arrow">→</span>
-        <div class="chain-item">Y steigt</div>
-      </div>
-      <div class="formula" style="margin-top:12px;">
-        Zusätzlicher Kanal — Vermögenspreise:<br>
-        Zins ↓ → Anleihepreise ↑ → Vermögen ↑ → Konsum ↑<br><br>
-        Zusätzlicher Kanal — Wechselkurs:<br>
-        Zins ↓ → Kapitalabfluss → Währung wertet ab → Exporte ↑
-      </div>
-    </div>
-  </div>
-</div>
+</div><!-- /acc-group Modelle -->
 
 
 <!-- ════════════════════════════════════════════════ -->
-<!--  SECTION 4: KLAUSURVORBEREITUNG                 -->
+<!--  ACCORDION: WIRTSCHAFTSPOLITIK                  -->
 <!-- ════════════════════════════════════════════════ -->
-<div class="section-divider"><h2>4 · Klausurvorbereitung</h2></div>
+<div class="sec-head"><h2>Wirtschaftspolitik</h2></div>
 
-<div class="card model" id="klausur">
-  <div class="card-header">
-    <div>
-      <div class="card-title">Klausur-Tipps &amp; Häufige Fehler</div>
-      <div class="card-subtitle">Was wird gefragt — und wie antwortet man richtig?</div>
-    </div>
-  </div>
+<div class="acc-group">
 
-  <!-- Was wird gefragt -->
-  <div class="model-step">
-    <span class="model-step-label">Aufgabentypen</span>
-    <span class="model-step-title">Was wird in Makro-Klausuren typischerweise gefragt?</span>
-    <div class="model-step-body">
-      <ul class="thesen">
-        <li><strong>Multiple Choice zu Theorien:</strong> "Welche Schule vertritt die These, dass…?" — Klassik, Keynes, Monetarismus zuordnen</li>
-        <li><strong>IS-LM verbal analysieren:</strong> "Was passiert, wenn G steigt? Begründen Sie mit IS-LM."</li>
-        <li><strong>Multiplikator berechnen:</strong> Konsumquote gegeben → m = ?, ΔG gegeben → ΔY = ?</li>
-        <li><strong>Phillipskurve interpretieren:</strong> "Warum ist die langfristige Phillipskurve senkrecht?"</li>
-        <li><strong>Geldpolitik vs. Fiskalpolitik:</strong> "Vergleichen Sie die Effekte im IS-LM-Modell."</li>
-        <li><strong>BIP berechnen:</strong> Verwendungsrechnung Y = C + I + G + NX mit Zahlen</li>
-        <li><strong>Quantitätsgleichung:</strong> M · V = P · Y — welche Variable ändert sich?</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Theorie zuordnen -->
-  <div class="model-step">
-    <span class="model-step-label">Schnellreferenz</span>
-    <span class="model-step-title">Theorie-Zuordnung — welche Schule steckt dahinter?</span>
-    <div class="model-step-body">
-      <div class="quickref">
-        <div class="quickref-row">
-          <span class="stmt">„Staatsausgaben erhöhen das BIP durch den Multiplikator."</span>
-          <span class="school"><span class="school-badge school-keynes">Keynes</span></span>
-        </div>
-        <div class="quickref-row">
-          <span class="stmt">„Geldmenge bestimmt langfristig nur das Preisniveau, nicht den Output."</span>
-          <span class="school"><span class="school-badge school-monetarism">Monetarismus</span></span>
-        </div>
-        <div class="quickref-row">
-          <span class="stmt">„Märkte regulieren sich selbst — staatliche Eingriffe verzerren nur."</span>
-          <span class="school"><span class="school-badge school-klassik">Klassik</span></span>
-        </div>
-        <div class="quickref-row">
-          <span class="stmt">„Antizipierte Geldpolitik hat keinen Realeffekt."</span>
-          <span class="school"><span class="school-badge school-neue">Neue Klassik</span></span>
-        </div>
-        <div class="quickref-row">
-          <span class="stmt">„Kurzfristig wirkt Nachfragesteuerung; langfristig herrscht klassisches Gleichgewicht."</span>
-          <span class="school"><span class="school-badge school-neoklassik">Neoklassik</span></span>
-        </div>
-        <div class="quickref-row">
-          <span class="stmt">„Jede Staatsausgabe verdrängt genau eine private Investition."</span>
-          <span class="school"><span class="school-badge school-klassik">Klassik / Monetar.</span></span>
-        </div>
-        <div class="quickref-row">
-          <span class="stmt">„Es gibt einen kurzfristigen Trade-off zwischen Inflation und Arbeitslosigkeit."</span>
-          <span class="school"><span class="school-badge school-keynes">Keynes / Phillips</span></span>
-        </div>
-        <div class="quickref-row">
-          <span class="stmt">„Langfristig ist die Phillipskurve senkrecht bei u*."</span>
-          <span class="school"><span class="school-badge school-monetarism">Monetarismus</span></span>
-        </div>
+  <!-- FISKALPOLITIK -->
+  <div class="acc-item open" id="fiskalpolitik">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Fiskalpolitik</span>
+        <span class="acc-sub">Staatliche Einnahmen und Ausgaben als Steuerungsinstrument</span>
+      </div>
+      <div class="acc-meta">
+        <span class="sb sb-keynes">Keynes</span>
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
       </div>
     </div>
-  </div>
+    <div class="acc-body">
+      <div class="acc-content">
 
-  <!-- Häufige Verwechslungen -->
-  <div class="model-step">
-    <span class="model-step-label">Häufige Fehler</span>
-    <span class="model-step-title">Typische Verwechslungen</span>
-    <div class="model-step-body">
-      <div class="verwechslung">
-
-        <div class="verwechslung-row">
-          <div class="verwechslung-cell wrong">
-            <div class="cell-label">✗ Falsch</div>
-            <p>„Fiskalpolitik verschiebt die LM-Kurve."</p>
-          </div>
-          <div class="verwechslung-cell right">
-            <div class="cell-label">✓ Richtig</div>
-            <p>Fiskalpolitik (G, T) verschiebt die <strong>IS-Kurve</strong>. LM bewegt sich nur bei Geldmengenänderungen.</p>
+        <div class="mstep">
+          <div class="mstep-lbl">Instrumente</div>
+          <span class="mstep-title">Expansiv vs. Restriktiv</span>
+          <div class="mstep-body">
+            <div class="pol-grid">
+              <div class="pol-card pol-exp">
+                <h4>Expansiv (Rezession)</h4>
+                <ul>
+                  <li>Staatsausgaben G ↑</li>
+                  <li>Steuern T ↓</li>
+                  <li>→ Gesamtnachfrage ↑</li>
+                  <li>→ BIP ↑, Arbeitslosigkeit ↓</li>
+                  <li>→ Staatsdefizit entsteht</li>
+                </ul>
+              </div>
+              <div class="pol-card pol-res">
+                <h4>Restriktiv (Inflation)</h4>
+                <ul>
+                  <li>Staatsausgaben G ↓</li>
+                  <li>Steuern T ↑</li>
+                  <li>→ Gesamtnachfrage ↓</li>
+                  <li>→ Inflation sinkt</li>
+                  <li>→ Haushalt verbessert sich</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="verwechslung-row">
-          <div class="verwechslung-cell wrong">
-            <div class="cell-label">✗ Falsch</div>
-            <p>„Langfristig gibt es einen Trade-off zwischen Inflation und Arbeitslosigkeit."</p>
-          </div>
-          <div class="verwechslung-cell right">
-            <div class="cell-label">✓ Richtig</div>
-            <p>Nur <strong>kurzfristig</strong>. Langfristig ist die Phillipskurve senkrecht bei u* — kein Trade-off.</p>
-          </div>
-        </div>
-
-        <div class="verwechslung-row">
-          <div class="verwechslung-cell wrong">
-            <div class="cell-label">✗ Falsch</div>
-            <p>„Nominaler Zins = Realer Zins"</p>
-          </div>
-          <div class="verwechslung-cell right">
-            <div class="cell-label">✓ Richtig</div>
-            <p>Realer Zins = Nominaler Zins − Inflationsrate (Fisher-Gleichung: r = i − π). Relevant für Investitionsentscheidungen.</p>
+        <div class="mstep">
+          <div class="mstep-lbl">Eingebaut</div>
+          <span class="mstep-title">Automatische Stabilisatoren</span>
+          <div class="mstep-body">
+            <p><span class="term">Automatische Stabilisatoren<span class="tip-box">Haushaltspositionen, die ohne aktiven Beschluss antizyklisch wirken: In der Rezession steigen Ausgaben (Arbeitslosengeld) und sinken Steuereinnahmen automatisch — das dämpft den Abschwung.</span></span> reagieren ohne Parlamentsbeschluss:</p>
+            <div class="fml">
+              <div class="frow">In der Rezession (Y ↓):</div>
+              <div class="note">Arbeitslosengeld steigt automatisch → C bleibt stabiler &nbsp;|&nbsp; Steuereinnahmen sinken → geringere Netto-Belastung</div>
+              <div class="frow">Im Boom (Y ↑):</div>
+              <div class="note">Progressive Steuer → Belastung steigt automatisch → dämpft Überhitzung</div>
+            </div>
           </div>
         </div>
 
-        <div class="verwechslung-row">
-          <div class="verwechslung-cell wrong">
-            <div class="cell-label">✗ Falsch</div>
-            <p>„BIP-Deflator = CPI (Verbraucherpreisindex)"</p>
-          </div>
-          <div class="verwechslung-cell right">
-            <div class="cell-label">✓ Richtig</div>
-            <p>BIP-Deflator erfasst alle im Inland produzierten Güter. CPI misst nur einen fixen Warenkorb der Konsumenten (inkl. Importe).</p>
-          </div>
-        </div>
-
-        <div class="verwechslung-row">
-          <div class="verwechslung-cell wrong">
-            <div class="cell-label">✗ Falsch</div>
-            <p>„Mehr Geldmenge → mehr Output (dauerhaft)"</p>
-          </div>
-          <div class="verwechslung-cell right">
-            <div class="cell-label">✓ Richtig</div>
-            <p>Kurzfristig möglich, langfristig neutrales Geld: Mehr M → nur mehr Inflation (Quantitätstheorie). Langfristig Y = Y*.</p>
+        <div class="mstep">
+          <div class="mstep-lbl">Einschränkung 1</div>
+          <span class="mstep-title">Crowding-out-Mechanismus</span>
+          <div class="mstep-body">
+            <div class="chain">
+              <div class="chain-item">G ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">IS rechts</div><span class="chain-arr">→</span>
+              <div class="chain-item">i ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">I privat ↓</div><span class="chain-arr">→</span>
+              <div class="chain-item">Teil-Neutralisierung</div>
+            </div>
+            <div class="fml">
+              <div class="frow">Vollständiges Crowding-out: ΔI = −ΔG → kein Netto-Effekt (Klassik, Monetarismus)</div>
+              <div class="frow">Partielles Crowding-out: ΔI &lt; ΔG → positiver Netto-Effekt (Keynesianismus)</div>
+              <div class="note">Wenig Crowding-out bei: zinsinelastischen Investitionen, flacher LM (Liquiditätsfalle)</div>
+            </div>
           </div>
         </div>
 
-        <div class="verwechslung-row">
-          <div class="verwechslung-cell wrong">
-            <div class="cell-label">✗ Falsch</div>
-            <p>„Steuermultiplikator = Ausgabenmultiplikator"</p>
-          </div>
-          <div class="verwechslung-cell right">
-            <div class="cell-label">✓ Richtig</div>
-            <p>Steuermultiplikator = −c⁄(1−c), Ausgabenmultiplikator = 1⁄(1−c). Bei c = 0,8: Steuer-m = −4, Ausgaben-m = 5.</p>
+        <div class="mstep">
+          <div class="mstep-lbl">Einschränkung 2</div>
+          <span class="mstep-title">Ricardianische Äquivalenz</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow"><span class="term">Ricardianische Äquivalenz<span class="tip-box">These von Barro (1974): Staatsverschuldung heute = zukünftige Steuern. Rational handelnde Haushalte antizipieren dies und sparen mehr → kein Nachfragestimulus durch Staatsschulden.</span></span> (Barro 1974)</div>
+              <div class="note">G ↑ (schuldenfinanziert) → Haushalte erwarten spätere Steuern → private Ersparnis ↑</div>
+              <div class="note">→ C sinkt genau um ΔG → kein Multiplikatoreffekt</div>
+              <div class="note">Voraussetzungen: vollständige Information, vollkommener Kapitalmarkt (unrealistisch!)</div>
+            </div>
           </div>
         </div>
 
@@ -1588,18 +1112,248 @@ body {
     </div>
   </div>
 
-  <div class="tip">
+  <!-- GELDPOLITIK -->
+  <div class="acc-item" id="geldpolitik">
+    <div class="acc-header">
+      <div class="acc-title-wrap">
+        <span class="acc-title">Geldpolitik &amp; EZB</span>
+        <span class="acc-sub">Europäische Zentralbank — Instrumente und Transmission</span>
+      </div>
+      <div class="acc-meta">
+        <span class="badge badge-red">🔴 Pflicht</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+
+        <div class="mstep">
+          <div class="mstep-lbl">Ziel</div>
+          <span class="mstep-title">Primärziel: Preisstabilität</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow">Inflation &lt; 2 % im Euroraum (mittelfristig)</div>
+              <div class="note">EZB ist politisch unabhängig — kein Weisungsrecht von Regierungen</div>
+              <div class="note">Begründung: Schutz vor politisch motivierter Inflationserzeugung vor Wahlen (Zeitinkonsistenz)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Instrument 1</div>
+          <span class="mstep-title">Leitzinsen</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="note">Hauptrefinanzierungssatz (MRO): Zins, zu dem Banken sich bei der EZB refinanzieren</div>
+              <div class="note">Einlagefazilität: Zins auf Einlagen von Banken bei der EZB</div>
+              <div class="frow">Zins ↓ → Bankzinsen ↓ → Kredite billiger → I ↑ → Y ↑</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Instrument 2</div>
+          <span class="mstep-title">Offenmarktgeschäfte &amp; QE</span>
+          <div class="mstep-body">
+            <p><span class="term">Offenmarktgeschäfte<span class="tip-box">EZB kauft oder verkauft Wertpapiere (meist Staatsanleihen) auf dem offenen Markt. Kauf → Geldmenge steigt → Zins sinkt (expansiv). Verkauf → Geldmenge sinkt (restriktiv).</span></span>: EZB kauft/verkauft Wertpapiere auf dem offenen Markt.</p>
+            <div class="fml">
+              <div class="frow">Ankauf → M ↑ → Zins ↓ &nbsp;&nbsp;&nbsp; (expansiv)</div>
+              <div class="frow">Verkauf → M ↓ → Zins ↑ &nbsp;&nbsp;&nbsp; (restriktiv)</div>
+              <div class="note">QE (Quantitative Easing): Massiver Anleiheankauf bei Nullzins — senkt Langfristzins, bekämpft Deflationsrisiko</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Instrument 3</div>
+          <span class="mstep-title">Mindestreserve &amp; Geldschöpfungsmultiplikator</span>
+          <div class="mstep-body">
+            <div class="fml">
+              <div class="frow"><span class="term">Geldschöpfungsmultiplikator<span class="tip-box">Faktor, um den Zentralbankgeld durch die Kreditvergabe der Geschäftsbanken vervielfacht wird. Bei einem Mindestreservesatz von 10 % kann 1 € Zentralbankgeld zu 10 € Buchgeld werden.</span></span>: &nbsp; m = <span class="frac"><span class="num">1</span><span class="den">r</span></span></div>
+              <div class="note">r = Mindestreservesatz &nbsp;|&nbsp; Beispiel: r = 10 % → m = 10 → 100 € → 1.000 € Buchgeld</div>
+              <div class="frow">r ↑ → weniger Kreditvergabe → M ↓ &nbsp;&nbsp;&nbsp; (restriktiv)</div>
+              <div class="frow">r ↓ → mehr Kreditvergabe → M ↑ &nbsp;&nbsp;&nbsp; (expansiv)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mstep">
+          <div class="mstep-lbl">Wirkungsmechanismus</div>
+          <span class="mstep-title">Transmissionsmechanismus</span>
+          <div class="mstep-body">
+            <p>Wie kommt <span class="term">Transmissionsmechanismus<span class="tip-box">Der Kanal, über den geldpolitische Maßnahmen (Leitzinsänderungen) die Realwirtschaft beeinflussen — von der EZB über das Bankensystem bis zu Investitionen und Konsum.</span></span> in der Realwirtschaft an?</p>
+            <div class="chain">
+              <div class="chain-item">EZB senkt Leitzins</div><span class="chain-arr">→</span>
+              <div class="chain-item">Bankzinsen ↓</div><span class="chain-arr">→</span>
+              <div class="chain-item">Kredite billiger</div><span class="chain-arr">→</span>
+              <div class="chain-item">I und C ↑</div><span class="chain-arr">→</span>
+              <div class="chain-item">Y ↑</div>
+            </div>
+            <div class="fml">
+              <div class="note">Zusätzlicher Kanal — Vermögenspreise: Zins ↓ → Anleihepreise ↑ → Vermögen ↑ → C ↑</div>
+              <div class="note">Zusätzlicher Kanal — Wechselkurs: Zins ↓ → Kapitalabfluss → Währung wertet ab → NX ↑</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /acc-group Wirtschaftspolitik -->
+
+
+<!-- ════════════════════════════════════════════════ -->
+<!--  IMMER SICHTBAR: KLAUSUR-TIPPS                  -->
+<!-- ════════════════════════════════════════════════ -->
+<div class="sec-head"><h2>Klausurvorbereitung</h2></div>
+
+<div class="klausur-card">
+
+  <h3>Was wird gefragt?</h3>
+  <ul class="at-list">
+    <li><strong>Multiple Choice zu Theorien:</strong> „Welche Schule vertritt die These, dass …?" — Klassik, Keynes, Monetarismus zuordnen</li>
+    <li><strong>IS-LM verbal analysieren:</strong> „Was passiert, wenn G steigt? Begründen Sie mit IS-LM."</li>
+    <li><strong>Multiplikator berechnen:</strong> Konsumquote gegeben → m = ?, ΔG gegeben → ΔY = ?</li>
+    <li><strong>Phillipskurve interpretieren:</strong> „Warum ist die langfristige Phillipskurve senkrecht?"</li>
+    <li><strong>Geldpolitik vs. Fiskalpolitik:</strong> „Vergleichen Sie die Effekte im IS-LM-Modell."</li>
+    <li><strong>BIP berechnen:</strong> Verwendungsrechnung Y = C + I + G + NX mit Zahlen</li>
+    <li><strong>Quantitätsgleichung:</strong> M · V = P · Y — welche Variable ändert sich?</li>
+  </ul>
+
+  <h3>Theorie-Zuordnung — Schnellreferenz</h3>
+  <div class="qref">
+    <div class="qref-row"><span class="stmt">„Staatsausgaben erhöhen das BIP durch den Multiplikator."</span><span><span class="sb sb-keynes">Keynes</span></span></div>
+    <div class="qref-row"><span class="stmt">„Geldmenge bestimmt langfristig nur das Preisniveau, nicht den Output."</span><span><span class="sb sb-monetar">Monetarismus</span></span></div>
+    <div class="qref-row"><span class="stmt">„Märkte regulieren sich selbst — staatliche Eingriffe verzerren nur."</span><span><span class="sb sb-klassik">Klassik</span></span></div>
+    <div class="qref-row"><span class="stmt">„Antizipierte Geldpolitik hat keinen Realeffekt."</span><span><span class="sb sb-neue">Neue Klassik</span></span></div>
+    <div class="qref-row"><span class="stmt">„Kurzfristig wirkt Nachfragesteuerung; langfristig herrscht klassisches Gleichgewicht."</span><span><span class="sb sb-neo">Neoklassik</span></span></div>
+    <div class="qref-row"><span class="stmt">„Jede Staatsausgabe verdrängt genau eine private Investition."</span><span><span class="sb sb-klassik">Klassik / Monetar.</span></span></div>
+    <div class="qref-row"><span class="stmt">„Es gibt einen kurzfristigen Trade-off zwischen Inflation und Arbeitslosigkeit."</span><span><span class="sb sb-keynes">Keynes / Phillips</span></span></div>
+    <div class="qref-row"><span class="stmt">„Langfristig ist die Phillipskurve senkrecht bei u*."</span><span><span class="sb sb-monetar">Monetarismus</span></span></div>
+  </div>
+
+  <h3>Häufige Verwechslungen</h3>
+  <div class="vw-row">
+    <div class="vw-cell wrong"><span class="vlbl">✗ Falsch</span><p>„Fiskalpolitik verschiebt die LM-Kurve."</p></div>
+    <div class="vw-cell right"><span class="vlbl">✓ Richtig</span><p>Fiskalpolitik (G, T) verschiebt die <strong>IS-Kurve</strong>. LM bewegt sich nur bei Geldmengenänderungen.</p></div>
+  </div>
+  <div class="vw-row">
+    <div class="vw-cell wrong"><span class="vlbl">✗ Falsch</span><p>„Langfristig gibt es einen Trade-off zwischen Inflation und Arbeitslosigkeit."</p></div>
+    <div class="vw-cell right"><span class="vlbl">✓ Richtig</span><p>Nur <strong>kurzfristig</strong>. Langfristig ist die Phillipskurve senkrecht bei u* — kein Trade-off.</p></div>
+  </div>
+  <div class="vw-row">
+    <div class="vw-cell wrong"><span class="vlbl">✗ Falsch</span><p>„Nominaler Zins = Realer Zins"</p></div>
+    <div class="vw-cell right"><span class="vlbl">✓ Richtig</span><p>Realer Zins = Nominaler Zins − Inflationsrate (Fisher: r = i − π). Relevant für Investitionsentscheidungen.</p></div>
+  </div>
+  <div class="vw-row">
+    <div class="vw-cell wrong"><span class="vlbl">✗ Falsch</span><p>„BIP-Deflator = CPI (Verbraucherpreisindex)"</p></div>
+    <div class="vw-cell right"><span class="vlbl">✓ Richtig</span><p>BIP-Deflator erfasst alle im Inland produzierten Güter. CPI misst nur einen fixen Konsumwarenkorb (inkl. Importe).</p></div>
+  </div>
+  <div class="vw-row">
+    <div class="vw-cell wrong"><span class="vlbl">✗ Falsch</span><p>„Mehr Geldmenge → dauerhaft mehr Output"</p></div>
+    <div class="vw-cell right"><span class="vlbl">✓ Richtig</span><p>Kurzfristig möglich. Langfristig: neutrales Geld. Mehr M → nur mehr Inflation (Quantitätstheorie). Y kehrt zu Y* zurück.</p></div>
+  </div>
+  <div class="vw-row">
+    <div class="vw-cell wrong"><span class="vlbl">✗ Falsch</span><p>„Steuermultiplikator = Ausgabenmultiplikator"</p></div>
+    <div class="vw-cell right"><span class="vlbl">✓ Richtig</span><p>Ausgaben-m = 1⁄(1−c). Steuer-m = −c⁄(1−c). Bei c = 0,8: Ausgaben-m = 5; Steuer-m = −4.</p></div>
+  </div>
+
+  <div class="tip" style="margin-top:20px;">
     <span class="tip-tag">💡 Lernstrategie</span>
     <ul>
-      <li>IS-LM zuerst verbal verstehen, dann grafisch — Klausur verlangt beides</li>
-      <li>Theorien immer mit Gegenposition lernen: Keynes antwortet auf die Klassik, Friedman antwortet auf Keynes</li>
+      <li>IS-LM zuerst verbal verstehen, dann grafisch — die Klausur verlangt beides</li>
+      <li>Theorien mit Gegenposition lernen: Keynes antwortet auf Klassik, Friedman antwortet auf Keynes</li>
       <li>Für jedes Modell die Verschiebungslogik auswendig kennen (was verschiebt wohin?)</li>
-      <li>Phillipskurve: kurzfristig = Bewegung entlang der Kurve; langfristig = senkrechte Kurve bei u*</li>
-      <li>Multiplikator: m = 1⁄(1−c) ist die wichtigste Formel der Makroökonomik — immer einsetzen können</li>
+      <li>Phillipskurve: Bewegung <em>entlang</em> = Politik; Verschiebung = Angebotsschock oder geänderte Erwartungen</li>
+      <li>Multiplikator m = 1⁄(1−c): auswendig können und immer sofort berechnen können</li>
     </ul>
   </div>
+
 </div>
 
 </div><!-- /page -->
+
+<script>
+// ── Accordion ──────────────────────────────────────
+(function() {
+  // Initialize: open items get height:auto
+  document.querySelectorAll('.acc-item.open .acc-body').forEach(function(body) {
+    body.style.height = 'auto';
+  });
+
+  document.querySelectorAll('.acc-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      var item = header.closest('.acc-item');
+      var body = item.querySelector('.acc-body');
+      var isOpen = item.classList.contains('open');
+
+      if (isOpen) {
+        // Set explicit px height so transition works, then animate to 0
+        body.style.height = body.scrollHeight + 'px';
+        item.classList.remove('open');
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            body.style.height = '0';
+          });
+        });
+      } else {
+        // Open
+        item.classList.add('open');
+        var target = body.scrollHeight;
+        body.style.height = '0';
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            body.style.height = target + 'px';
+          });
+        });
+        body.addEventListener('transitionend', function handler() {
+          if (item.classList.contains('open')) {
+            body.style.height = 'auto'; // allow content growth
+          }
+          body.removeEventListener('transitionend', handler);
+        });
+      }
+    });
+  });
+})();
+
+// ── Fachbegriff Tooltips ───────────────────────────
+(function() {
+  document.querySelectorAll('.term').forEach(function(term) {
+    term.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var wasActive = term.classList.contains('active');
+      // close all
+      document.querySelectorAll('.term.active').forEach(function(t) {
+        t.classList.remove('active');
+      });
+      if (!wasActive) {
+        term.classList.add('active');
+        // Reposition if tooltip would go off-screen
+        var box = term.querySelector('.tip-box');
+        if (box) {
+          box.style.left = '50%';
+          box.style.transform = 'translateX(-50%)';
+          var rect = box.getBoundingClientRect();
+          if (rect.left < 8) {
+            var shift = 8 - rect.left;
+            box.style.left = 'calc(50% + ' + shift + 'px)';
+          } else if (rect.right > window.innerWidth - 8) {
+            var shift2 = rect.right - (window.innerWidth - 8);
+            box.style.left = 'calc(50% - ' + shift2 + 'px)';
+          }
+        }
+      }
+    });
+  });
+
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.term.active').forEach(function(t) {
+      t.classList.remove('active');
+    });
+  });
+})();
+</script>
 </body>
 </html>
